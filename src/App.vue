@@ -1,24 +1,37 @@
 <template>
   <div id="app">
-    <vHeader></vHeader>
+    <v-header></v-header>
+    <v-hide-nav></v-hide-nav>
   </div>
 </template>
 
 <script>
 import 'normalize.css';
 
-import { getTopics } from './service/data';
-import vHeader from './components/header'
+import { getTopics, getTest } from './service/data';
+import vHeader from './components/header';
+import vHideNav from './components/hideNav';
 
 export default {
   name: 'App',
   components: {
-    'vHeader': vHeader 
+    vHeader, vHideNav
   },
   mounted() {
-    getTopics().then((res) => {
+    getTest().then((res) => {
       console.log(res);
     })
+  },
+  data() {
+    chekClick : 'false'
+
+    return {}
+  },
+  methods: {
+    clikIcon() {
+      this.chekClick = 'true';
+      console.log(chekClick);
+    }
   }
 }
 </script>

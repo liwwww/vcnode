@@ -4,6 +4,16 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+import {Menu, MenuItem, Row, Submenu, Col, MenuItemGroup} from 'element-ui'
+
+Vue.use(Menu);
+Vue.use(MenuItem);
+Vue.use(Row);
+Vue.use(Submenu);
+Vue.use(Col);
+Vue.use(MenuItemGroup);
+
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

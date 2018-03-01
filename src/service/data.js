@@ -6,3 +6,6 @@ export const getTopics = () => vfetch('/topics', 'GET', {
     limit: 4,
     mdrender: false
 })
+
+export const getTest = () => vfetch('http://39.108.179.185/category/querySuperiorData', 'GET', {
+})

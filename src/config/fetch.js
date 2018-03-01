@@ -1,7 +1,7 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
-    const api = 'https://cnodejs.org/api/v1'; 
+const api = ''; //https://cnodejs.org/api/v1
 export default async function vfetch(url, method, data) {
     url = api + url;    //请求地址拼接
     method = method.toUpperCase();
