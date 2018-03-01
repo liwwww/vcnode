@@ -6,8 +6,16 @@
 </template>
 
 <script>
+import { getTopic } from './service/data';
+
 export default {
-  name: 'App'
+  name: 'App',
+
+  mounted() {
+    getTopic().then((res) => {
+      console.log(res);
+    })
+  }
 }
 </script>
 
