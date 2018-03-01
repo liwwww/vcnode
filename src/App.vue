@@ -1,18 +1,22 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <vHeader></vHeader>
   </div>
 </template>
 
 <script>
-import { getTopic } from './service/data';
+import 'normalize.css';
+
+import { getTopics } from './service/data';
+import vHeader from './components/header'
 
 export default {
   name: 'App',
-
+  components: {
+    'vHeader': vHeader 
+  },
   mounted() {
-    getTopic().then((res) => {
+    getTopics().then((res) => {
       console.log(res);
     })
   }
@@ -21,11 +25,6 @@ export default {
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+
 }
 </style>

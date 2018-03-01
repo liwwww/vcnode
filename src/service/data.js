@@ -1,6 +1,6 @@
 import vfetch from '../config/fetch';
 
-export const getTopic = () => vfetch('/topics', 'GET', {
+export const getTopics = () => vfetch('/topics', 'GET', {
     page: 1,
     tab: 'good',
     limit: 4,
