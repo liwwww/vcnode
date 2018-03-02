@@ -8,7 +8,7 @@
 <script>
 import 'normalize.css';
 
-import { getTopics, getTest } from './service/data';
+import { getTopics } from './service/data';
 import vHeader from './components/header';
 import vHideNav from './components/hideNav';
 
@@ -18,9 +18,7 @@ export default {
     vHeader, vHideNav
   },
   mounted() {
-    getTest().then((res) => {
-      console.log(res);
-    })
+
   },
   data() {
     chekClick : 'false'
