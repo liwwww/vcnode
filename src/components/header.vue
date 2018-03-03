@@ -1,33 +1,35 @@
 <template>
   <header>
     <div class="menu-top">
-      <span class='menu-icon' @click="iconShow"></span>
-      <h4 class="menu-text">VUE</h4>
+      <div class="menu-icon" @click="iconShow"><i></i></div>
+      <span class="menu-text">VUE</span>
     </div>
-    <div class="menu-hide" v-show="iconIsClick">
-      <div class="menu-mask" @click="iconHide"></div>
-      <el-col :span="16">
-        <el-menu default-active="1" class="menu-vertical" @open="handleOpen" @close="handleClose" background-color="#fff" text-color="#000" active-text-color="#000">
-          <div class="menu-header">
-            <img calss="menu-avatar" src="./user.png" style="width='80px',height='80px'" />
-            <span class="menu-username">{{ username }}</span>
-          </div>
-          <el-menu-item index="1">
-            <i class="el-icon-menu"></i>
-            <span slot="title">导航二</span>
+      <transition name="slide-fade-mask" >
+        <div class="menu-mask" @click="iconHide" v-show="maskShow"></div>
+      </transition>
+      <transition name="slide-fade">
+        <el-col :span="16" v-show="iconIsClick">
+          <el-menu default-active="1" class="menu-vertical" @open="handleOpen" @close="handleClose" background-color="#fff" text-color="#000" active-text-color="#000">
+            <div class="menu-header">
+              <img calss="menu-avatar" src="./user.png" style="width='80px',height='80px'" />
+              <span class="menu-username">{{ username }}</span>
+            </div>
+            <el-menu-item index="1">
+              <i class="el-icon-menu"></i>
+              <span slot="title">导航二</span>
+            </el-menu-item>
+            <el-menu-item index="2">
+              <i class="el-icon-document"></i>
+              <span slot="title">导航三</span>
           </el-menu-item>
-          <el-menu-item index="2">
-            <i class="el-icon-document"></i>
-            <span slot="title">导航三</span>
-          </el-menu-item>
-          <el-menu-item index="3">
-            <i class="el-icon-setting"></i>
-            <span slot="title">导航四</span>
-          </el-menu-item>
-        </el-menu>
-      </el-col>
-    </div>
-  </header>
+            <el-menu-item index="3">
+              <i class="el-icon-setting"></i>
+              <span slot="title">导航四</span>
+            </el-menu-item>
+          </el-menu>
+        </el-col>
+      </transition>
+    </header>
 </template>
 
 <script>
@@ -35,16 +37,18 @@ export default {
   data() {
     return {
       iconIsClick: false,
-      username: 'liwww'
+      maskShow: false,
+      username: "liwww"
     };
   },
   methods: {
     iconShow() {
       this.iconIsClick = true;
-      console.log(this.iconIsClick);
+      this.maskShow = true;
     },
     iconHide() {
       this.iconIsClick = false;
+      this.maskShow = false;
     },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -57,23 +61,12 @@ export default {
 </script>
 
 <style scoped lang="less">
-.mixin-line(@top,@color,@height,@topPosition,@leftPosition) {
-  position: absolute;
-  display: inline-block;
-  content: "";
-  top: @topPosition;
-  left: @leftPosition;
-  width: 100%;
-  height: @height;
-  margin-top: @top;
-  background: @color;
-}
-
+@import "../commons/style/mixin.less";
+@import "../commons/style/animation.less";
 .el-col {
-  position: relative;
+  position: fixed;
   height: 100%;
-  z-index: 100;
-
+  z-index: 103;
   .menuitem {
     height: 100%;
   }
@@ -86,79 +79,75 @@ export default {
 .menu-top {
   position: fixed;
   width: 100%;
-  height: 66px;
+  height: 56px;
   z-index: 100;
   left: 0;
   top: 0;
-  line-height: 60px;
+  line-height: 56px;
   background-color: red;
   overflow: hidden;
-
   .menu-icon {
     position: relative;
     display: inline-block;
-    width: 40px;
-    height: 2px;
-    box-sizing: border-box;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
     left: 4%;
-    vertical-align: middle;
-    background-color: #fff;
-
-    &:after {
-      .mixin-line(18px,#fff,2px,0,0);
-    }
-
-    &:before {
-      .mixin-line(-18px,#fff,2px,0,0);
+    cursor: pointer;
+    i {
+      display: inline-block;
+      width: 100%;
+      height: 2px;
+      box-sizing: border-box;
+      vertical-align: middle;
+      background-color: #fff;
+      &:after {
+        .mixin-border-line(#fff,2px,auto,0);
+      }
+      &:before {
+        .mixin-border-line(#fff,2px,0,auto);
+      }
     }
   }
 
   .menu-text {
     position: relative;
     display: inline-block;
-    vertical-align: middle;
-    left: 5%;
+    vertical-align: top;
+    height: 100%;
     font-size: 24px;
-    margin: 0 46px;
+    left: 12%;
     color: #fff;
+    box-sizing: border-box;
     cursor: pointer;
   }
 }
 
-.menu-hide {
+.menu-header {
+  position: relative;
+  width: 100%;
+  padding-bottom: 16px;
+  img {
+    width: 60px;
+    height: 60px;
+    margin: 22px 0 0 22px;
+    border-radius: 50%;
+  }
+  span {
+    display: block;
+    padding: 24px 0 0 22px;
+    box-sizing: border-box;
+  }
+  &:after {
+    .mixin-border-line( #666,1px,inherit,0);
+  }
+}
+
+.menu-mask {
   position: absolute;
   width: 100%;
   height: 100%;
-  z-index: 101;
-
-  .menu-mask {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.4);
-    z-index: 10;
-  }
-
-  .menu-header {
-    width: 100%;
-    height: 25%;
-
-    img {
-      width: 60px;
-      height: 60px;
-      margin: 12% 0 0 22px;
-      border-radius: 50%; 
-    }
-
-    span {
-      display: block;
-      padding: 24px 0 0 22px;
-      box-sizing: border-box;
-    }
-
-    &:after {
-        .mixin-line(10px, #666,1px,inherit,inherit);
-      }
-  }
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 102;
 }
 </style>

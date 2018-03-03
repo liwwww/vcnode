@@ -11,6 +11,7 @@ import 'normalize.css';
 import { getTopics } from './service/data';
 import vHeader from './components/header';
 import vHideNav from './components/hideNav';
+import vfetch from './config/fetch';
 
 export default {
   name: 'App',
@@ -18,7 +19,9 @@ export default {
     vHeader, vHideNav
   },
   mounted() {
-
+    vfetch('/topic/5433d5e4e737cbe96dcef312','GET').then((res) => {
+      console.log(res);
+    })
   },
   data() {
     chekClick : 'false'
