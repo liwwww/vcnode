@@ -1,14 +1,14 @@
 <template>
   <header>
     <div class="menu-top">
-      <div class="menu-icon" @click="iconShow"><i></i></div>
+      <div class="menu-icon" @click="menuShow"><i></i></div>
       <span class="menu-text">VUE</span>
     </div>
       <transition name="slide-fade-mask" >
-        <div class="menu-mask" @click="iconHide" v-show="maskShow"></div>
+        <div class="menu-mask" @click="menuHide" v-show="maskShow"></div>
       </transition>
       <transition name="slide-fade">
-        <el-col :span="16" v-show="iconIsClick">
+        <el-col :span="16" v-show="menuClick">
           <el-menu default-active="1" class="menu-vertical" @open="handleOpen" @close="handleClose" background-color="#fff" text-color="#000" active-text-color="#000">
             <div class="menu-header">
               <img calss="menu-avatar" src="./user.png" style="width='80px',height='80px'" />
@@ -36,18 +36,18 @@
 export default {
   data() {
     return {
-      iconIsClick: false,
+      menuClick: false,
       maskShow: false,
       username: "liwww"
     };
   },
   methods: {
-    iconShow() {
-      this.iconIsClick = true;
+    menuShow() {
+      this.menuClick = true;
       this.maskShow = true;
     },
-    iconHide() {
-      this.iconIsClick = false;
+    menuHide() {
+      this.menuClick = false;
       this.maskShow = false;
     },
     handleOpen(key, keyPath) {
