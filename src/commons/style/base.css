@@ -2,3 +2,20 @@ body {
     font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
     background-color: #E4E7ED;
 }
+
+.el-switch {
+    float: right;
+    height: inherit;
+    margin-right: 40px;
+}
+
+.el-switch__button {
+    width: 28px !important;
+    height: 28px !important;
+    left: -5px !important;
+    top: -5px !important;
+    background-image: url(../img/pin.png) !important;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-color: rgba(0, 0, 0, 0) !important; 
+}

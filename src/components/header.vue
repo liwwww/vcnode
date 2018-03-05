@@ -3,7 +3,7 @@
     <div class="menu-top">
       <div class="menu-icon" @click="menuShow"><i></i></div>
       <span class="menu-text">VUE</span>
-      <el-switch v-model="value2" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
+      <el-switch v-model="value2" active-color="#F2F6FC" inactive-color="#67C23A"></el-switch>
     </div>
       <transition name="slide-fade-mask" >
         <div class="menu-mask" @click="menuHide" v-show="maskShow"></div>
@@ -91,8 +91,8 @@ export default {
     position: relative;
     display: inline-block;
     width: 28px;
-    height: 28px;
-    line-height: 28px;
+    height: 24px;
+    line-height: 24px;
     margin: 0 40px;
     cursor: pointer;
     i {
@@ -109,11 +109,6 @@ export default {
         .mixin-border-line(#fff,2px,0,auto);
       }
     }
-  }
-  .el-switch {
-    float: right;
-    height: inherit;
-    margin-right: 40px;
   }
 
   .menu-text {
