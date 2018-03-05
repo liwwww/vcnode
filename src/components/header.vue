@@ -3,28 +3,33 @@
     <div class="menu-top">
       <div class="menu-icon" @click="menuShow"><i></i></div>
       <span class="menu-text">VUE</span>
+      <el-switch v-model="value2" active-color="#13ce66" inactive-color="#ff4949"></el-switch>
     </div>
       <transition name="slide-fade-mask" >
         <div class="menu-mask" @click="menuHide" v-show="maskShow"></div>
       </transition>
-      <transition name="slide-fade">
+      <transition name="slide-fade-menu">
         <el-col :span="16" v-show="menuClick">
-          <el-menu default-active="1" class="menu-vertical" @open="handleOpen" @close="handleClose" background-color="#fff" text-color="#000" active-text-color="#000">
+          <el-menu default-active="1" class="menu-vertical" background-color="#fff" text-color="#000" active-text-color="#000">
             <div class="menu-header">
               <img calss="menu-avatar" src="./user.png" style="width='80px',height='80px'" />
               <span class="menu-username">{{ username }}</span>
             </div>
             <el-menu-item index="1">
-              <i class="el-icon-menu"></i>
-              <span slot="title">导航二</span>
+              <i class="el-icon-tickets"></i>
+              <span slot="title">全部</span>
             </el-menu-item>
             <el-menu-item index="2">
               <i class="el-icon-document"></i>
-              <span slot="title">导航三</span>
-          </el-menu-item>
+              <span slot="title">精华</span>
+            </el-menu-item>
             <el-menu-item index="3">
-              <i class="el-icon-setting"></i>
-              <span slot="title">导航四</span>
+              <i class="el-icon-share"></i>
+              <span slot="title">分享</span>
+            </el-menu-item>
+            <el-menu-item index="4">
+              <i class="el-icon-edit-outline"></i>
+              <span slot="title">问答</span>
             </el-menu-item>
           </el-menu>
         </el-col>
@@ -38,7 +43,9 @@ export default {
     return {
       menuClick: false,
       maskShow: false,
-      username: "liwww"
+      username: "liwww",
+      value1: true,
+      value2: true
     };
   },
   methods: {
@@ -49,12 +56,6 @@ export default {
     menuHide() {
       this.menuClick = false;
       this.maskShow = false;
-    },
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
     }
   }
 };
@@ -79,12 +80,12 @@ export default {
 .menu-top {
   position: fixed;
   width: 100%;
-  height: 56px;
+  height: 48px;
+  line-height: 48px;
   z-index: 100;
   left: 0;
   top: 0;
-  line-height: 56px;
-  background-color: red;
+  background-color: #409EFF;
   overflow: hidden;
   .menu-icon {
     position: relative;
@@ -92,7 +93,7 @@ export default {
     width: 28px;
     height: 28px;
     line-height: 28px;
-    left: 4%;
+    margin: 0 40px;
     cursor: pointer;
     i {
       display: inline-block;
@@ -109,6 +110,11 @@ export default {
       }
     }
   }
+  .el-switch {
+    float: right;
+    height: inherit;
+    margin-right: 40px;
+  }
 
   .menu-text {
     position: relative;
@@ -116,7 +122,6 @@ export default {
     vertical-align: top;
     height: 100%;
     font-size: 24px;
-    left: 12%;
     color: #fff;
     box-sizing: border-box;
     cursor: pointer;

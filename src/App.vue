@@ -7,6 +7,7 @@
 
 <script>
 import 'normalize.css';
+import './commons/style/base.css';
 
 import { getTopics } from './service/data';
 import vHeader from './components/header';
