@@ -15,7 +15,7 @@
               <img calss="menu-avatar" src="./user.png" style="width='80px',height='80px'" />
               <span class="menu-username">{{ username }}</span>
             </div>
-            <el-menu-item index="1" :route="{path: '/index'}">
+            <el-menu-item index="1">
               <i class="el-icon-tickets"></i>
               <span slot="title">全部</span>
             </el-menu-item>
@@ -66,6 +66,8 @@ export default {
 @import "../commons/style/animation.less";
 .el-col {
   position: fixed;
+  top: 0;
+  left: 0;
   height: 100%;
   z-index: 103;
   .menuitem {
@@ -94,7 +96,7 @@ export default {
     width: 28px;
     height: 24px;
     line-height: 24px;
-    margin: 0 28px 0 40px;
+    margin: 0 40px;
     cursor: pointer;
     i {
       display: inline-block;
@@ -144,7 +146,9 @@ export default {
 }
 
 .menu-mask {
-  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);

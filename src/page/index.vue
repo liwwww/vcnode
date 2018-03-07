@@ -1,4 +1,6 @@
 <template>
+    <div>
+    <v-header></v-header>
     <v-content>
         <nav class="main-today">
             <ul>
@@ -16,13 +18,15 @@
             </ul>
         </nav>
     </v-content>
+    </div>
 </template>
 
 <script>
 import vContent from '../components/content';
+import vHeader from '../components/header';
 
     export default {
-        components: { vContent }
+        components: { vContent, vHeader }
     }
 </script>
 
@@ -38,10 +42,11 @@ import vContent from '../components/content';
             box-sizing: border-box;
             background-color: #fff;
             i {
-                display: inline-block;
+                display: block;
                 width: 40px;
                 height: 40px;
                 border-radius: 100%;
+                float: left;
                 background-color: #000;
             }
             span {
@@ -49,6 +54,7 @@ import vContent from '../components/content';
             }
             p {
                 display: block;
+                word-wrap: break-word;
             }
         }
     }

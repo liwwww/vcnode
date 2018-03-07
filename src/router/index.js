@@ -10,10 +10,9 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'app',
       component:APP,
       children: [
-        { path: "/index", component: index }
+        { path: "/", component: index }
       ]
     }
   ]

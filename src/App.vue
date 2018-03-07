@@ -1,10 +1,5 @@
-<template>
-  <div id="app">
-    <v-header></v-header>
-    <div id="main">
-      <router-view></router-view>
-    </div>
-  </div>
+<template> 
+    <router-view></router-view>
 </template>
 
 <script>
@@ -39,6 +34,6 @@ export default {
 
 <style>
 #main {
-  margin-top: 60px;
+  
 }
 </style>
