@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <v-header></v-header>
-    <v-hide-nav></v-hide-nav>
+    <div id="main">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -11,14 +13,11 @@ import './commons/style/base.css';
 
 import { getTopics } from './service/data';
 import vHeader from './components/header';
-import vHideNav from './components/hideNav';
 import vfetch from './config/fetch';
 
 export default {
   name: 'App',
-  components: {
-    vHeader, vHideNav
-  },
+  components: { vHeader },
   mounted() {
     vfetch('/topic/5433d5e4e737cbe96dcef312','GET').then((res) => {
       console.log(res);
@@ -39,7 +38,7 @@ export default {
 </script>
 
 <style>
-#app {
-
+#main {
+  margin-top: 60px;
 }
 </style>

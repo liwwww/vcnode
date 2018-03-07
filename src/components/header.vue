@@ -15,7 +15,7 @@
               <img calss="menu-avatar" src="./user.png" style="width='80px',height='80px'" />
               <span class="menu-username">{{ username }}</span>
             </div>
-            <el-menu-item index="1">
+            <el-menu-item index="1" :route="{path: '/index'}">
               <i class="el-icon-tickets"></i>
               <span slot="title">全部</span>
             </el-menu-item>
@@ -87,13 +87,14 @@ export default {
   top: 0;
   background-color: #409EFF;
   overflow: hidden;
+  box-shadow: 0 2px 2px rgba(0,0,0,.15);
   .menu-icon {
     position: relative;
     display: inline-block;
     width: 28px;
     height: 24px;
     line-height: 24px;
-    margin: 0 40px;
+    margin: 0 28px 0 40px;
     cursor: pointer;
     i {
       display: inline-block;
@@ -106,7 +107,7 @@ export default {
         .mixin-border-line(#fff,2px,auto,0);
       }
       &:before {
-        .mixin-border-line(#fff,2px,0,auto);
+        .mixin-border-line(#fff,2px,2px,auto);
       }
     }
   }
@@ -114,12 +115,11 @@ export default {
   .menu-text {
     position: relative;
     display: inline-block;
-    vertical-align: top;
+    vertical-align: middle;
     height: 100%;
     font-size: 24px;
     color: #fff;
     box-sizing: border-box;
-    cursor: pointer;
   }
 }
 
