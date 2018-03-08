@@ -3,13 +3,13 @@
         <v-header></v-header>
         <v-content>
             <div class="main-today">
-                <el-row class="list">
+                <el-row class="list" :v-for="nav in list">
                     <el-col class="list-avatar" :span="4">
                         <i></i>
                     </el-col>
                     <el-col :span="19" class="list-main">
-                        <a>fdfdafdsafds</a>
-                        <p>fdsafdsafdsafdasfdsafdsafd asfdsafdsafdsa fdsafdsafdsafdhhhhhhhhhhhhhhhhh hhhhhhhgdfhgfdhgfdhgfdhgfdhgfdhgfdhgfdhgfdhgdfhgdfhgdfhgfhhhhhhhhhhhhhhhhhhhhhhhhh</p>
+                        <a>{{ nav.title }}</a>
+                        <p>{{ nav.content }}</p>
                     </el-col>
                     <i @click="pinClick" v-bind:class="{ isPin: checkPin }"></i>
                 </el-row>
@@ -25,7 +25,11 @@ import vHeader from '../components/header';
 export default {
     data() {
         return {
-            checkPin: false
+            checkPin: false,
+            list: [
+                {title: '哈哈哈哈',content: '和范德萨很发达是否考虑结婚的刷卡后方可'},
+                {title: '哈哈哈哈',content: '和范德萨很发达是否考虑结婚的刷卡后方可'}
+            ]
         };
     },
     methods: {
@@ -40,9 +44,6 @@ export default {
 <style scoped lang="less">
 .isPin {
     background-image: url(../commons/img/ypin.png) !important;
-}
-.noPin {
-    
 }
 .main-today {
     position: relative;
