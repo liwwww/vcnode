@@ -7,10 +7,11 @@
                     <el-col class="list-avatar" :span="4">
                         <i></i>
                     </el-col>
-                    <el-col :span="20" class="list-main">
+                    <el-col :span="19" class="list-main">
                         <a>fdfdafdsafds</a>
                         <p>fdsafdsafdsafdasfdsafdsafd asfdsafdsafdsa fdsafdsafdsafdhhhhhhhhhhhhhhhhh hhhhhhhgdfhgfdhgfdhgfdhgfdhgfdhgfdhgfdhgfdhgdfhgdfhgdfhgfhhhhhhhhhhhhhhhhhhhhhhhhh</p>
                     </el-col>
+                    <i></i>
                 </el-row>
             </div>
         </v-content>
@@ -40,20 +41,27 @@ export default {
         background-color: #fff;
         overflow: hidden;
         .list-avatar {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 100%;
             background-color: #000;
         }
         .list-main {
-            display: inline-block;
             margin-left: 15px;
             p {
                 white-space: nowrap;
                 text-overflow: ellipsis;
                 overflow: hidden;
             }
+        }
+        i {
+            position: absolute;
+            display: block;
+            width: 24px;
+            height: 24px;
+            right: 0;
+            background-image: url(../commons/img/ypin.png);
+            background-size: 24px 24px;
         }
     }
 }
