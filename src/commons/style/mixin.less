@@ -1,3 +1,7 @@
+@screen-sm-min: 460px;
+@screen-md-min: 960px;
+@screen-lg-min: 1200px;
+
 .mixin-border-line(@color,@height,@topPosition,@bottomPosition) {
     position: absolute;
     display: inline-block;
@@ -8,3 +12,13 @@
     height: @height;
     background: @color;
   }
+
+.minxin-screen-sm(@rules) {
+  @media screen and (min-width: @screen-sm-min) { @rules(); }
+}
+.minxin-screen-md(@rules) {
+  @media screen and (min-width: @screen-md-min) { @rules(); }
+}
+.minxin-screen-lg(@rules) {
+  @media screen and (min-width: @screen-lg-min) { @rules(); }
+}

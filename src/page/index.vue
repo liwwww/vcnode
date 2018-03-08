@@ -2,17 +2,17 @@
     <div>
         <v-header></v-header>
         <v-content>
-            <nav class="main-today">
-                <div class="list">
-                    <div class="list-avatar">
+            <div class="main-today">
+                <el-row class="list">
+                    <el-col class="list-avatar" :span="4">
                         <i></i>
-                    </div>
-                    <div class="list-main">
+                    </el-col>
+                    <el-col :span="20" class="list-main">
                         <a>fdfdafdsafds</a>
-                        <p>fdsafdsafdsafdasfdsafdsafdasfdsafdsafdsafdsafdsafdsafdhhhhhhhhhhhhhhhhhhhhhhhhgdfhgfdhgfdhgfdhgfdhgfdhgfdhgfdhgfdhgdfhgdfhgdfhgfhhhhhhhhhhhhhhhhhhhhhhhhh</p>
-                    </div>
-                </div>
-            </nav>
+                        <p>fdsafdsafdsafdasfdsafdsafd asfdsafdsafdsa fdsafdsafdsafdhhhhhhhhhhhhhhhhh hhhhhhhgdfhgfdhgfdhgfdhgfdhgfdhgfdhgfdhgfdhgdfhgdfhgdfhgfhhhhhhhhhhhhhhhhhhhhhhhhh</p>
+                    </el-col>
+                </el-row>
+            </div>
         </v-content>
     </div>
 </template>
@@ -32,7 +32,6 @@ export default {
     width: 100%;
     .list {
         position: relative;
-        display: flex;
         width: 100%;
         margin: 16px 0;
         padding: 16px 20px;
@@ -42,7 +41,6 @@ export default {
         overflow: hidden;
         .list-avatar {
             display: inline-block;
-            flex: 1;
             width: 40px;
             height: 40px;
             border-radius: 100%;
@@ -51,7 +49,6 @@ export default {
         .list-main {
             display: inline-block;
             margin-left: 15px;
-            width: 800px;
             p {
                 white-space: nowrap;
                 text-overflow: ellipsis;
