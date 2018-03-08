@@ -89,7 +89,7 @@ export default {
   top: 0;
   background-color: #409EFF;
   overflow: hidden;
-  box-shadow: 0 2px 2px rgba(0,0,0,.15);
+  box-shadow: 0 2px 2px rgba(0,0,0,.19);
   .menu-icon {
     position: relative;
     display: inline-block;
