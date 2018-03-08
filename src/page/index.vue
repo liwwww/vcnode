@@ -11,7 +11,7 @@
                         <a>fdfdafdsafds</a>
                         <p>fdsafdsafdsafdasfdsafdsafd asfdsafdsafdsa fdsafdsafdsafdhhhhhhhhhhhhhhhhh hhhhhhhgdfhgfdhgfdhgfdhgfdhgfdhgfdhgfdhgfdhgdfhgdfhgdfhgfhhhhhhhhhhhhhhhhhhhhhhhhh</p>
                     </el-col>
-                    <i></i>
+                    <i @click="pinClick" v-bind:class="{ isPin: checkPin }"></i>
                 </el-row>
             </div>
         </v-content>
@@ -23,11 +23,27 @@ import vContent from '../components/content';
 import vHeader from '../components/header';
 
 export default {
+    data() {
+        return {
+            checkPin: false
+        };
+    },
+    methods: {
+        pinClick() {
+            this.checkPin = !this.checkPin;
+        }
+    },
     components: { vContent, vHeader }
 }
 </script>
 
 <style scoped lang="less">
+.isPin {
+    background-image: url(../commons/img/ypin.png) !important;
+}
+.noPin {
+    
+}
 .main-today {
     position: relative;
     width: 100%;
@@ -35,14 +51,15 @@ export default {
         position: relative;
         width: 100%;
         margin: 16px 0;
-        padding: 16px 20px;
+        padding: 16px 20px 0 20px;
         border-radius: 2px;
         box-sizing: border-box;
         background-color: #fff;
         overflow: hidden;
         .list-avatar {
-            width: 42px;
-            height: 42px;
+            @avatarSize: 42px;
+            width: @avatarSize;
+            height: @avatarSize;
             border-radius: 100%;
             background-color: #000;
         }
@@ -54,14 +71,18 @@ export default {
                 overflow: hidden;
             }
         }
+        @pinPosition: 40px;
+        @pinSize: 20px;
         i {
             position: absolute;
             display: block;
-            width: 24px;
-            height: 24px;
-            right: 0;
-            background-image: url(../commons/img/ypin.png);
-            background-size: 24px 24px;
+            width: @pinPosition;
+            height: @pinPosition;
+            right: @pinSize;
+            background-size: @pinSize @pinSize;
+            background-position: top right;
+            background-repeat: no-repeat;
+            background-image: url(../commons/img/npin.png)
         }
     }
 }
