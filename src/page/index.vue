@@ -3,7 +3,7 @@
         <v-header></v-header>
         <v-content>
             <div class="main-today">
-                <el-row class="list" :v-for="nav in list">
+                <el-row class="list" v-for="(nav, index) in list" :key="nav.index">
                     <el-col class="list-avatar" :span="4">
                         <i></i>
                     </el-col>
@@ -11,7 +11,7 @@
                         <a>{{ nav.title }}</a>
                         <p>{{ nav.content }}</p>
                     </el-col>
-                    <i @click="pinClick" v-bind:class="{ isPin: checkPin }"></i>
+                    <i @click="pinClick(nav, index)" v-bind:class="{ isPin: nav.checkPin }"></i>
                 </el-row>
             </div>
         </v-content>
@@ -25,16 +25,16 @@ import vHeader from '../components/header';
 export default {
     data() {
         return {
-            checkPin: false,
+            clickPin: '',
             list: [
-                {title: '哈哈哈哈',content: '和范德萨很发达是否考虑结婚的刷卡后方可'},
-                {title: '哈哈哈哈',content: '和范德萨很发达是否考虑结婚的刷卡后方可'}
+                {title: '哈哈哈哈', content: '和范德萨很发达是否考虑结婚的刷卡后方可', checkPin: false},
+                {title: '哈哈哈哈', content: '和范德萨很发达是否考虑结婚的刷卡后方可', checkPin: false}
             ]
         };
     },
     methods: {
-        pinClick() {
-            this.checkPin = !this.checkPin;
+        pinClick(nav, index) {
+           nav.checkPin = !nav.checkPin 
         }
     },
     components: { vContent, vHeader }
