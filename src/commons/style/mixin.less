@@ -1,6 +1,6 @@
-@screen-sm-min: 460px;
-@screen-md-min: 960px;
-@screen-lg-min: 1200px;
+@screen-xs: 460px;
+@screen-sm: 960px;
+@screen-md: 1200px;
 
 .mixin-border-line(@color,@height,@topPosition,@bottomPosition) {
     position: absolute;
@@ -13,12 +13,15 @@
     background: @color;
   }
 
-.minxin-screen-sm(@rules) {
-  @media screen and (min-width: @screen-sm-min) { @rules(); }
+.mixin-screen-xs(@rules) {
+  @media screen and (max-width: @screen-xs) { @rules(); }
 }
-.minxin-screen-md(@rules) {
-  @media screen and (min-width: @screen-md-min) { @rules(); }
+.mixin-screen-sm(@rules) {
+  @media screen and (max-width: @screen-sm) { @rules(); }
 }
-.minxin-screen-lg(@rules) {
-  @media screen and (min-width: @screen-lg-min) { @rules(); }
+.mixin-screen-md(@rules) {
+  @media screen and (max-width: @screen-md) { @rules(); }
+}
+.mixin-screen-lg(@rules) {
+  @media screen and (min-width: @screen-md) { @rules(); }
 }

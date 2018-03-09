@@ -16,7 +16,7 @@ export default async function vfetch(url, method, data) {
         mode: 'cors'    //跨域
     }
 
-    if (method === 'GET'&&typeof(data) == undefined) {
+    if (method === 'GET') {
         let str = '';
         Object.keys(data).forEach(key => {
             str += key + '=' + data[key] + '&';

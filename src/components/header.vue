@@ -10,12 +10,12 @@
       </transition>
       <transition name="slide-fade-menu">
         <el-col :span="16" v-show="menuClick">
-          <el-menu default-active="1" class="menu-vertical" background-color="#fff" text-color="#000" active-text-color="#000">
+          <el-menu router default-active="1" class="menu-vertical" background-color="#fff" text-color="#000" active-text-color="#000" >
             <div class="menu-header">
               <img calss="menu-avatar" src="./user.png" style="width='80px',height='80px'" />
               <span class="menu-username">{{ username }}</span>
             </div>
-            <el-menu-item index="1">
+            <el-menu-item index="1" :route="{path: '/'}">
               <i class="el-icon-tickets"></i>
               <span slot="title">全部</span>
             </el-menu-item>
@@ -23,7 +23,7 @@
               <i class="el-icon-document"></i>
               <span slot="title">精华</span>
             </el-menu-item>
-            <el-menu-item index="3">
+            <el-menu-item index="3" :route="{path: '/share'}">
               <i class="el-icon-share"></i>
               <span slot="title">分享</span>
             </el-menu-item>
