@@ -31,8 +31,7 @@ export default {
         };
     },
     created() {
-        let job = 'job';
-        this.getTopicsData(job);
+        this.getTopicsData();
     },
     methods: {
         pinClick(nav, index) {
@@ -121,7 +120,11 @@ export default {
             background-size: @pinSize @pinSize;
             background-position: top right;
             background-repeat: no-repeat;
-            background-image: url(../../commons/img/npin.png)
+            background-image: url(../../commons/img/npin.png);
+            cursor: pointer;
+            &:hover {
+                background-image: url(../../commons/img/ypin.png);
+            }
         }
     }
 }
