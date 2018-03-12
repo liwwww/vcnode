@@ -1,5 +1,5 @@
 <template>
-    <div class="main-wrapper">
+    <div class="container">
         <slot></slot>
     </div>
 </template>
@@ -12,7 +12,7 @@
 <style scoped lang="less">
 @import '../commons/style/mixin.less';
 
-.main-wrapper {
+.container {
     position: relative;
     .mixin-screen-lg({
         max-width: 1060px;

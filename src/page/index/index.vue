@@ -6,7 +6,7 @@
                     <div class="list-avatar">
                         <img :src = "nav.author.avatar_url"></img>
                     </div>
-                    <div class="list-main">
+                    <div class="list-main" @click="getDetail">
                         <a>{{ nav.title }}</a>
                         <p>{{ nav.content }}</p>
                     </div>
@@ -41,6 +41,9 @@ export default {
             let aa = await getTopics();
             this.list = aa.data;
             console.log(this.list);
+        },
+        getDetail() {
+            this.$router.push({path:'/detail'})
         }
     },
     components: { vContent, vHeader }
