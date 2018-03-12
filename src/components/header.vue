@@ -1,8 +1,7 @@
 <template>
   <header>
     <div class="menu-top">
-      <div class="menu-icon" @click="menuShow"><i></i></div>
-      <span class="menu-text">VUE</span>
+      <div class="menu-icon" @click="menuShow"><i></i></div><span class="menu-text">VUE</span>
       <el-switch v-model="value2" active-color="#F2F6FC" inactive-color="#67C23A"></el-switch>
     </div>
       <transition name="slide-fade-mask" >
@@ -84,19 +83,21 @@ export default {
   width: 100%;
   height: 48px;
   line-height: 48px;
-  z-index: 100;
   left: 0;
   top: 0;
+  padding: 0 40px;
+  box-sizing: border-box;
   background-color: #409EFF;
   overflow: hidden;
   box-shadow: 0 2px 2px rgba(0,0,0,.19);
+  z-index: 100;
   .menu-icon {
     position: relative;
     display: inline-block;
     width: 28px;
     height: 24px;
     line-height: 24px;
-    margin: 0 40px;
+    vertical-align: text-bottom;
     cursor: pointer;
     i {
       display: inline-block;
@@ -117,7 +118,9 @@ export default {
   .menu-text {
     position: relative;
     display: inline-block;
-    vertical-align: middle;
+    top: 0;
+    bottom: 0;
+    margin: auto 40px;
     height: 100%;
     font-size: 24px;
     color: #fff;

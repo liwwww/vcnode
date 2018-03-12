@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import 'normalize.css';
+import './commons/style/reset.css';
 import './commons/style/base.css';
 
 import vHeader from './components/header';
