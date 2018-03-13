@@ -24,7 +24,6 @@ import vHeader from '@/components/header';
 
 export default {
     data() {
-
         return {
             clickPin: '',
             list: []
@@ -125,9 +124,17 @@ export default {
             background-repeat: no-repeat;
             background-image: url(../../commons/img/npin.png);
             cursor: pointer;
-            &:hover {
-                background-image: url(../../commons/img/ypin.png);
-            }
+            .mixin-screen-sm({
+                &:hover {
+                    background-image: url(../../commons/img/ypin.png);
+                }
+            });
+            .mixin-screen-lg({
+                &:hover {
+                    background-image: url(../../commons/img/ypin.png);
+                }
+            });
+            
         }
     }
 }
