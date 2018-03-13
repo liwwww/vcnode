@@ -21,6 +21,26 @@ ol, ul {
     height: inherit;
 }
 
+img {
+    height: auto;
+    max-width: 100%;
+    vertical-align: middle;
+    border: 0;
+}
+
+pre {
+    display: block;
+    padding: 9.5px;
+    margin: 0 0 10px;
+    font-size: 13px;
+    line-height: 1.42858;
+    word-break: break-all;
+    word-wrap: break-word;
+    color: #333;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+}
+
 .el-switch__button {
     width: 28px !important;
     height: 28px !important;
@@ -30,4 +50,9 @@ ol, ul {
     background-repeat: no-repeat;
     background-size: 100% 100%;
     background-color: rgba(0, 0, 0, 0) !important; 
+}
+
+.content-main img {
+    display: block;
+    margin: 0 auto;  
 }

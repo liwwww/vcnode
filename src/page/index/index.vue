@@ -6,9 +6,9 @@
                     <div class="list-avatar">
                         <img :src = "nav.author.avatar_url"></img>
                     </div>
-                    <div class="list-main" @click="getDetail">
+                    <div class="list-main" @click="getDetail(nav)">
                         <a>{{ nav.title }}</a>
-                        <p>{{ nav.content }}</p>
+                        <p>{{ nav.content.replace(new RegExp('<[^>]*>','g'),'') }}</p>
                     </div>
                     <i @click="pinClick(nav, index)" v-bind:class="{ isPin: nav.checkPin }"></i>
                 </el-row>
@@ -38,12 +38,12 @@ export default {
             nav.checkPin = !nav.checkPin;
         },
         async getTopicsData() {
-            let aa = await getTopics();
-            this.list = aa.data;
-            console.log(this.list);
+            let topicDetail = await getTopics();
+            this.list = topicDetail.data;
         },
-        getDetail() {
-            this.$router.push({path:'/detail'})
+        getDetail(nav) {
+            window.localStorage.setItem('detail',JSON.stringify(nav));
+            this.$router.push({path: 'detail'})
         }
     },
     components: { vContent, vHeader }

@@ -1,21 +1,20 @@
 <template>
     <div>
-        <v-header></v-header>
         <v-content>
             <div class="content">
                 <div class="content-menu">
-                    <div class="content-title">这是左侧标题</div>
+                    <div class="content-title">{{ detail.title }}</div>
                     <div class="content-tip"></div>
                 </div>
                 <div class="content-detail">
                     <div class="content-user">
                         <div class="user-detail">
-                            <img src="../../components/user.png" alt="头像" />
-                            <span>liwwww</span>
+                            <img :src="detail.author.avatar_url" alt="头像" />
+                            <span>{{ detail.author.loginname }}</span>
                         </div>
-                        <div class="user-create-time">12：56 PM</div>
+                        <div class="user-create-time">{{ detail.create_at }}</div>
                     </div>
-                    <div class="content-main"></div>
+                    <div class="content-main" v-html='detail.content'></div>
                 </div>
             </div>
         </v-content>
@@ -23,16 +22,16 @@
 </template>
 
 <script>
-import vHeader from '@/components/header.vue';
-import vContent from '@/components/content.vue'      
-    export default {
-        data() {
-            return {
-                
-            }
-        },
-        components: { vHeader, vContent }
-    }
+import vHeader from '@/components/header.vue'
+import vContent from '@/components/content.vue'
+export default {
+    data() {
+        return {
+            detail: JSON.parse(window.localStorage.getItem('detail'))
+        }
+    },
+    components: { vHeader, vContent }
+}
 </script>
 
 <style scoped lang="less">
@@ -43,7 +42,7 @@ import vContent from '@/components/content.vue'
     background-color: #fff;
     .content-menu {
         padding: 20px 16px;
-        font-size: 20px;
+        font-size: 15px;
         box-sizing: border-box;
         border-bottom: 1px solid #E4E7ED;
     }
@@ -51,7 +50,12 @@ import vContent from '@/components/content.vue'
         padding: 14px 16px;
         box-sizing: border-box;
         .content-user {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            font-size: 13px;
             .user-detail {
+                float: left;
                 img {
                     width: 40px;
                     height: 40px;
@@ -61,10 +65,19 @@ import vContent from '@/components/content.vue'
                     display: inline-block;
                     margin: 5px 0 0 20px;
                     vertical-align: top;
+                    font-weight: bolder;
                 }
             }
+            .user-create-time {
+                margin: 5px 0 0 20px;
+                float: right;
+            }
+        }
+        .content-main {
+            font-size: 14px;
+            line-height: 22px;
+            padding: 24px 26px;
         }
     }
 }
-
 </style>
