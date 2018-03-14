@@ -70,6 +70,9 @@ export default {
         box-sizing: border-box;
         background-color: #fff;
         overflow: hidden;
+        &:hover {
+                background-color: #f5f5f5;
+            }
         .list-avatar {
             float: left;
             img {
@@ -83,6 +86,7 @@ export default {
         .list-main {
             position: relative;
             padding-left: 15px;
+            cursor: pointer;
             overflow: hidden;
             p,
             a {
@@ -106,6 +110,7 @@ export default {
             }
             p {
                 width: 95%;
+                line-height: 1.6;
                 margin-top: 10px;
                 font-size: 12px;
                 color: #909399;
@@ -124,11 +129,6 @@ export default {
             background-repeat: no-repeat;
             background-image: url(../../commons/img/npin.png);
             cursor: pointer;
-            .mixin-screen-sm({
-                &:hover {
-                    background-image: url(../../commons/img/ypin.png);
-                }
-            });
             .mixin-screen-lg({
                 &:hover {
                     background-image: url(../../commons/img/ypin.png);
