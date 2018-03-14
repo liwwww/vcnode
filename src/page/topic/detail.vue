@@ -18,19 +18,21 @@
                 </div>
             </div>
         </v-content>
+        <v-reply></v-reply>
     </div>
 </template>
 
 <script>
 import vHeader from '@/components/header.vue'
 import vContent from '@/components/content.vue'
+import vReply from '@/components/reply.vue'
 export default {
     data() {
         return {
             detail: JSON.parse(window.localStorage.getItem('detail'))
         }
     },
-    components: { vHeader, vContent }
+    components: { vHeader, vContent, vReply }
 }
 </script>
 

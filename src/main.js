@@ -4,7 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-import {Menu, MenuItem, Row, Submenu, Col, MenuItemGroup, Switch} from 'element-ui'
+import {Menu, MenuItem, Row, Submenu, Col, MenuItemGroup, Switch, Input, Button} from 'element-ui'
 
 Vue.use(Menu);
 Vue.use(MenuItem);
@@ -13,6 +13,8 @@ Vue.use(Submenu);
 Vue.use(Col);
 Vue.use(MenuItemGroup);
 Vue.use(Switch);
+Vue.use(Input);
+Vue.use(Button);
 
 
 Vue.config.productionTip = false
