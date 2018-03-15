@@ -21,11 +21,23 @@ ol, ul {
     height: inherit;
 }
 
-content-main img {
+img {
+    display: inline-block;
     height: auto;
     max-width: 100%;
     vertical-align: middle;
     border: 0;
+}
+
+.icon {
+   width: 1em; height: 1em;
+   vertical-align: -0.15em;
+   fill: currentColor;
+   overflow: hidden;
+}
+
+.reply-content img {
+    display: block !important;
 }
 
 pre {

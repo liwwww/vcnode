@@ -13,8 +13,15 @@
                 </div>
                 <div class="reply-content" v-html="reply.content"></div>
                 <p class="reply-tips">
-                    <span class="reply-tips-zan"></span>
-                    <span class="reply-tips-btn"></span>
+                    <i>
+                        <svg class="icon" aria-hidden="true"><use xlink:href="#icon-like__easyico"></use></svg>
+                    </i>
+                    <span class="reply-tips-zan">赞
+                        <a v-if="reply.ups.length > 0 ">
+                            + {{ reply.ups.length }}
+                        </a>
+                    </span>
+                    <span class="reply-tips-btn">回复</span>
                 </p>
                 <!--<div class="reply-item-box">
                     <div class="reply-item-list">
@@ -112,8 +119,7 @@ export default {
         border-bottom: 1px solid #E4E7ED;
     }
     .reply-list {
-        padding: 0 0 25px 47px;
-        
+        padding: 0 0 20px 47px;
         box-sizing: border-box;
         .reply-user {
             width: 100%;
@@ -138,9 +144,13 @@ export default {
             margin: 1.3em 0;
         }
         .reply-tips {
-            height: 14px;
             width: 100%;
-            background-color: #000;
+            font-size: 13px;
+            span {
+                color: #666;
+                margin-right: 15px;
+                cursor: pointer;
+            }
         }
         .reply-item-box {
             position: relative;
