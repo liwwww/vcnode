@@ -18,7 +18,7 @@
                 </div>
             </div>
         </v-content>
-        <v-reply></v-reply>
+        <v-reply :topicId='id'></v-reply>
     </div>
 </template>
 
@@ -29,8 +29,12 @@ import vReply from '@/components/reply.vue'
 export default {
     data() {
         return {
-            detail: JSON.parse(window.localStorage.getItem('detail'))
+            detail: JSON.parse(window.localStorage.getItem('detail')),
+            id: '' 
         }
+    },
+    created () {
+        this.id = this.detail.id;
     },
     components: { vHeader, vContent, vReply }
 }

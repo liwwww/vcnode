@@ -37,8 +37,8 @@ export default {
             nav.checkPin = !nav.checkPin;
         },
         async getTopicsData() {
-            let topicDetail = await getTopics();
-            this.list = topicDetail.data;
+            let topicsDetail = await getTopics();
+            this.list = topicsDetail.data;
         },
         getDetail(nav) {
             window.localStorage.setItem('detail',JSON.stringify(nav));
