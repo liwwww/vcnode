@@ -1,6 +1,6 @@
 <template>
     <div class="reply-comtainer">
-        <div class="reply-box" v-for="reply in replyData" v-show="reply.reply_id == null">
+        <div class="reply-box" v-for="(reply, key) in replyData" :key="reply.id">
             <div class="reply-left">
                 <img :src="reply.author.avatar_url" alt="img" />
             </div>
@@ -16,10 +16,9 @@
                     <span class="reply-tips-zan"></span>
                     <span class="reply-tips-btn"></span>
                 </p>
-                <div class="reply-item-box">
+                <!--<div class="reply-item-box">
                     <div class="reply-item-list">
                         <div class="reply-item-content">
-                            这是一条楼中楼
                         </div>
                         <div class="reply-item-msg">
                             ——liwwww · 1秒钟前
@@ -33,7 +32,7 @@
                             <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容"></el-input>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
     </div>
@@ -101,10 +100,20 @@ export default {
 }
 
 .reply-box {
+    position: relative;
     padding: 10px 0;
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 1px;
+        border-bottom: 1px solid #E4E7ED;
+    }
     .reply-list {
         padding: 0 0 25px 47px;
-        border-bottom: 1px solid #fafafa;
+        
         box-sizing: border-box;
         .reply-user {
             width: 100%;
