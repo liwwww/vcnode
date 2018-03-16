@@ -1,5 +1,5 @@
 <template>
-    <div class="reply-comtainer">
+    <div class="reply-comtainer shadow-box">
         <div class="reply-box" v-for="(reply, key) in replyData" :key="reply.id">
             <div class="reply-left">
                 <img :src="reply.author.avatar_url" alt="img" />

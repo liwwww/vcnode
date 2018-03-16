@@ -4,13 +4,22 @@
             <div class="main-today">
                 <el-row class="list" v-for="(nav, index) in list" :key="nav.index">
                     <div class="list-avatar">
-                        <img :src = "nav.author.avatar_url"></img>
+                        <img :src="nav.author.avatar_url"></img>
                     </div>
                     <div class="list-main" @click="getDetail(nav)">
                         <a>{{ nav.title }}</a>
                         <p>{{ nav.content.replace(new RegExp('<[^>]*>','g'),'') }}</p>
+                        <div class="list-tips" style="font-size:13px;color:#999;">
+                            <span>
+                                <i class="el-icon-view"></i>{{ nav.visit_count }}</span>
+                            <span>
+                                <i class="el-icon-edit-outline" style="margin: 10px 0 0 15px;"></i>{{ nav.visit_count }}</span>
+                            <span>
+                                <i class="el-icon-refresh" style="margin: 10px 0 0 15px;"></i>5 秒前</span>
+                        </div>
                     </div>
-                    <i @click="pinClick(nav, index)" v-bind:class="{ isPin: nav.checkPin }"></i>
+                    <i class="list-pin" @click="pinClick(nav, index)" v-bind:class="{ isPin: nav.checkPin }"></i>
+
                 </el-row>
             </div>
         </v-content>
@@ -41,8 +50,8 @@ export default {
             this.list = topicsDetail.data;
         },
         getDetail(nav) {
-            window.localStorage.setItem('detail',JSON.stringify(nav));
-            this.$router.push({path: 'detail'})
+            window.localStorage.setItem('detail', JSON.stringify(nav));
+            this.$router.push({ path: 'detail' })
         }
     },
     components: { vContent, vHeader }
@@ -71,17 +80,16 @@ export default {
         background-color: #fff;
         overflow: hidden;
         &:hover {
-                background-color: #f5f5f5;
-            }
+            background-color: #f5f5f5;
+        }
         .list-avatar {
             float: left;
             img {
-            width: @avatarSize;
-            height: @avatarSize;
-            background-size: @avatarSize @avatarSize; 
-            border-radius: 100%;
+                width: @avatarSize;
+                height: @avatarSize;
+                background-size: @avatarSize @avatarSize;
+                border-radius: 100%;
             }
-            
         }
         .list-main {
             position: relative;
@@ -97,16 +105,19 @@ export default {
             }
             a {
                 width: 80%;
-                .mixin-screen-md({
+                .mixin-screen-md( {
                     font-size: 16px;
-                });
-                .mixin-screen-sm({
+                }
+                );
+                .mixin-screen-sm( {
                     font-size: 14px;
-                });
-                .mixin-screen-xs({
+                }
+                );
+                .mixin-screen-xs( {
                     font-size: 12px;
                     font-weight: bolder;
-                });
+                }
+                );
             }
             p {
                 width: 95%;
@@ -116,8 +127,8 @@ export default {
                 color: #909399;
             }
         }
-       
-        i {
+
+        .list-pin {
             position: absolute;
             top: 16px;
             display: block;
@@ -129,12 +140,12 @@ export default {
             background-repeat: no-repeat;
             background-image: url(../../commons/img/npin.png);
             cursor: pointer;
-            .mixin-screen-lg({
+            .mixin-screen-lg( {
                 &:hover {
                     background-image: url(../../commons/img/ypin.png);
                 }
-            });
-            
+            }
+            );
         }
     }
 }

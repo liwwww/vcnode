@@ -9,7 +9,7 @@
 import 'normalize.css';
 import './commons/style/base.css';
 import './commons/style/markdown.css';
-import './commons/iconfont/zan/iconfont.js';
+import './commons/iconfont/index/iconfont.js';
 
 import vHeader from './components/header';
 

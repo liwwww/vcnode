@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-content>
-            <div class="content">
+            <div class="content shadow-box">
                 <div class="content-menu">
                     <div class="content-title">{{ detail.title }}</div>
                     <div class="content-tip"></div>
@@ -51,6 +51,9 @@ export default {
         font-size: 15px;
         box-sizing: border-box;
         border-bottom: 1px solid #E4E7ED;
+        .content-title {
+            font-weight: bolder;
+        }
     }
     .content-detail {
         padding: 14px 16px;

@@ -551,6 +551,12 @@ e91ece3  on 31 Dec 2017
 
 .markdown-text li {
   word-wrap: break-all;
+  list-style: decimal;
+}
+
+.markdown-text ul li li{
+  word-wrap: break-all;
+  list-style: disc;
 }
 
 .markdown-text li>p {

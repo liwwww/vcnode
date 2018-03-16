@@ -89,7 +89,7 @@ export default {
   box-sizing: border-box;
   background-color: #409EFF;
   overflow: hidden;
-  box-shadow: 0 2px 2px rgba(0,0,0,.19);
+  box-shadow: 0 1px 12px rgba(0,0,0,.22);
   z-index: 100;
   .menu-icon {
     position: relative;
