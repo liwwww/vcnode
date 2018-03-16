@@ -8,6 +8,11 @@
                 <div class="reply-user">
                     <div class="reply-msg">
                         <a>{{ reply.author.loginname }}</a>
+                        <i v-if="author_name == reply.author.loginname">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-star"></use>
+                            </svg>
+                        </i>
                         <span>{{'· '+reply.create_at}}</span>
                     </div>
                 </div>
@@ -21,32 +26,32 @@
                             + {{ reply.ups.length }}
                         </a>
                     </span>
-                    <span class="reply-tips-btn">回复</span>
+                    <span class="reply-tips-btn" @click="replyBtn(key)">回复</span>
                 </p>
-                <!--<div class="reply-item-box">
-                    <div class="reply-item-list">
+                <div class="reply-item-box" v-if="replyBtnCheck == key && replyBtnCheck >= 0">
+                    <!--<div class="reply-item-list">
                         <div class="reply-item-content">
                         </div>
                         <div class="reply-item-msg">
                             ——liwwww · 1秒钟前
                         </div>
-                    </div>
+                    </div>-->
                     <div class="reply-item-form">
                         <div class="reply-btn">
-                            <el-button>回复</el-button>
+                            <el-button @click="replyBtn(key, inputData)">回复</el-button>
                         </div>
                         <div class="reply-textarea">
-                            <el-input type="textarea" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容"></el-input>
+                            <el-input type="textarea" v-model="inputData" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容"></el-input>
                         </div>
                     </div>
-                </div>-->
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import { getTopic } from '@/service/data'
+import { getTopic, postReplies } from '@/service/data'
 export default {
     props: {
         topicId: {
@@ -55,7 +60,10 @@ export default {
     },
     data() {
         return {
-            replyData: []
+            replyData: [],
+            author_name: '',
+            replyBtnCheck: -1,
+            inputData: ''
         }
     },
     created() {
@@ -65,6 +73,11 @@ export default {
         async getTopicData(id) {
             let topicDetail = await getTopic(id);
             this.replyData = topicDetail.data.replies;
+            this.author_name = topicDetail.data.author.loginname;
+        },
+        replyBtn(id, data) {
+            this.replyBtnCheck === id ? this.replyBtnCheck = -1:this.replyBtnCheck = id;
+            this.inputData = '';
         }
     }
 }

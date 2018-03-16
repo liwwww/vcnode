@@ -11,5 +11,11 @@ export const getTopic = (id) => vfetch('/topic/'+id, 'GET', {
     mdrender: 'true'
 })
 
+export const postReplies = (id, data, accesstoken) => vfetch('/topic/'+id+'/replies', 'POST', {
+    accesstoken: accesstoken,
+    content: content,
+    reply_id: id,
+})
+
 //export const getTest = () => vfetch('http://39.108.179.185/category/querySuperiorData', 'GET', {
 //})

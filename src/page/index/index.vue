@@ -13,13 +13,12 @@
                             <span>
                                 <i class="el-icon-view"></i>{{ nav.visit_count }}</span>
                             <span>
-                                <i class="el-icon-edit-outline" style="margin: 10px 0 0 15px;"></i>{{ nav.visit_count }}</span>
+                                <i class="el-icon-edit-outline" style="margin: 10px 0 0 15px;"></i>{{ nav.reply_count }}</span>
                             <span>
                                 <i class="el-icon-refresh" style="margin: 10px 0 0 15px;"></i>5 秒前</span>
                         </div>
                     </div>
                     <i class="list-pin" @click="pinClick(nav, index)" v-bind:class="{ isPin: nav.checkPin }"></i>
-
                 </el-row>
             </div>
         </v-content>
