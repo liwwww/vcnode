@@ -18,17 +18,21 @@
               <i class="el-icon-tickets"></i>
               <span slot="title">全部</span>
             </el-menu-item>
-            <el-menu-item index="2">
+            <el-menu-item index="2" :route="{ path: '/index/good' }">
               <i class="el-icon-document"></i>
               <span slot="title">精华</span>
             </el-menu-item>
-            <el-menu-item index="3" :route="{path: '/share'}">
+            <el-menu-item index="3" :route="{ path: '/index/share' }">
               <i class="el-icon-share"></i>
               <span slot="title">分享</span>
             </el-menu-item>
-            <el-menu-item index="4">
+            <el-menu-item index="4" :route="{ path: '/index/ask' }">
               <i class="el-icon-edit-outline"></i>
               <span slot="title">问答</span>
+            </el-menu-item>
+            <el-menu-item index="5" :route="{ path: '/index/job' }">
+              <i class="el-icon-edit-outline"></i>
+              <span slot="title">工作</span>
             </el-menu-item>
           </el-menu>
         </el-col>

@@ -6,7 +6,7 @@
                     <div class="list-avatar">
                         <img :src="nav.author.avatar_url"></img>
                     </div>
-                    <div class="list-main" @click="getDetail(nav)">
+                    <div class="list-main" @click="getDetail( nav )">
                         <a>{{ nav.title }}</a>
                         <p>{{ nav.content.replace(new RegExp('<[^>]*>','g'),'') }}</p>
                         <div class="list-tips" style="font-size:13px;color:#999;">
@@ -38,19 +38,23 @@ export default {
         };
     },
     created() {
-        this.getTopicsData();
+        if ( !this.$route.params.page ) {
+            this.getTopicsData(this.$route.params.page);
+        }else {
+            this.getTopicsData();
+        }
     },
     methods: {
         pinClick(nav, index) {
             nav.checkPin = !nav.checkPin;
         },
-        async getTopicsData() {
-            let topicsDetail = await getTopics();
+        async getTopicsData( tab = '' ) {
+            let topicsDetail = await getTopics( tab );
             this.list = topicsDetail.data;
         },
         getDetail(nav) {
             window.localStorage.setItem('detail', JSON.stringify(nav));
-            this.$router.push({ path: 'detail' })
+            this.$router.push({ path: '/detail' })
         }
     },
     components: { vContent, vHeader }

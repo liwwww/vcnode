@@ -14,9 +14,10 @@ export default new Router({
       path: '/',
       component:APP,
       children: [
-        { path: "/", component: index },
+        { path: '/', component: index },
         { path: "/share", component: share },
-        { path: "/detail", name: 'detail', component: detail}
+        { path: "/detail", name: 'detail', component: detail },
+        { path: '/index/:page', name: 'index', component: index }
       ]
     }
   ]
