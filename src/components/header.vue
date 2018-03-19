@@ -1,11 +1,11 @@
 <template>
   <header>
     <div class="menu-top">
-      <div class="menu-icon" @click="menuShow"><i></i></div><span class="menu-text">VUE</span>
+      <div class="menu-icon" @click="menuCtrl"><i></i></div><span class="menu-text">VUE</span>
       <el-switch v-model="value2" active-color="#F2F6FC" inactive-color="#67C23A"></el-switch>
     </div>
       <transition name="slide-fade-mask" >
-        <div class="menu-mask" @click="menuHide" v-show="maskShow"></div>
+        <div class="menu-mask" @click="menuCtrl" v-show="menuClick"></div>
       </transition>
       <transition name="slide-fade-menu">
         <el-col :span="16" v-show="menuClick">
@@ -14,7 +14,7 @@
               <img calss="menu-avatar" src="./user.png" style="width='80px',height='80px'" />
               <span class="menu-username">{{ username }}</span>
             </div>
-            <el-menu-item v-for="(tabs, index) in tab" :key="index" :index="tabs.inedex" :route="{path: '/'+ tabs.page}" @click="menuHide()">
+            <el-menu-item v-for="tabs in tab" index = 0 :key="tabs.name" :route="{path: '/'+ tabs.page}" @click="menuCtrl">
               <i class="el-icon-tickets"></i>
               <span slot="title">{{ tabs.name }}</span>
             </el-menu-item>
@@ -29,8 +29,8 @@ export default {
   data() {
     return {
       menuClick: false,
-      maskShow: false,
       username: "liwww",
+      value2: '',
       tab: [
         {
           name: '全部',
@@ -47,18 +47,17 @@ export default {
         {
           name: '分享',
           page: 'index/share'
+        },
+        {
+          name: '测试',
+          page: 'index/dev'
         }
       ]
     };
   },
   methods: {
-    menuShow() {
-      this.menuClick = true;
-      this.maskShow = true;
-    },
-    menuHide() {
-      this.menuClick = false;
-      this.maskShow = false;
+    menuCtrl() {
+      this.menuClick = !this.menuClick;
     }
   }
 };

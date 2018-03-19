@@ -65,7 +65,7 @@ export default {
 <style scoped lang="less">
 @import "../../commons/style/mixin.less";
 @avatarSize: 42px;
-@pinPosition: 40px;
+@pinPosition: 20px;
 @pinSize: 20px;
 .isPin {
     background-image: url(../../commons/img/ypin.png) !important;

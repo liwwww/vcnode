@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-header></v-header>
+    <v-release></v-release>
     <router-view></router-view>
   </div>
 </template>
@@ -12,13 +13,13 @@ import './commons/style/markdown.css';
 import './commons/iconfont/index/iconfont.js';
 
 import vHeader from './components/header';
+import vRelease from './components/release';
 
 export default {
   name: 'App',
-  components: { vHeader },
+  components: { vHeader, vRelease },
   data() {
     chekClick : 'false'
-
     return {}
   },
   methods: {
