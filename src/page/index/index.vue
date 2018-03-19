@@ -37,19 +37,20 @@ export default {
             list: []
         };
     },
-    created() {
-        if ( !this.$route.params.page ) {
+    watch: {
+        '$route'(to, from) {
             this.getTopicsData(this.$route.params.page);
-        }else {
-            this.getTopicsData();
         }
+    },
+    created() {
+        this.getTopicsData(this.$route.params.page);
     },
     methods: {
         pinClick(nav, index) {
             nav.checkPin = !nav.checkPin;
         },
-        async getTopicsData( tab = '' ) {
-            let topicsDetail = await getTopics( tab );
+        async getTopicsData(tab = '') {
+            let topicsDetail = await getTopics(tab);
             this.list = topicsDetail.data;
         },
         getDetail(nav) {

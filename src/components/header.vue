@@ -14,25 +14,9 @@
               <img calss="menu-avatar" src="./user.png" style="width='80px',height='80px'" />
               <span class="menu-username">{{ username }}</span>
             </div>
-            <el-menu-item index="1" :route="{path: '/'}">
+            <el-menu-item v-for="(tabs, index) in tab" :key="index" :index="tabs.inedex" :route="{path: '/'+ tabs.page}" @click="menuHide()">
               <i class="el-icon-tickets"></i>
-              <span slot="title">全部</span>
-            </el-menu-item>
-            <el-menu-item index="2" :route="{ path: '/index/good' }">
-              <i class="el-icon-document"></i>
-              <span slot="title">精华</span>
-            </el-menu-item>
-            <el-menu-item index="3" :route="{ path: '/index/share' }">
-              <i class="el-icon-share"></i>
-              <span slot="title">分享</span>
-            </el-menu-item>
-            <el-menu-item index="4" :route="{ path: '/index/ask' }">
-              <i class="el-icon-edit-outline"></i>
-              <span slot="title">问答</span>
-            </el-menu-item>
-            <el-menu-item index="5" :route="{ path: '/index/job' }">
-              <i class="el-icon-edit-outline"></i>
-              <span slot="title">工作</span>
+              <span slot="title">{{ tabs.name }}</span>
             </el-menu-item>
           </el-menu>
         </el-col>
@@ -47,8 +31,24 @@ export default {
       menuClick: false,
       maskShow: false,
       username: "liwww",
-      value1: true,
-      value2: true
+      tab: [
+        {
+          name: '全部',
+          page: ''
+        },
+        {
+          name: '精华',
+          page: 'index/good'
+        },
+        {
+          name: '问答',
+          page: 'index/ask'
+        },
+        {
+          name: '分享',
+          page: 'index/share'
+        }
+      ]
     };
   },
   methods: {

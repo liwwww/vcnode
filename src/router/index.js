@@ -17,7 +17,7 @@ export default new Router({
         { path: '/', component: index },
         { path: "/share", component: share },
         { path: "/detail", name: 'detail', component: detail },
-        { path: '/index/:page', name: 'index', component: index }
+        { path: '/index/:page', component: index }
       ]
     }
   ]
