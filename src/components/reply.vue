@@ -74,6 +74,7 @@ export default {
             let topicDetail = await getTopic(id);
             this.replyData = topicDetail.data.replies;
             this.author_name = topicDetail.data.author.loginname;
+            console.log("评论区加载完毕");
         },
         replyBtn(id, data) {
             this.replyBtnCheck === id ? this.replyBtnCheck = -1:this.replyBtnCheck = id;

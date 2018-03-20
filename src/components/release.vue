@@ -1,12 +1,6 @@
 <template>
     <div>
         <div class="release-btn"></div>
-        <div class="release-editor">
-            <div class="release-title"></div>
-            <div class="release-tab"></div>
-            <div class="release-content"></div>
-            <div class="release-submit"></div>
-        </div>
     </div>
 </template>
 
@@ -27,8 +21,8 @@
     text-align: center;
     border-radius: 50%;
     cursor: pointer;
-    background-color: #F56C6C;
-    box-shadow: -2px 3px 12px rgba(0, 0, 0, 0.23), 0 10px 40px rgba(0, 0, 0, 0.19);
+    background-color: #409EFF;
+    box-shadow: -2px 3px 12px rgba(0, 0, 0, .23), 0 10px 40px rgba(0, 0, 0, .19);
     z-index: 10;
     &:after {
         position: absolute;
@@ -59,7 +53,7 @@
         z-index: 11;
     }
     &:hover {
-        background-color: #d9534f;
+        background-color: #337ab7;
     }
 }
 </style>

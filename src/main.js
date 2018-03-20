@@ -16,7 +16,6 @@ Vue.use(Switch);
 Vue.use(Input);
 Vue.use(Button);
 
-
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
