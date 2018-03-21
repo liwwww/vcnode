@@ -56,11 +56,25 @@ export default {
 </script>
 <style lang="less">
 @import '../../commons/style/simplemde.min.css';
+@import '../../commons/style/mixin.less';
 .create-container {
     margin-top: 16px;
     background-color: #fff;
+    .mixin-screen-sm({
+        padding: 10px;
+    });
     padding: 60px;
     box-sizing: border-box;
     .create-editor {}
+}
+.editor-toolbar {
+    .mixin-screen-sm({
+        display: none;
+    });
+}
+.el-radio-button {
+    .mixin-screen-sm({
+        zoom: 0.5;
+    });
 }
 </style>
