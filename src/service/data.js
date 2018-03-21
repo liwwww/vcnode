@@ -17,30 +17,36 @@ export const postReplies = (id, data, accesstoken) => vfetch('/topic/'+id+'/repl
     reply_id: id,
 })
 
-export const getTab = () => {
-    return [
+export const getUser = () => window.localStorage.getItem('vcnode_user')
+
+export const getTab = () => 
+     [
         {
           name: '全部',
-          page: ''
+          page: '',
+          tab: ''
         },
         {
           name: '精华',
-          page: 'index/good'
+          page: 'index/good',
+          tab: 'good'
         },
         {
           name: '问答',
-          page: 'index/ask'
+          page: 'index/ask',
+          tab: 'ask'
         },
         {
           name: '分享',
-          page: 'index/share'
+          page: 'index/share',
+          tab: 'share'
         },
         {
           name: '测试',
-          page: 'index/dev'
+          page: 'index/dev',
+          tab: 'dev'
         }
       ]
-}
 
 //export const getTest = () => vfetch('http://39.108.179.185/category/querySuperiorData', 'GET', {
 //})

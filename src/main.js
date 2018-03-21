@@ -4,7 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-import {Menu, MenuItem, Row, Submenu, Col, MenuItemGroup, Switch, Input, Button, Radio, RadioGroup, RadioButton} from 'element-ui'
+import {Menu, MenuItem, Row, Submenu, Col, MenuItemGroup, Switch, Input, Button, Radio, RadioGroup, RadioButton, Form, FormItem} from 'element-ui'
 
 Vue.use(Menu);
 Vue.use(MenuItem);
@@ -18,6 +18,8 @@ Vue.use(Button);
 Vue.use(Radio);
 Vue.use(RadioGroup);
 Vue.use(RadioButton);
+Vue.use(Form);
+Vue.use(FormItem);
 
 Vue.config.productionTip = false
 

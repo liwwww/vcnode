@@ -2,20 +2,22 @@
     <div>
         <v-content>
             <div class="create-container shadow-box">
-                <div class="create-title">
-                    <el-input placeholder="请输入标题" clearable></el-input>
-                </div>
-                <div class="create-tab">
-                    <el-radio-group v-model="radio3">
-                        <el-radio-button v-for="tabs in tab" :key="tabs.name" :label="tabs.name"></el-radio-button>
+                <el-form label-width="40px">
+                    <el-form-item label="标题">
+                        <el-input placeholder="请输入标题" clearable></el-input>
+                    </el-form-item>
+                    <el-form-item label="板块">
+                        <el-radio-group v-model="radio3">
+                        <el-radio-button v-for="tabs in tab" v-if="tabs.tab" :key="tabs.name" :label="tabs.name"></el-radio-button>
                     </el-radio-group>
-                </div>
-                <div class="create-editor">
-                    <markdown-editor v-model="content" :configs="configs" ref="markdownEditor"></markdown-editor>
-                </div>
-                <div class="create-submit">
-                    <el-button type="primary">提交</el-button>
-                </div>
+                    </el-form-item>
+                    <el-form-item label="正文">
+                        <markdown-editor v-model="content" :configs="configs" ref="markdownEditor"></markdown-editor>
+                    </el-form-item>
+                    <el-form-item>
+                        <el-button type="primary">提交</el-button>
+                    </el-form-item>
+                </el-form>
             </div>
         </v-content>
     </div>
@@ -23,10 +25,10 @@
 
 <script>
 import vContent from '@/components/content';
-import { markdownEditor } from 'vue-simplemde';            // 导入markdownEditor组件
+import { markdownEditor } from 'vue-simplemde';
 import { getTab } from '../../service/data';
 export default {
-    data: function() {
+    data() {
         return {
             tab: [],
             radio3: '分享',
@@ -42,11 +44,13 @@ export default {
         }
     },
     created() {
-        this.tab = getTab(); 
+        this.tab = getTab();
     },
     components: {
         markdownEditor,
         vContent
+    },
+    methods: {
     }
 }
 </script>
@@ -55,6 +59,8 @@ export default {
 .create-container {
     margin-top: 16px;
     background-color: #fff;
+    padding: 60px;
+    box-sizing: border-box;
     .create-editor {}
 }
 </style>
