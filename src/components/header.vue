@@ -25,35 +25,18 @@
 </template>
 
 <script>
+import { getTab } from '../service/data';
 export default {
   data() {
     return {
       menuClick: false,
       username: "liwww",
       value2: '',
-      tab: [
-        {
-          name: '全部',
-          page: ''
-        },
-        {
-          name: '精华',
-          page: 'index/good'
-        },
-        {
-          name: '问答',
-          page: 'index/ask'
-        },
-        {
-          name: '分享',
-          page: 'index/share'
-        },
-        {
-          name: '测试',
-          page: 'index/dev'
-        }
-      ]
-    };
+      tab: []
+    }
+  },
+  created() {
+    this.tab = getTab();
   },
   methods: {
     menuCtrl() {

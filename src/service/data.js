@@ -17,5 +17,30 @@ export const postReplies = (id, data, accesstoken) => vfetch('/topic/'+id+'/repl
     reply_id: id,
 })
 
+export const getTab = () => {
+    return [
+        {
+          name: '全部',
+          page: ''
+        },
+        {
+          name: '精华',
+          page: 'index/good'
+        },
+        {
+          name: '问答',
+          page: 'index/ask'
+        },
+        {
+          name: '分享',
+          page: 'index/share'
+        },
+        {
+          name: '测试',
+          page: 'index/dev'
+        }
+      ]
+}
+
 //export const getTest = () => vfetch('http://39.108.179.185/category/querySuperiorData', 'GET', {
 //})
