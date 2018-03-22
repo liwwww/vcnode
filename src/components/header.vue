@@ -1,27 +1,30 @@
 <template>
   <header>
     <div class="menu-top">
-      <div class="menu-icon" @click="menuCtrl"><i></i></div><span class="menu-text">VUE</span>
+      <div class="menu-icon" @click="menuCtrl">
+        <i></i>
+      </div>
+      <span class="menu-text">VUE</span>
       <el-switch v-model="value2" active-color="#F2F6FC" inactive-color="#67C23A"></el-switch>
     </div>
-      <transition name="slide-fade-mask" >
-        <div class="menu-mask" @click="menuCtrl" v-show="menuClick"></div>
-      </transition>
-      <transition name="slide-fade-menu">
-        <el-col :span="16" v-show="menuClick">
-          <el-menu router default-active="1" class="menu-vertical" background-color="#fff" text-color="#000" active-text-color="#000" >
-            <div class="menu-header">
-              <img calss="menu-avatar" src="./user.png" style="width='80px',height='80px'" />
-              <span class="menu-username">{{ username }}</span>
-            </div>
-            <el-menu-item v-for="tabs in tab" index = 0 :key="tabs.name" :route="{path: '/'+ tabs.page}" @click="menuCtrl">
-              <i class="el-icon-tickets"></i>
-              <span slot="title">{{ tabs.name }}</span>
-            </el-menu-item>
-          </el-menu>
-        </el-col>
-      </transition>
-    </header>
+    <transition name="slide-fade-mask">
+      <div class="menu-mask" @click="menuCtrl" v-show="menuClick"></div>
+    </transition>
+    <transition name="slide-fade-menu">
+      <el-col :span="16" v-show="menuClick">
+        <el-menu router default-active="1" class="menu-vertical" background-color="#fff" text-color="#000" active-text-color="#000">
+          <div class="menu-header">
+            <img calss="menu-avatar" src="./user.png" style="width='80px',height='80px'" />
+            <span class="menu-username">{{ username }}</span>
+          </div>
+          <el-menu-item v-for="tabs in tab" index=0 :key="tabs.name" :route="{path: '/'+ tabs.page}" @click="menuCtrl">
+            <i class="el-icon-tickets"></i>
+            <span slot="title">{{ tabs.name }}</span>
+          </el-menu-item>
+        </el-menu>
+      </el-col>
+    </transition>
+  </header>
 </template>
 
 <script>
@@ -46,7 +49,7 @@ export default {
 };
 </script>
 
-<style scoped lang="less">
+<style lang="less">
 @import "../commons/style/mixin.less";
 @import "../commons/style/animation.less";
 .el-col {
@@ -71,14 +74,25 @@ export default {
   line-height: 48px;
   left: 0;
   top: 0;
-  .mixin-screen-sm({ 
+  .el-switch__button {
+    width: 28px !important;
+    height: 28px !important;
+    left: -5px !important;
+    top: -5px !important;
+    background-image: url(../commons/img/pin.png) !important;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-color: rgba(0, 0, 0, 0) !important;
+  }
+  .mixin-screen-sm( {
     padding: 0 10px !important;
-   }); 
+  }
+  );
   padding: 0 40px;
   box-sizing: border-box;
   background-color: #409EFF;
   overflow: hidden;
-  box-shadow: 0 1px 12px rgba(0,0,0,.22);
+  box-shadow: 0 1px 12px rgba(0, 0, 0, .22);
   z-index: 100;
   .menu-icon {
     position: relative;
@@ -96,10 +110,10 @@ export default {
       vertical-align: middle;
       background-color: #fff;
       &:after {
-        .mixin-border-line(#fff,2px,auto,0);
+        .mixin-border-line(#fff, 2px, auto, 0);
       }
       &:before {
-        .mixin-border-line(#fff,2px,2px,auto);
+        .mixin-border-line(#fff, 2px, 2px, auto);
       }
     }
   }
@@ -133,7 +147,7 @@ export default {
     box-sizing: border-box;
   }
   &:after {
-    .mixin-border-line( #666,1px,inherit,0);
+    .mixin-border-line( #666, 1px, inherit, 0);
   }
 }
 

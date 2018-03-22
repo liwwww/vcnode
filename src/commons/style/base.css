@@ -1,7 +1,7 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     /*font-family: Segoe UI,\\5FAE\8F6F\96C5\9ED1,Tahoma,Geneva,Verdana,sans-serif;*/
-    background-color: #E4E7ED;
+    background-color: #f9f9f9; /*#E4E7ED*/
     font-weight: 500;
     color: #444;
 }
@@ -54,17 +54,6 @@ pre {
     color: #333;
     background-color: #f5f5f5;
     border-radius: 4px;
-}
-
-.el-switch__button {
-    width: 28px !important;
-    height: 28px !important;
-    left: -5px !important;
-    top: -5px !important;
-    background-image: url(../img/pin.png) !important;
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    background-color: rgba(0, 0, 0, 0) !important; 
 }
 
 .content-main img {

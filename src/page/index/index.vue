@@ -1,5 +1,6 @@
 <template>
     <div>
+        <v-header></v-header>
         <v-content>
             <div class="main-today">
                 <el-row class="list" v-for="(nav, index) in list" :key="nav.index">
@@ -22,7 +23,7 @@
                 </el-row>
             </div>
         </v-content>
-        <v-release><router-link :to="{ path: '/create' }"><div class="release-btn"></div></router-link></v-release>
+        <v-release><router-link :to="{ path: '/create', query: {tab: pageTab} }"><div class="release-btn"></div></router-link></v-release>
     </div>
 </template>
 
@@ -43,6 +44,7 @@ export default {
     watch: {
         '$route'(to, from) {
             this.getTopicsData(this.$route.params.page);
+            this.pageTab = this.$route.params.page;
         }
     },
     created() {
@@ -88,7 +90,7 @@ export default {
         background-color: #fff;
         overflow: hidden;
         &:hover {
-            background-color: #f5f5f5;
+            background-color: #eff3f6; /*#f5f5f5*/
         }
         .list-avatar {
             float: left;

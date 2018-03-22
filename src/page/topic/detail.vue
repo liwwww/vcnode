@@ -1,5 +1,6 @@
 <template>
     <div>
+        <v-header></v-header>
         <v-content>
             <div class="content shadow-box">
                 <div class="content-menu">

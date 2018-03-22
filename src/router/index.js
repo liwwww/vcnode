@@ -5,6 +5,7 @@ import APP from '../App'
 import index from '../page/index/index'
 import detail from '../page/topic/detail'
 import create from '../page/create/create'
+import login from '../page/login/login'
 
 Vue.use(Router)
 
@@ -27,6 +28,10 @@ export default new Router({
         { path: '/index/:page', name: 'index', component: index },
         { path: '/create', component: create}
       ]
+    },
+    {
+      path: '/login',
+      component: login
     }
   ]
 })
