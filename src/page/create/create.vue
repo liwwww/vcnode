@@ -74,7 +74,7 @@ export default {
 }
 .el-radio-button {
     .mixin-screen-sm({
-        zoom: 0.5;
+        zoom: .8;
     });
 }
 </style>

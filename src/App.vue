@@ -1,7 +1,6 @@
 <template>
   <div>
     <v-header></v-header>
-    <v-release></v-release>
     <router-view></router-view>
   </div>
 </template>

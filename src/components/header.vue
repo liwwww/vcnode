@@ -71,6 +71,9 @@ export default {
   line-height: 48px;
   left: 0;
   top: 0;
+  .mixin-screen-sm({ 
+    padding: 0 10px !important;
+   }); 
   padding: 0 40px;
   box-sizing: border-box;
   background-color: #409EFF;
