@@ -12,7 +12,7 @@
                 <el-input class="login-row" placeholder="请输入内容" clearable></el-input>
             </div>
             <div class="login-row login-remember">
-                <el-switch v-model="value2" active-text="是否保存token">
+                <el-switch v-model="saveToken" active-text="是否保存token">
                 </el-switch>
             </div>
             <div class="login-btn">
@@ -32,8 +32,7 @@
 export default {
     data() {
         return {
-            value1: true,
-            value2: true
+            saveToken: false
         }
     }
 }
