@@ -30,8 +30,8 @@ import { getTab } from '../../service/data';
 export default {
     data() {
         return {
-            tab: [],
-            radio: '问答',
+            tab: '',
+            radio: '',
             releaseTab: '',
             content: '',                                    // markdown编辑器内容
             configs: {                                    // markdown编辑器配置参数
@@ -45,7 +45,13 @@ export default {
         }
     },
     created() {
-        this.tab = getTab();
+        let tabParam = this.$route.params.tab;
+        let tabList = getTab();
+        for (var i in tabList) {
+            if (tabList.hasOwnProperty(i) === true && tabList[i].tab == tabParam) {
+                this.radio = tabList[i].name;
+                }
+            }
     },
     components: {
         markdownEditor,
@@ -59,12 +65,12 @@ export default {
 @import '../../commons/style/simplemde.min.css';
 @import '../../commons/style/mixin.less';
 .create-container {
-    margin-top: 16px;
+    margin-top: -33px;
     background-color: #fff;
     .mixin-screen-sm({
         padding: 10px;
     });
-    padding: 60px;
+    padding: 50px 60px;
     box-sizing: border-box;
 }
 .editor-toolbar {

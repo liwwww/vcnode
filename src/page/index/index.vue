@@ -23,7 +23,7 @@
                 </el-row>
             </div>
         </v-content>
-        <v-release><router-link :to="{ path: '/create', query: {tab: pageTab} }"><div class="release-btn"></div></router-link></v-release>
+        <v-release><router-link :to="{ path: '/create/' + pageTab }"><div class="release-btn"></div></router-link></v-release>
     </div>
 </template>
 
