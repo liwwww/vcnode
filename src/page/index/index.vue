@@ -3,7 +3,10 @@
         <v-header></v-header>
         <v-content>
             <div class="main-today">
-                <el-row class="list" v-for="(nav, index) in list" :key="nav.index">
+                <el-row class="list" v-for="n in 10" :key="n.index" v-if="!loading">
+                    <vtloding></vtloding>
+                </el-row>
+                <el-row class="list" v-for="(nav, index) in list" :key="nav.index" v-if="loading">
                     <div class="list-avatar">
                         <img :src="nav.author.avatar_url"></img>
                     </div>
@@ -32,39 +35,47 @@ import { getTopics } from '@/service/data';
 import vContent from '@/components/content';
 import vHeader from '@/components/header';
 import vRelease from '@/components/release';
+import vtloding from '@/components/topicLoading'
 
 export default {
     data() {
         return {
             clickPin: '',
             list: [],
-            pageTab: ''
+            pageTab: '',
+            loading: false
         };
     },
     watch: {
         '$route'(to, from) {
-            this.getTopicsData(this.$route.params.page);
-            this.pageTab = this.$route.params.page;
+            this.loading = false;
+            this.loadList();
         }
     },
     created() {
-        this.getTopicsData(this.$route.params.page);
-        this.pageTab = this.$route.params.page;
+         this.loadList();
     },
     methods: {
+        loadList() {
+            setTimeout(() => {
+            this.getTopicsData(this.$route.params.page);
+            this.pageTab = this.$route.params.page;
+        }, 500);
+        },
         pinClick(nav, index) {
             nav.checkPin = !nav.checkPin;
         },
         async getTopicsData(tab = '') {
             let topicsDetail = await getTopics(tab);
             this.list = topicsDetail.data;
+            this.loading = true;
         },
         getDetail(nav) {
             window.localStorage.setItem('detail', JSON.stringify(nav));
             this.$router.push({ path: '/detail' })
         }
     },
-    components: { vContent, vHeader, vRelease }
+    components: { vContent, vHeader, vRelease, vtloding }
 }
 </script>
 
