@@ -17,7 +17,7 @@
             <img calss="menu-avatar" src="./user.png" style="width='80px',height='80px'" />
             <span class="menu-username">{{ username }}</span>
           </div>
-          <el-menu-item v-for="tabs in tab" index=0 :key="tabs.name" :route="{path: '/'+ tabs.page}" @click="menuCtrl">
+          <el-menu-item v-for="tabs in tab" index=0 :key="tabs.name" :route="{path: '/'+ tabs.tab}" @click="menuCtrl">
             <i class="el-icon-tickets"></i>
             <span slot="title">{{ tabs.name }}</span>
           </el-menu-item>

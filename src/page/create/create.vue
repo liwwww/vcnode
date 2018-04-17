@@ -8,7 +8,7 @@
                     </el-form-item>
                     <el-form-item label="板块">
                         <el-radio-group v-model="radio">
-                        <el-radio-button v-for="tabs in tab" v-if="tabs.tab" :key="tabs.tab" :label="tabs.name"></el-radio-button>
+                        <el-radio-button v-for="tabs in tab" v-if="tabs.page" :key="tabs.tab" :label="tabs.name"></el-radio-button>
                     </el-radio-group>
                     </el-form-item>
                     <el-form-item label="正文">
@@ -47,6 +47,7 @@ export default {
     created() {
         let tabParam = this.$route.params.tab;
         let tabList = getTab();
+        this.tab = tabList;
         for (var i in tabList) {
             if (tabList.hasOwnProperty(i) === true && tabList[i].tab == tabParam) {
                 this.radio = tabList[i].name;
@@ -70,7 +71,7 @@ export default {
     .mixin-screen-sm({
         padding: 10px;
     });
-    padding: 50px 60px;
+    padding: 50px 45px;
     box-sizing: border-box;
 }
 .editor-toolbar {

@@ -24,7 +24,7 @@ export const getTab = () =>
         {
           name: '全部',
           page: '',
-          tab: ''
+          tab: 'all'
         },
         {
           name: '精华',
