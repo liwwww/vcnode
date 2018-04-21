@@ -77,12 +77,12 @@ export default {};
 .background-masker.header-right,
 .background-masker.subheader-right {
   width: auto;
-  left: 300px;
+  left: 50%;
   right: 0;
 }
 
 .background-masker.subheader-right {
-  left: 230px;
+  left: 90%;
 }
 
 .background-masker.subheader-bottom {

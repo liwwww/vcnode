@@ -60,7 +60,7 @@ export default {
             setTimeout(() => {
             this.getTopicsData(this.$route.params.page);
             this.pageTab = this.$route.params.page;
-        }, 500);
+        }, 1000);
         },
         pinClick(nav, index) {
             nav.checkPin = !nav.checkPin;
