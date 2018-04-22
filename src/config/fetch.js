@@ -1,7 +1,7 @@
 require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
-const api = 'https://cnodejs.org/api/v1'; //http://53037d82.123nat.com/
+const api = 'https://cnodejs.org/api/v1';
 export default async function vfetch(url, method, data) {
     url = api + url;    //请求地址拼接
     method = method.toUpperCase();
@@ -13,7 +13,7 @@ export default async function vfetch(url, method, data) {
             'Accept': 'application/json'
         },
         cache: 'no-cache',
-        mode: 'cors'    //跨域
+        mode: 'cors'
     }
 
     if (method === 'GET') {

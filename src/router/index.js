@@ -26,7 +26,7 @@ export default new Router({
         { path: '/', component: Index },
         { path: '/detail', name: 'detail', component: Detail },
         { path: '/tab/:page', name: 'index', component: Index },
-        { path: '/create/:tab', component: Create}
+        { path: '/create', name:'create', component: Create}
       ]
     },
     { path: '/login', name: 'login', component: Login }

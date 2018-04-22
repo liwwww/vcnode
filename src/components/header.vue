@@ -67,6 +67,10 @@ export default {
   }
 }
 
+header {
+  overflow: hidden;
+}
+
 .menu-top {
   position: fixed;
   width: 100%;

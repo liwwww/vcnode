@@ -26,7 +26,7 @@
                 </el-row>
             </div>
         </v-content>
-        <v-release><router-link :to="{ path: '/create/' + pageTab }"><div class="release-btn"></div></router-link></v-release>
+        <v-release><router-link :to="{ path: '/create', query: { tab: pageTab } }"><div class="release-btn"></div></router-link></v-release>
     </div>
 </template>
 
@@ -35,7 +35,8 @@ import { getTopics } from '@/service/data';
 import vContent from '@/components/content';
 import vHeader from '@/components/header';
 import vRelease from '@/components/release';
-import vtloding from '@/components/topicLoading'
+import vtloding from '@/components/topicLoading';
+import vs from '@/config/storage';
 
 export default {
     data() {
@@ -71,7 +72,7 @@ export default {
             this.loading = true;
         },
         getDetail(nav) {
-            window.localStorage.setItem('detail', JSON.stringify(nav));
+            vs.set('detail', JSON.stringify(nav));
             this.$router.push({ path: '/detail' })
         }
     },

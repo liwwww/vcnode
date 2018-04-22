@@ -27,12 +27,12 @@
 import vContent from '@/components/content';
 import { markdownEditor } from 'vue-simplemde';
 import { getTab } from '../../service/data';
+import vs from '@/config/storage';
 export default {
     data() {
         return {
             tab: '',
             radio: '',
-            releaseTab: '',
             content: '',                                    // markdown编辑器内容
             configs: {                                    // markdown编辑器配置参数
                 status: false,                            // 禁用底部状态栏
@@ -45,7 +45,7 @@ export default {
         }
     },
     created() {
-        let tabParam = this.$route.params.tab;
+        let tabParam = this.$route.query.tab;
         let tabList = getTab();
         this.tab = tabList;
         for (var i in tabList) {
