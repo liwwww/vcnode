@@ -2,11 +2,11 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import APP from '../App'
-import Index from '../page/index/index'
-import Detail from '../page/topic/detail'
-import Create from '../page/create/create'
-import Login from '../page/login/login'
-
+import Index from '@/page/index/index'
+import Detail from '@/page/topic/detail'
+import Create from '@/page/create/create'
+import Login from '@/page/login/login'
+import User from '@/page/user/user'
 Vue.use(Router)
 
 export default new Router({
@@ -26,7 +26,8 @@ export default new Router({
         { path: '/', name:'index', component: Index },
         { path: '/detail', name: 'detail', component: Detail },
         { path: '/tab/:page', name: 'page', component: Index },
-        { path: '/create', name:'create', component: Create}
+        { path: '/create', name:'create', component: Create},
+        { path: '/user/:id', name:'user', component: User }
       ]
     },
     { path: '/login', name: 'login', component: Login }

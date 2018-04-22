@@ -40,7 +40,9 @@ export default {
             inputText: '是否保存token',
             loginMsg: '',
             logining: false,
-            checkLogin: ''
+            checkLogin: '',
+            accessToken: 'access_token',
+            loginData: 'login_data'
         }
     },
     methods: {
@@ -49,7 +51,10 @@ export default {
             this.loginMsg = this.checkLogin.error_msg;
             this.logining = false;
             if(this.checkLogin.success) {
-                vs.set('accesstoken',this.token);
+                let data = this.checkLogin;
+                delete data['success'];
+                vs.set(accessToken,this.token);
+                vs.set(loginData,JSON.stringify(data));
                 this.$router.push({ path: '/index', name:'index' })
             }
         },
