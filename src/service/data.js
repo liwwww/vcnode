@@ -1,4 +1,5 @@
-import vfetch from '../config/fetch';
+import vfetch from '@/config/fetch';
+import vs from '@/config/storage';
 
 export const getTopics = ( tab ) => vfetch('/topics', 'GET', {
     page: 1,
@@ -17,7 +18,11 @@ export const postReplies = (id, data, accesstoken) => vfetch('/topic/'+id+'/repl
     reply_id: id,
 })
 
-export const getUser = () => window.localStorage.getItem('vcnode_user')
+export const checkUser = (token) => vfetch('/accesstoken', 'POST', {
+  accesstoken: token
+})
+
+export const getUser = () => vs.get('access_token');
 
 export const getTab = () => 
      [

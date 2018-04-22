@@ -21,7 +21,7 @@ export default {
             setData = VC_STORAGE.getItem(CACHE_NAME);
         }
         setData = JSON.parse(setData);
-        setData.data[key] = value;
+        setData[key] = value;
         VC_STORAGE.setItem(CACHE_NAME,JSON.stringify(setData));
         return setData.data;
     },

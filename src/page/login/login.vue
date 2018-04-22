@@ -9,16 +9,17 @@
             </div>
             <div class="login-row token-input">
                 <a>accessToken:</a>
-                <el-input class="login-row" placeholder="请输入内容" clearable></el-input>
+                <el-input class="login-row" v-model="token" placeholder="请输入内容" clearable></el-input>
+            </div>
+            <div class="login-row login-msg">
+                {{ loginMsg }}
             </div>
             <div class="login-row login-remember">
-                <el-switch v-model="saveToken" active-text="是否保存token">
+                <el-switch v-model="saveToken" :active-text="inputText">
                 </el-switch>
             </div>
             <div class="login-btn">
-                <router-link :to="{ path: '/'}">
-                    <el-button type="primary"> login</el-button>
-                </router-link>
+                <el-button type="primary" :loading="logining" @click="login">login</el-button>
             </div>
         </div>
         <p class="login-row login-create">
@@ -29,10 +30,33 @@
 </template>
 
 <script>
+import { getUser, checkUser } from '@/service/data';
+import vs from '@/config/storage';
 export default {
     data() {
         return {
-            saveToken: false
+            saveToken: true,
+            token: '',
+            inputText: '是否保存token',
+            loginMsg: '',
+            logining: false,
+            checkLogin: ''
+        }
+    },
+    methods: {
+        async getUser (){
+            this.checkLogin = await checkUser(this.token);
+            this.loginMsg = this.checkLogin.error_msg;
+            this.logining = false;
+            if(this.checkLogin.success) {
+                vs.set('accesstoken',this.token);
+                this.$router.push({ path: '/index', name:'index' })
+            }
+        },
+        login (){
+            this.loginMsg = '';
+            this.logining = true;
+            this.getUser();
         }
     }
 }
@@ -70,6 +94,10 @@ export default {
         border-radius: 5px;
         padding: 20px;
         box-sizing: border-box;
+    }
+    .login-msg {
+        text-align: center;
+        color: #F56C6C;
     }
     .login-remember {
         height: 24px;
