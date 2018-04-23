@@ -24,18 +24,20 @@
 </template>
 
 <script>
-import vHeader from '@/components/header.vue'
-import vContent from '@/components/content.vue'
-import vReply from '@/components/reply.vue'
-import vs from '@/config/storage'
+import vHeader from '@/components/header.vue';
+import vContent from '@/components/content.vue';
+import vReply from '@/components/reply.vue';
+import vs from '@/config/storage';
 export default {
     data() {
         return {
-            detail: vs.get('detail'),
-            id: '' 
+            detail: '',
+            id: '',
+            detailName: 'topic_detail' 
         }
     },
     created () {
+        this.detail = JSON.parse(vs.get(this.detailName));
         this.id = this.detail.id;
     },
     components: { vHeader, vContent, vReply }

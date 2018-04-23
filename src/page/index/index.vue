@@ -72,7 +72,7 @@ export default {
             this.loading = true;
         },
         getDetail(nav) {
-            vs.set('detail', JSON.stringify(nav));
+            vs.set('topic_detail', JSON.stringify(nav));
             this.$router.push({ path: '/detail' })
         }
     },

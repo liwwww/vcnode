@@ -3,15 +3,14 @@ const VC_STORAGE = window.localStorage;
 
 export default {
     init (){
-        VC_STORAGE.setItem(CACHE_NAME,'{"data":{}}');
+        VC_STORAGE.setItem(CACHE_NAME,'{}');
     },
     get (key){
         let getData = VC_STORAGE.getItem(CACHE_NAME);
         if(!getData) {
             return false;
         }else {
-            getData = JSON.parse(getData);
-            return JSON.parse(getData.data[key]);
+            return JSON.parse(getData)[key];
         }
     },
     set (key, value){
@@ -23,7 +22,7 @@ export default {
         setData = JSON.parse(setData);
         setData[key] = value;
         VC_STORAGE.setItem(CACHE_NAME,JSON.stringify(setData));
-        return setData.data;
+        return setData;
     },
     remove (key){
         try {
