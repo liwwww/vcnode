@@ -8,7 +8,7 @@
                 </el-row>
                 <el-row class="list" v-for="(nav, index) in list" :key="nav.index" v-if="loading">
                     <div class="list-avatar">
-                        <img :src="nav.author.avatar_url"></img>
+                        <router-link :to="{ name: 'user', params: { name: nav.author.loginname }}"><img :src="nav.author.avatar_url"/></router-link>
                     </div>
                     <div class="list-main" @click="getDetail( nav )">
                         <a>{{ nav.title }}</a>

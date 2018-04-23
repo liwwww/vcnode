@@ -25,9 +25,9 @@ export default new Router({
       children: [
         { path: '/', name:'index', component: Index },
         { path: '/detail', name: 'detail', component: Detail },
-        { path: '/tab/:page', name: 'page', component: Index },
+        { path: '/tab/:page', name: 'tab', component: Index },
         { path: '/create', name:'create', component: Create},
-        { path: '/user/:id', name:'user', component: User }
+        { path: '/user/:name', name:'user', component: User }
       ]
     },
     { path: '/login', name: 'login', component: Login }
