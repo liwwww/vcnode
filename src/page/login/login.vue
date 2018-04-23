@@ -19,7 +19,7 @@
                 </el-switch>
             </div>
             <div class="login-btn">
-                <el-button type="primary" :loading="logining" @click="login">login</el-button>
+                <el-button type="primary" :loading="btLogining" @click="login">login</el-button>
             </div>
         </div>
         <p class="login-row login-create">
@@ -30,97 +30,114 @@
 </template>
 
 <script>
-import { getUser, checkUser } from '@/service/data';
-import vs from '@/config/storage';
+import { getUser, checkUser } from "@/service/data";
+import vs from "@/config/storage";
 export default {
-    data() {
-        return {
-            saveToken: true,
-            token: '',
-            inputText: '是否保存token',
-            loginMsg: '',
-            logining: false,
-            checkLogin: '',
-            accessToken: 'access_token',
-            loginData: 'login_data'
+  data() {
+    return {
+      saveToken: true,
+      token: "",
+      inputText: "是否保存token",
+      loginMsg: "",
+      btLogining: false,
+      checkLogin: "",
+      checkStatus: false,
+      accessToken: "access_token",
+      loginData: "login_data"
+    };
+  },
+  created() {
+    let storeToken = JSON.parse(vs.get(this.loginData))[this.accessToken];
+    this.checkStoreToken(storeToken).then(() => {
+      if (storeToken && this.checkStatus) {
+        this.$router.push({ path: "/index", name: "index" });
+      }
+    });
+  },
+  methods: {
+    getUser() {
+      this.checkStoreToken(this.token).then(() => {
+        this.loginMsg = this.checkLogin.error_msg;
+        this.btLogining = false;
+        if (this.checkLogin.success) {
+          let data = this.checkLogin;
+          data[this.accessToken] = this.token;
+          delete data.success;
+          vs.set(this.accessToken, this.token);
+          vs.set(this.loginData, JSON.stringify(data));
+          this.$router.push({ path: "/index", name: "index" });
         }
+      });
     },
-    methods: {
-        async getUser (){
-            this.checkLogin = await checkUser(this.token);
-            this.loginMsg = this.checkLogin.error_msg;
-            this.logining = false;
-            if(this.checkLogin.success) {
-                let data = this.checkLogin;
-                data[this.accessToken] = this.token;
-                delete data.success;
-                vs.set(this.loginData,JSON.stringify(data));
-                this.$router.push({ path: '/index', name:'index' })
-            }
-        },
-        login (){
-            this.loginMsg = '';
-            this.logining = true;
-            this.getUser();
-        }
+    async checkStoreToken(token) {
+      this.token = token;
+      this.checkLogin = await checkUser(token);
+      this.checkStatus = this.checkLogin.success;
+      return this.checkStatus;
+    },
+    login() {
+      this.loginMsg = "";
+      this.btLogining = true;
+      this.getUser();
     }
-}
+  }
+};
 </script>
 
 <style scoped lang="less">
 .login-row {
-    margin-top: 8px;
-    margin-bottom: 12px;
+  margin-top: 8px;
+  margin-bottom: 12px;
 }
 
 .login {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 20%;
-    width: 310px;
-    margin: 0 auto;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 20%;
+  width: 310px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow: hidden;
+  button {
+    width: 100%;
+  }
+  .header-text {
+    text-align: center;
+    h1 {
+      font-size: 24px;
+      font-weight: 300;
+      letter-spacing: -0.5px;
+    }
+  }
+  .login-form {
+    border: 1px solid #d8dee2;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 20px;
     box-sizing: border-box;
-    overflow: hidden;
-    button {
-        width: 100%;
+  }
+  .login-msg {
+    text-align: center;
+    color: #f56c6c;
+  }
+  .login-remember {
+    height: 24px;
+    line-height: 24px;
+    .el-switch {
+      float: left;
     }
-    .header-text {
-        text-align: center;
-        h1 {
-            font-size: 24px;
-            font-weight: 300;
-            letter-spacing: -0.5px;
-        }
+  }
+  .login-create {
+    padding: 15px 20px;
+    text-align: center;
+    border: 1px solid #d8dee2;
+    border-radius: 5px;
+    font-size: 13px;
+    a {
+      color: #0366d6;
+      text-decoration: none;
     }
-    .login-form {
-        border: 1px solid #d8dee2;
-        background-color: #fff;
-        border-radius: 5px;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-    .login-msg {
-        text-align: center;
-        color: #F56C6C;
-    }
-    .login-remember {
-        height: 24px;
-        line-height: 24px; 
-        .el-switch {
-            float: left;
-        }
-    }
-    .login-create {
-        padding: 15px 20px;
-        text-align: center;
-        border: 1px solid #d8dee2;
-        border-radius: 5px;
-        font-size: 13px;
-        a {
-            color: #0366d6;
-            text-decoration: none;
-        }
-    }
+  }
 }
 </style>
