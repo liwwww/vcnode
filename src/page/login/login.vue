@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { getUser, checkUser } from "@/service/data";
+import { checkUser } from "@/service/data";
 import vs from "@/config/storage";
 export default {
   data() {
@@ -55,7 +55,7 @@ export default {
     });
   },
   methods: {
-    getUser() {
+    getLoginUser() {
       this.checkStoreToken(this.token).then(() => {
         this.loginMsg = this.checkLogin.error_msg;
         this.btLogining = false;
@@ -78,7 +78,7 @@ export default {
     login() {
       this.loginMsg = "";
       this.btLogining = true;
-      this.getUser();
+      this.getLoginUser();
     }
   }
 };

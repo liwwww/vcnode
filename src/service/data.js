@@ -22,7 +22,7 @@ export const checkUser = (token) => vfetch('/accesstoken', 'POST', {
   accesstoken: token
 })
 
-export const getUser = () => vs.get('access_token');
+export const getUser = (loginname) => vfetch('/user/'+loginname, 'GET', {})
 
 export const getTab = () => 
      [
