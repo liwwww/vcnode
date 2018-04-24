@@ -105,7 +105,19 @@ export default {
   box-sizing: border-box;
   overflow: hidden;
   border-radius: 2px;
-  background: linear-gradient(right, rgb(242, 246, 252), rgb(191, 218, 245));
+  /* Webkit: Safari 4-5, Chrome 1-9 */ 
+background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgb(242, 246, 252)), to(rgb(191, 218, 245))); 
+/* Webkit: Safari 5.1+, Chrome 10+ */ 
+background: -webkit-linear-gradient(right, rgb(242, 246, 252), rgb(191, 218, 245)); 
+/* Firefox 3.6+ */ 
+background: -moz-linear-gradient(right, rgb(242, 246, 252), rgb(191, 218, 245)); 
+/* Opera 11.10+ */ 
+background: -o-linear-gradient(right, rgb(242, 246, 252), rgb(191, 218, 245)); 
+/* IE 10 */ 
+background: -ms-linear-gradient(right, rgb(242, 246, 252), rgb(191, 218, 245)); 
+/* IE < 10 */ 
+/* 注意：这一行必须写在最后 */ 
+FILTER: progid:DXImageTransform.Microsoft.Gradient(startColorStr=rgb(242, 246, 252), endColorStr=rgb(191, 218, 245));
   .user-header {
     display: flex;
     padding: 14px 16px;
