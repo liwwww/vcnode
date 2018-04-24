@@ -22,6 +22,8 @@ export const checkUser = (token) => vfetch('/accesstoken', 'POST', {
   accesstoken: token
 })
 
+export const getUserCollect = (name) => vfetch('/topic_collect/'+name, 'GET', {})
+
 export const getUser = (loginname) => vfetch('/user/'+loginname, 'GET', {})
 
 export const getTab = () => 

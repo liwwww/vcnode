@@ -14,14 +14,20 @@
                                     <use xlink:href="#icon-star"></use>
                                 </svg>
                                 {{userMsg.loginname}}
-                            </strong>
-                        </div>
-                        <div class="msg-githubname" v-if="userMsg.githubUsername">
-                            <a class="msgName-item" target="_blank" :href="githubLink" style="color:#666">
+                                <a class="msg-githubName msgName-item" target="_blank" :href="githubLink" style="color:#666">
                                 <svg class="icon" aria-hidden="true">
                                     <use xlink:href="#icon-github"></use>
                                 </svg>
                                 @{{userMsg.githubUsername}}
+                            </a>
+                            </strong>
+                        </div>
+                        <div class="msg-score" v-if="userMsg.githubUsername">
+                            <a class="msgName-item" target="_blank" :href="githubLink" style="color:#666">
+                                <svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#icon-github"></use>
+                                </svg>
+                                {{userMsg.score}}
                             </a>
                         </div>
                     </div>
@@ -29,22 +35,26 @@
                 <div class="user-detail">
                     <a class="detail-numberBorad userTab-active">
                         <div class="numberBorad-name">发帖</div>
-                        <strong class="numberBorad-num">1</strong>
+                        <strong class="numberBorad-num">{{ topics.length }}</strong>
                     </a>
                     <a class="detail-numberBorad">
-                        <div class="numberBorad-name">评论</div>
-                        <strong class="numberBorad-num">1</strong>
+                        <div class="numberBorad-name">最近评论</div>
+                        <strong class="numberBorad-num">{{ replies.length }}</strong>
                     </a>
                     <a class="detail-numberBorad">
                         <div class="numberBorad-name">收藏</div>
-                        <strong class="numberBorad-num">0</strong>
+                        <strong class="numberBorad-num">{{ collect.length }}</strong>
                     </a>
                 </div>
                 <div class="user-topic">
-                    <div class="topic-create">
-
+                    <div class="topic-item" v-for="list in topicList" :key="list.index">
+                        <div class="item-avatar">
+                            <img :src="list.author.avatar_url" alt="author_avatar" />
+                        </div>
+                        <div class="item-title">{{ list.title }}</div>
+                        <div class="item-time">一天前</div>
                     </div>
-                    <div class="topic-reply"></div>
+
                 </div>
             </div>
             
@@ -55,12 +65,16 @@
 <script>
 import vHeader from "@/components/header";
 import vContent from "@/components/content";
-import { getUser } from "@/service/data";
+import { getUser, getUserCollect } from "@/service/data";
 export default {
   data() {
     return {
       userMsg: "",
-      githubLink: "https://www.github.com/" + this.$route.params.name
+      githubLink: "https://www.github.com/" + this.$route.params.name,
+      topics: '',
+      replies: '',
+      collect: '',
+      topicList: ''
     };
   },
   created() {
@@ -71,8 +85,12 @@ export default {
   methods: {
     async getUserMsg() {
       this.userMsg = await getUser(this.$route.params.name);
+      this.collect = await getUserCollect(this.$route.params.name);
+      this.collect = this.collect.data;
       this.userMsg = this.userMsg.data;
-      console.log(this.userMsg);
+      this.topics = this.userMsg.recent_topics;
+      this.replies = this.userMsg.recent_replies;
+      this.topicList = this.replies;
     }
   },
   components: { vHeader, vContent }
@@ -87,16 +105,19 @@ export default {
   box-sizing: border-box;
   overflow: hidden;
   border-radius: 2px;
-  background-color: rgb(233, 237, 248);
+  background: linear-gradient(right, rgb(242, 246, 252), rgb(191, 218, 245));
   .user-header {
     display: flex;
-    background: linear-gradient(right, rgb(242, 246, 252), rgb(191, 218, 245));
     padding: 14px 16px;
+    background-color: #fff;
     border-bottom-left-radius: 7px;
     border-bottom-right-radius: 7px;
     width: 100%;
     box-sizing: border-box;
     .user-avatar {
+      width: 68px;
+      height: 68px;
+      border-radius: 100%;
       margin-right: 40px;
       display: inline-block;
       float: left;
@@ -111,8 +132,11 @@ export default {
       display: flex;
       justify-content: center;
       flex-direction: column;
+      .msg-githubName {
+          margin-left: 10px;
+      }
       .msg-loginname,
-      .msg-githubname {
+      .msg-score {
         padding: 5px 0;
       }
       .msgName-item {
@@ -141,9 +165,37 @@ export default {
   }
   .user-topic {
       position: relative;
-      height: 30px;
-      background-color: #fff;
-      
+      background-color: #fff;//rgb(233, 237, 248)
+      padding-top: 12px; 
+      .topic-item {
+          position: relative;
+          width: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          padding: 13px;
+          box-sizing: border-box;
+          border-bottom: 1px solid rgb(233, 237, 248);
+          .item-avatar {
+              margin-right: 20px;
+              img {
+                  width: 34px;
+                  height: 34px;
+                  border-radius: 100%;
+              }
+          }
+          .item-title {
+            width: 70%; 
+            vertical-align: middle;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+          }
+          .item-time {
+              margin-left: auto;
+              font-size: 12px;
+          }
+      }
   }
   .userTab-active {
       position: relative;
