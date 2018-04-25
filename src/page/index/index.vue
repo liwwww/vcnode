@@ -10,7 +10,7 @@
                     <div class="list-avatar">
                         <router-link :to="{ name: 'user', params: { name: nav.author.loginname }}"><img :src="nav.author.avatar_url"/></router-link>
                     </div>
-                    <div class="list-main" @click="getDetail( nav )">
+                    <div class="list-main" @click="getDetail( nav.id )">
                         <a>{{ nav.title }}</a>
                         <p>{{ nav.content.replace(new RegExp('<[^>]*>','g'),'') }}</p>
                         <div class="list-tips" style="font-size:13px;color:#999;">
@@ -71,9 +71,8 @@ export default {
             this.list = topicsDetail.data;
             this.loading = true;
         },
-        getDetail(nav) {
-            vs.set('topic_detail', JSON.stringify(nav));
-            this.$router.push({ path: '/detail' })
+        getDetail(id) {
+            this.$router.push({path: '/detail', query: { id: id}});
         }
     },
     components: { vContent, vHeader, vRelease, vtloding }

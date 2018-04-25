@@ -35,7 +35,7 @@
                 <div class="user-detail">
                     <a class="detail-numberBorad" :class="{ userTabActive: index === listName.arrow }" v-for="(numBorad, key, index) in topicList" :key="numBorad.id" @click="getList(numBorad, index)">
                         <div class="numberBorad-name">{{ listName[key] }}</div>
-                        <strong class="numberBorad-num">{{ numBorad.length }}</strong>
+                        <div class="numberBorad-num">{{ index != 1 ? numBorad.length:"5天前" }}</div>
                     </a>
                     <!--<a class="detail-numberBorad" @click="getList(replies)">
                         <div class="numberBorad-name">最近评论</div>
@@ -48,13 +48,13 @@
                 </div>
                 <div class="user-topic">
                     <div class="topic-item" v-for="list in detailList" :key="list.index">
-                        <div class="item-avatar">
+                        <div class="item-avatar" @click="linkUser(list.author.loginname)">
                             <img :src="list.author.avatar_url" alt="author_avatar" />
                         </div>
-                        <div class="item-title">{{ list.title }}</div>
+                        <div class="item-title" @click="linkDetail(list.id)">{{ list.title }}</div>
                         <div class="item-time">一天前</div>
                     </div>
-
+                    <div class="item-empty" v-if="detailList <= 0">暂无数据~~</div>
                 </div>
             </div>
             
@@ -73,7 +73,8 @@ export default {
       githubLink: "https://www.github.com/" + this.$route.params.name,
       detailList: '',
       topicList: '',
-      listName: {_topics:'发帖', _replies:'最近回复', _collect:'收藏', arrow: 0}
+      listName: {_topics:'发帖', _replies:'最近回复', _collect:'收藏', arrow: 0},
+      userName: this.$route.params.name
     };
   },
   created() {
@@ -81,10 +82,16 @@ export default {
       this.getUserMsg();
     }, 1000);
   },
+  watch: {
+        '$route'(to, from) {
+            this.getUserMsg();
+            this.listName.arrow = 0;
+        }
+  },
   methods: {
     async getUserMsg() {
-      this.userMsg = await getUser(this.$route.params.name);
-      this.collect = await getUserCollect(this.$route.params.name); 
+      this.userMsg = await getUser(this.userName);
+      this.collect = await getUserCollect(this.userName); 
       const collect = this.collect.data;
       this.userMsg = this.userMsg.data;
       const topics =  this.userMsg.recent_topics
@@ -95,6 +102,12 @@ export default {
     getList(list, index) {
         this.detailList = list;
         this.listName.arrow = index;
+    },
+    linkDetail(id) {
+        this.$router.push({path: '/detail', query: { id: id}});
+    },
+    linkUser(name) {
+        this.$router.push({ path: '/user/'+name });
     }
   },
   components: { vHeader, vContent }
@@ -119,8 +132,8 @@ export default {
     width: 100%;
     box-sizing: border-box;
     .user-avatar {
-      width: 68px;
-      height: 68px;
+      width: 64px;
+      height: 64px;
       border-radius: 100%;
       margin-right: 40px;
       display: inline-block;
@@ -165,6 +178,9 @@ export default {
           position: relative;
           text-align: center;
           flex: 1;
+          .numberBorad-num {
+              font-weight: bold;
+          }
       }
   }
   .user-topic {
@@ -180,6 +196,10 @@ export default {
           padding: 13px;
           box-sizing: border-box;
           border-bottom: 1px solid #E9EDF8;
+          cursor: pointer;
+          &:hover {
+              background-color: #F2F6FC;
+          }
           .item-avatar {
               margin-right: 20px;
               img {
@@ -200,6 +220,13 @@ export default {
               font-size: 12px;
           }
       }
+      .item-empty {
+          text-align: center;
+          vertical-align: middle;
+          line-height: 100px;
+          color: darkgray;
+          height: 100px;
+        }
   }
   .userTabActive {
       position: relative;
@@ -209,7 +236,7 @@ export default {
         border-left: 10px solid transparent;
         border-right: 10px solid transparent;
         position: absolute;
-        margin-left: -16px;
+        margin-left: -10px;
         bottom: -22px;
         }
   }

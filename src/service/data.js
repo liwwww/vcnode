@@ -8,9 +8,7 @@ export const getTopics = ( tab ) => vfetch('/topics', 'GET', {
     mdrender: 'true'
 })
 
-export const getTopic = (id) => vfetch('/topic/'+id, 'GET', {
-    mdrender: 'true'
-})
+export const getTopic = (id) => vfetch('/topic/'+id, 'GET', {})
 
 export const postReplies = (id, data, accesstoken) => vfetch('/topic/'+id+'/replies', 'POST', {
     accesstoken: accesstoken,

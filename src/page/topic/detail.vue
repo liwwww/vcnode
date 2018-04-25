@@ -10,8 +10,10 @@
                 <div class="content-detail">
                     <div class="content-user">
                         <div class="user-detail">
+                            <router-link :to="{ path: '/user/'+detail.author.loginname }">
                             <img :src="detail.author.avatar_url" alt="头像" />
                             <span>{{ detail.author.loginname }}</span>
+                            </router-link>
                         </div>
                         <div class="user-create-time">{{ detail.create_at }}</div>
                     </div>
@@ -28,6 +30,7 @@ import vHeader from '@/components/header.vue';
 import vContent from '@/components/content.vue';
 import vReply from '@/components/reply.vue';
 import vs from '@/config/storage';
+import { getTopic } from '@/service/data';
 export default {
     data() {
         return {
@@ -37,8 +40,10 @@ export default {
         }
     },
     created () {
-        this.detail = JSON.parse(vs.get(this.detailName));
-        this.id = this.detail.id;
+        getTopic(this.$route.query.id).then((msg) => {
+            this.detail = msg.data;
+            this.id = this.detail.id;
+        });
     },
     components: { vHeader, vContent, vReply }
 }

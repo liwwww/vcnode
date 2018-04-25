@@ -2,7 +2,7 @@
     <div class="reply-comtainer shadow-box">
         <div class="reply-box" v-for="(reply, key) in replyData" :key="reply.id">
             <div class="reply-left">
-                <img :src="reply.author.avatar_url" alt="img" />
+                <router-link :to="{ path:'/user/'+reply.author.loginname }"><img :src="reply.author.avatar_url" alt="img" /></router-link>
             </div>
             <div class="reply-list">
                 <div class="reply-user">
