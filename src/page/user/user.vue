@@ -33,21 +33,21 @@
                     </div>
                 </div>
                 <div class="user-detail">
-                    <a class="detail-numberBorad userTab-active">
-                        <div class="numberBorad-name">发帖</div>
-                        <strong class="numberBorad-num">{{ topics.length }}</strong>
+                    <a class="detail-numberBorad" :class="{ userTabActive: index === listName.arrow }" v-for="(numBorad, key, index) in topicList" :key="numBorad.id" @click="getList(numBorad, index)">
+                        <div class="numberBorad-name">{{ listName[key] }}</div>
+                        <strong class="numberBorad-num">{{ numBorad.length }}</strong>
                     </a>
-                    <a class="detail-numberBorad">
+                    <!--<a class="detail-numberBorad" @click="getList(replies)">
                         <div class="numberBorad-name">最近评论</div>
                         <strong class="numberBorad-num">{{ replies.length }}</strong>
                     </a>
-                    <a class="detail-numberBorad">
+                    <a class="detail-numberBorad" @click="getList(collect)">
                         <div class="numberBorad-name">收藏</div>
                         <strong class="numberBorad-num">{{ collect.length }}</strong>
-                    </a>
+                    </a>-->
                 </div>
                 <div class="user-topic">
-                    <div class="topic-item" v-for="list in topicList" :key="list.index">
+                    <div class="topic-item" v-for="list in detailList" :key="list.index">
                         <div class="item-avatar">
                             <img :src="list.author.avatar_url" alt="author_avatar" />
                         </div>
@@ -71,10 +71,9 @@ export default {
     return {
       userMsg: "",
       githubLink: "https://www.github.com/" + this.$route.params.name,
-      topics: '',
-      replies: '',
-      collect: '',
-      topicList: ''
+      detailList: '',
+      topicList: '',
+      listName: {_topics:'发帖', _replies:'最近回复', _collect:'收藏', arrow: 0}
     };
   },
   created() {
@@ -85,12 +84,17 @@ export default {
   methods: {
     async getUserMsg() {
       this.userMsg = await getUser(this.$route.params.name);
-      this.collect = await getUserCollect(this.$route.params.name);
-      this.collect = this.collect.data;
+      this.collect = await getUserCollect(this.$route.params.name); 
+      const collect = this.collect.data;
       this.userMsg = this.userMsg.data;
-      this.topics = this.userMsg.recent_topics;
-      this.replies = this.userMsg.recent_replies;
-      this.topicList = this.replies;
+      const topics =  this.userMsg.recent_topics
+      this.detailList = topics;
+      const replies = this.userMsg.recent_replies;
+      this.topicList = {'_topics': topics, '_replies': replies, '_collect': collect};
+    },
+    getList(list, index) {
+        this.detailList = list;
+        this.listName.arrow = index;
     }
   },
   components: { vHeader, vContent }
@@ -105,13 +109,13 @@ export default {
   box-sizing: border-box;
   overflow: hidden;
   border-radius: 2px;
-  background-color: linear-gradient(right, #F2F6FC, #BFDAF5);
+  background: linear-gradient( #BFDAF5, #F2F6FC);
   .user-header {
     display: flex;
     padding: 14px 16px;
     background-color: #fff;
-    border-bottom-left-radius: 7px;
-    border-bottom-right-radius: 7px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
     width: 100%;
     box-sizing: border-box;
     .user-avatar {
@@ -197,7 +201,7 @@ export default {
           }
       }
   }
-  .userTab-active {
+  .userTabActive {
       position: relative;
       &:after {
         content: "";
