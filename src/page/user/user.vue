@@ -1,7 +1,7 @@
 <template>
-    <div>
-        <v-header></v-header>
-        <v-content>
+<div>
+    <v-header></v-header>
+        <div class="container">
             <div class="user-container">
                 <div class="user-header">
                     <div class="user-avatar">
@@ -58,7 +58,8 @@
                 </div>
             </div>
             
-        </v-content>
+        </div>
+    
     </div>
 </template>
 
@@ -73,8 +74,7 @@ export default {
       githubLink: "https://www.github.com/" + this.$route.params.name,
       detailList: '',
       topicList: '',
-      listName: {_topics:'发帖', _replies:'最近回复', _collect:'收藏', arrow: 0},
-      userName: this.$route.params.name
+      listName: {_topics:'发帖', _replies:'最近回复', _collect:'收藏', arrow: 0}
     };
   },
   created() {
@@ -90,8 +90,9 @@ export default {
   },
   methods: {
     async getUserMsg() {
-      this.userMsg = await getUser(this.userName);
-      this.collect = await getUserCollect(this.userName); 
+      let userName = this.$route.params.name
+      this.userMsg = await getUser(userName);
+      this.collect = await getUserCollect(userName); 
       const collect = this.collect.data;
       this.userMsg = this.userMsg.data;
       const topics =  this.userMsg.recent_topics
@@ -116,6 +117,23 @@ export default {
 
 <style scoped lang="less">
 @import "../../commons/style/mixin.less";
+.container {
+    position: relative;
+    min-height: 80px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    padding-top: 49px;
+    .mixin-screen-lg({
+        max-width: 1060px;
+    });
+    .mixin-screen-md({
+        max-width: 700px;
+    });
+    .mixin-screen-sm({
+        max-width: 460px;
+    });
+}
 .user-container {
   position: relative;
   margin-top: 10px;

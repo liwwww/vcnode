@@ -4,7 +4,7 @@
       <div class="menu-icon" @click="menuCtrl">
         <i></i>
       </div>
-      <span class="menu-text">VUE</span>
+      <router-link :to="{name: 'index',params:{ tab:'dev'}}"><span class="menu-text">VUE</span></router-link>
       <el-switch v-model="value2" active-color="#F2F6FC" inactive-color="#67C23A"></el-switch>
     </div>
     <transition name="slide-fade-mask">
@@ -17,7 +17,7 @@
             <img calss="menu-avatar" src="./user.png" style="width='80px',height='80px'" />
             <span class="menu-username">{{ username }}</span>
           </div>
-          <el-menu-item v-for="tabs in tab" index=0 :key="tabs.name" :route="{path: '/tab/'+ tabs.tab}" @click="menuCtrl">
+          <el-menu-item v-for="tabs in tab" index=0 :key="tabs.name" @click="menuCtrl" :route="{path: '/', query:{tab:tabs.tab}}">
             <i class="el-icon-tickets"></i>
             <span slot="title">{{ tabs.name }}</span>
           </el-menu-item>

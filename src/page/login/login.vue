@@ -63,7 +63,6 @@ export default {
           let data = this.checkLogin;
           data[this.accessToken] = this.token;
           delete data.success;
-          vs.set(this.accessToken, this.token);
           vs.set(this.loginData, JSON.stringify(data));
           this.$router.push({ path: "/index", name: "index" });
         }

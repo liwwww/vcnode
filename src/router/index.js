@@ -23,9 +23,10 @@ export default new Router({
       path: '/',
       component: APP,
       children: [
-        { path: '/', name:'index', component: Index },
+        { path: '/', name:'index', component: Index,meta: {
+          keepAlive: true
+      } },
         { path: '/detail', name: 'detail', component: Detail },
-        { path: '/tab/:page', name: 'tab', component: Index },
         { path: '/create', name:'create', component: Create},
         { path: '/user/:name', name:'user', component: User }
       ]

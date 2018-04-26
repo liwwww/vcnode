@@ -1,6 +1,5 @@
 <template>
     <div>
-        <v-header></v-header>
         <v-content>
             <div class="main-today">
                 <el-row class="list" v-for="n in 10" :key="n.index" v-if="!loading">
@@ -44,23 +43,29 @@ export default {
             clickPin: '',
             list: [],
             pageTab: '',
-            loading: false
+            loading: false,
+            nowPage: '',
+            _params: ''
         };
     },
-    watch: {
-        '$route'(to, from) {
-            this.loading = false;
-            this.loadList();
-        }
-    },
+    beforeRouteUpdate (to, from, next) {
+        next();
+            if(this.nowPage !== this.$route.query.tab) {
+                    this.loading = false;
+                    this.loadList();
+                }
+            
+  },
     created() {
+        this._params = this.$route.query.tab;
          this.loadList();
+         this.nowPage = this._params;
     },
     methods: {
         loadList() {
             setTimeout(() => {
-            this.getTopicsData(this.$route.params.page);
-            this.pageTab = this.$route.params.page;
+            this.getTopicsData(this.$route.query.tab);
+            this.pageTab = this.$route.query.tab;
         }, 1000);
         },
         pinClick(nav, index) {

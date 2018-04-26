@@ -1,11 +1,18 @@
 <template>
+<div>
+    <keep-alive>
+<v-header></v-header>
+    </keep-alive>
     <div class="container">
         <slot></slot>
     </div>
+</div>
 </template>
 
 <script>
+import vHeader from '@/components/header';
     export default {
+        components: {vHeader}
     }
 </script>
 
