@@ -10,7 +10,14 @@ export const getTopics = ( tab ) => vfetch('/topics', 'GET', {
 
 export const getTopic = (id) => vfetch('/topic/'+id, 'GET', {})
 
-export const postReplies = (id, data, accesstoken) => vfetch('/topic/'+id+'/replies', 'POST', {
+export const createTopic = (accesstoken, title, tab, content) => vfetch('/topics', 'POST', {
+  accesstoken: accesstoken,
+  title: title,
+  tab: tab,
+  content: content
+})
+
+export const createReplies = (id, data, accesstoken) => vfetch('/topic/'+id+'/replies', 'POST', {
     accesstoken: accesstoken,
     content: content,
     reply_id: id,
@@ -28,27 +35,32 @@ export const getTab = () =>
      [
         {
           name: '全部',
-          page: '',
+          release: false,
           tab: 'all'
         },
         {
           name: '精华',
-          page: 'index/good',
+          release: false,
           tab: 'good'
         },
         {
           name: '问答',
-          page: 'index/ask',
+          release: true,
           tab: 'ask'
         },
         {
+          name: '招聘',
+          release: true,
+          tab: 'job'
+        },
+        {
           name: '分享',
-          page: 'index/share',
+          release: true,
           tab: 'share'
         },
         {
           name: '测试',
-          page: 'index/dev',
+          release: true,
           tab: 'dev'
         }
       ]

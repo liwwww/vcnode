@@ -84,6 +84,9 @@ export default {
                     vertical-align: top;
                     font-weight: bolder;
                 }
+                a {
+                    text-decoration: none;
+                }
             }
             .user-create-time {
                 margin: 5px 0 0 20px;

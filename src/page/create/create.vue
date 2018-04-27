@@ -4,18 +4,18 @@
             <div class="create-container shadow-box">
                 <el-form label-width="40px">
                     <el-form-item label="标题">
-                        <el-input placeholder="请输入标题" clearable></el-input>
+                        <el-input v-model="title" placeholder="请输入标题" clearable></el-input>
                     </el-form-item>
                     <el-form-item label="板块">
                         <el-radio-group v-model="radio">
-                        <el-radio-button v-for="tabs in tab" v-if="tabs.page" :key="tabs.tab" :label="tabs.name"></el-radio-button>
+                        <el-radio-button v-for="tabName in tabs" v-if="tabName.release" :key="tabName.tab" :label="tabName.name"></el-radio-button>
                     </el-radio-group>
                     </el-form-item>
                     <el-form-item label="正文">
                         <markdown-editor v-model="content" :configs="configs" ref="markdownEditor"></markdown-editor>
                     </el-form-item>
                     <el-form-item>
-                        <el-button type="primary">提交</el-button>
+                        <el-button type="primary" @click="createBtn()">提交</el-button>
                     </el-form-item>
                 </el-form>
             </div>
@@ -26,14 +26,17 @@
 <script>
 import vContent from '@/components/content';
 import { markdownEditor } from 'vue-simplemde';
-import { getTab } from '../../service/data';
+import { getTab, createTopic, checkUser } from '../../service/data';
 import vs from '@/config/storage';
 export default {
     data() {
         return {
+            tabs: '',
             tab: '',
             radio: '',
-            content: '',                                    // markdown编辑器内容
+            title: '',
+            content: '',
+            loginData: vs.get('login_data'),                                    // markdown编辑器内容
             configs: {                                    // markdown编辑器配置参数
                 status: false,                            // 禁用底部状态栏
                 initialValue: '请输入要编辑的内容....',                // 设置初始值
@@ -47,10 +50,12 @@ export default {
     created() {
         let tabParam = this.$route.query.tab;
         let tabList = getTab();
-        this.tab = tabList;
+        this.tabs = tabList;
+        console.log(this.tabs);
         for (var i in tabList) {
             if (tabList.hasOwnProperty(i) === true && tabList[i].tab == tabParam) {
                 this.radio = tabList[i].name;
+                this.tab = tabList[i].tab;
                 }
             }
     },
@@ -59,6 +64,38 @@ export default {
         vContent
     },
     methods: {
+        createBtn (){
+            if(this.tab && this.content && this.title) {
+                this.release();
+            }else {
+                alert('补全信息');
+            }
+        }, 
+        release (){
+            if(!this.loginData) {
+                this.$router.push({ path: '/login' });
+            }
+            let _accessToken = JSON.parse(this.loginData).access_token;
+            checkUser(_accessToken).then((msg) => {
+                if(msg.success) {
+                    let tabList = this.tabs;
+                    for (var i in tabList) {
+                        if (this.tabs.hasOwnProperty(i) === true && tabList[i].name == this.radio) {
+                            this.tab = tabList[i].tab;
+                            }
+                        }
+                    this.tab = this.tab ? this.tab : 'ask';
+                    createTopic(_accessToken, this.title, this.tab, this.content).then((msg) => {
+                        if(msg.success) {
+                            this.$router.push({ path: '/detail', query: { id: msg.topic_id } });
+                        }else {
+                            alert('err');
+                        }
+                    });
+                }
+            })
+            
+        }
     }
 }
 </script>
