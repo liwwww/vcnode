@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store/index'
+import vs from './config/storage'
 
 import {Menu, MenuItem, Row, Submenu, Col, MenuItemGroup, Switch, Input, Button, Radio, RadioGroup, RadioButton, Form, FormItem, Table, Loading} from 'element-ui'
 
@@ -28,7 +29,21 @@ Vue.prototype.$loading = Loading.service;*/
 
 Vue.config.productionTip = false
 
-/* eslint-disable no-new */
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.login)) {
+    if (!vs.get('accessToken')) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
+})
+
 new Vue({
   el: '#app',
   router,

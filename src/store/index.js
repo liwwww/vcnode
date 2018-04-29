@@ -19,18 +19,20 @@ export default new Vuex.Store({
         [GET_ACCESSTOKEN] (state, accessToken){
             state.accessToken = accessToken;
         },
-        [CHECK_LOGININFO] (state, info, accessToken){
-            if(info.success) {
+        [CHECK_LOGININFO] (state, infoArr){
+            if(infoArr.userInfo.success) {
                 state.isLogin = true;
-                state.loginInfo = info;
-                state.accessToken = accessToken;
-                vs.set('login_data', info);
+                state.loginInfo = infoArr.userInfo;
+                state.accessToken = infoArr.accessToken;
+                vs.set('login_data', infoArr.userInfo);
+                vs.set('accessToken', infoArr.accessToken);
             }
         }
     },
     actions: {
         async checkLoginInfo ({ commit }, accessToken){
-            commit('CHECK_LOGININFO', await checkUser(accessToken), accessToken);
+            let info = await checkUser(accessToken);
+            commit('CHECK_LOGININFO', { 'userInfo': info,'accessToken': accessToken });
         }   
     }
 })

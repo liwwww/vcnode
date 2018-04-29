@@ -50,17 +50,15 @@ export default {
     },
     beforeRouteUpdate (to, from, next) {
         next();
-            if(this.nowPage !== this.$route.query.tab) {
-                    this.loading = false;
-                    this.loadList();
-                }
-            
+        if(this.nowPage !== this.$route.query.tab) {
+            this.loading = false;
+            this.loadList();
+        }       
   },
     created() {
         this._params = this.$route.query.tab;
          this.loadList();
          this.nowPage = this._params;
-         console.log(this.$store.state.isLogin);
     },
     methods: {
         loadList() {

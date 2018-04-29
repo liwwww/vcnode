@@ -11,8 +11,8 @@
                         <div class="user-detail">
                             <router-link :to="{ path: '/user/'+detail.author.loginname }">
                             <img :src="detail.author.avatar_url" alt="头像" />
-                            <span>{{ detail.author.loginname }}</span>
                             </router-link>
+                            <span>{{ detail.author.loginname }}</span>
                         </div>
                         <div class="user-create-time">{{ detail.create_at }}</div>
                     </div>
@@ -33,15 +33,19 @@ import { getTopic } from '@/service/data';
 export default {
     data() {
         return {
-            detail: '',
-            id: '',
+            detail: {
+                author: {
+                    loginname: '',
+                    avatar_url: ''
+                } 
+            },
+            id: this.$route.query.id,
             detailName: 'topic_detail' 
         }
     },
     created () {
         getTopic(this.$route.query.id).then((msg) => {
             this.detail = msg.data;
-            this.id = this.detail.id;
         });
     },
     components: { vHeader, vContent, vReply }

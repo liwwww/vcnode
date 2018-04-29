@@ -23,11 +23,13 @@ export default new Router({
       path: '/',
       component: APP,
       children: [
-        { path: '/', name:'index', component: Index,meta: {
+        { path: '/', name:'index', component: Index, meta: {
           keepAlive: true
       } },
         { path: '/detail', name: 'detail', component: Detail },
-        { path: '/create', name:'create', component: Create},
+        { path: '/create', name:'create', component: Create, meta: {
+          login: true
+        }},
         { path: '/user/:name', name:'user', component: User }
       ]
     },
