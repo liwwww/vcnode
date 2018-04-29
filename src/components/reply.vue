@@ -51,7 +51,8 @@
 </template>
 
 <script>
-import { getTopic, postReplies } from '@/service/data'
+import { getTopic, createReplies } from '@/service/data';
+import vs from '@/config/storage';
 export default {
     props: {
         topicId: {
@@ -74,11 +75,19 @@ export default {
             let topicDetail = await getTopic(id);
             this.replyData = topicDetail.data.replies;
             this.author_name = topicDetail.data.author.loginname;
-            console.log("评论区加载完毕");
         },
         replyBtn(id, data) {
             this.replyBtnCheck === id ? this.replyBtnCheck = -1:this.replyBtnCheck = id;
             this.inputData = '';
+        },
+        async postReplies() {
+            let login_data = JSON.parse(vs.get('login_data'));
+            let _accessToken = login_data.accessToken;
+            try {
+                await createReplies(this.topicId, id, this,inputData, _accessToken);
+            } catch (error) {
+                alert('出现神秘错误');
+            }
         }
     }
 }

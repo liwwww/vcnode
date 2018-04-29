@@ -60,6 +60,7 @@ export default {
         this._params = this.$route.query.tab;
          this.loadList();
          this.nowPage = this._params;
+         console.log(this.$store.state.isLogin);
     },
     methods: {
         loadList() {

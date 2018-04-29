@@ -51,7 +51,6 @@ export default {
         let tabParam = this.$route.query.tab;
         let tabList = getTab();
         this.tabs = tabList;
-        console.log(this.tabs);
         for (var i in tabList) {
             if (tabList.hasOwnProperty(i) === true && tabList[i].tab == tabParam) {
                 this.radio = tabList[i].name;

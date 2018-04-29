@@ -17,7 +17,7 @@ export const createTopic = (accesstoken, title, tab, content) => vfetch('/topics
   content: content
 })
 
-export const createReplies = (id, data, accesstoken) => vfetch('/topic/'+id+'/replies', 'POST', {
+export const createReplies = (topic_id, id, data, accesstoken) => vfetch('/topic/'+topic_id+'/replies', 'POST', {
     accesstoken: accesstoken,
     content: content,
     reply_id: id,

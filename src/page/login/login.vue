@@ -19,12 +19,12 @@
                 </el-switch>
             </div>
             <div class="login-btn">
-                <el-button type="primary" :loading="btLogining" @click="login">login</el-button>
+                <el-button type="primary" :loading="logining" @click="login">login</el-button>
             </div>
         </div>
         <p class="login-row login-create">
             如何获取token?
-            <a href="https://cnodejs.org/setting">进入cnode用户设置</a>
+            <a href="https://cnodejs.org">进入cnode用户设置</a>
         </p>
     </div>
 </template>
@@ -38,46 +38,27 @@ export default {
       saveToken: true,
       token: "",
       inputText: "是否保存token",
-      loginMsg: "",
-      btLogining: false,
-      checkLogin: "",
-      checkStatus: false,
-      accessToken: "access_token",
-      loginData: "login_data"
+      logining: false,
+      loginMsg: ''
     };
   },
-  created() {
-    let storeToken = JSON.parse(vs.get(this.loginData))[this.accessToken];
-    this.checkStoreToken(storeToken).then(() => {
-      if (storeToken && this.checkStatus) {
-        this.$router.push({ path: "/index", name: "index" });
-      }
-    });
+  beforeCreate() {
+    if(vs.get('login_data')) {
+      this.$router.push({ path: "/index", name: "index" });
+    }
   },
   methods: {
-    getLoginUser() {
-      this.checkStoreToken(this.token).then(() => {
-        this.loginMsg = this.checkLogin.error_msg;
-        this.btLogining = false;
-        if (this.checkLogin.success) {
-          let data = this.checkLogin;
-          data[this.accessToken] = this.token;
-          delete data.success;
-          vs.set(this.loginData, JSON.stringify(data));
+    login() {
+      this.logining = true;
+      this.$store.dispatch('checkLoginInfo', this.token).then(() => {
+        if(this.$store.state.isLogin) {
+          this.logining = false;
           this.$router.push({ path: "/index", name: "index" });
+        }else {
+          this.loginMsg = 'accessToken错误';
+          this.logining = false;
         }
       });
-    },
-    async checkStoreToken(token) {
-      this.token = token;
-      this.checkLogin = await checkUser(token);
-      this.checkStatus = this.checkLogin.success;
-      return this.checkStatus;
-    },
-    login() {
-      this.loginMsg = "";
-      this.btLogining = true;
-      this.getLoginUser();
     }
   }
 };
