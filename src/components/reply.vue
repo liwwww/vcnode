@@ -1,6 +1,6 @@
 <template>
     <div class="reply-comtainer shadow-box">
-        <div class="reply-box" v-for="(reply, key) in replyData" :key="reply.id">
+        <div class="reply-box" v-for="(reply, key) in replyData" :key="reply.id" v-if="!reply.reply_id">
             <div class="reply-left">
                 <router-link :to="{ path:'/user/'+reply.author.loginname }"><img :src="reply.author.avatar_url" alt="img" /></router-link>
             </div>
@@ -29,16 +29,15 @@
                     <span class="reply-tips-btn" @click="replyBtn(key)">回复</span>
                 </p>
                 <div class="reply-item-box" v-if="replyBtnCheck == key && replyBtnCheck >= 0">
-                    <!--<div class="reply-item-list">
-                        <div class="reply-item-content">
-                        </div>
+                    <div class="reply-item-list" v-for="replies in reply.replies" :key="replies.id">
+                        <div class="reply-item-content" v-html="replies.content"></div>
                         <div class="reply-item-msg">
-                            ——liwwww · 1秒钟前
+                            ——<router-link :to="{path: '/user/'+replies.author.loginname}">{{replies.author.loginname}}</router-link> · 1秒钟前
                         </div>
-                    </div>-->
+                    </div>
                     <div class="reply-item-form">
                         <div class="reply-btn">
-                            <el-button @click="replyBtn(key, inputData)">回复</el-button>
+                            <el-button @click="postReplies(reply.id, reply.author.loginname)">回复</el-button>
                         </div>
                         <div class="reply-textarea">
                             <el-input type="textarea" v-model="inputData" :autosize="{ minRows: 2, maxRows: 4}" placeholder="请输入内容"></el-input>
@@ -73,20 +72,36 @@ export default {
     methods: {
         async getTopicData(id) {
             let topicDetail = await getTopic(id);
-            this.replyData = topicDetail.data.replies;
+            let replyData = topicDetail.data.replies;
+            for (const i in replyData) {
+                if (replyData.hasOwnProperty(i)&&!replyData[i].reply_id) {
+                    replyData[i] = {...replyData[i], 'replies': []};
+                    for (const j in replyData) {
+                        if (replyData.hasOwnProperty(j)&&replyData[j].reply_id === replyData[i].id) {
+                            replyData[i].replies = replyData[i].replies.concat(replyData[j]);
+                        }
+                    }                    
+                }
+            }
+            this.replyData = replyData;
             this.author_name = topicDetail.data.author.loginname;
         },
         replyBtn(id, data) {
             this.replyBtnCheck === id ? this.replyBtnCheck = -1:this.replyBtnCheck = id;
             this.inputData = '';
         },
-        async postReplies() {
-            let login_data = JSON.parse(vs.get('login_data'));
-            let _accessToken = login_data.accessToken;
-            try {
-                await createReplies(this.topicId, id, this,inputData, _accessToken);
-            } catch (error) {
-                alert('出现神秘错误');
+        async postReplies(id, name) {
+            let _accessToken = vs.get('accessToken');
+            console.log(this.topicId, id, this.inputData, _accessToken);
+            if(_accessToken) {
+                try {
+                  this.inputData = '@'+name+' '+this.inputData;
+                  await createReplies(this.topicId, id, this.inputData, _accessToken);
+                } catch (error) {
+                    console.log(error);
+                    }
+            }else {
+                this.$router.push({ path: '/login' });
             }
         }
     }
@@ -190,6 +205,11 @@ export default {
                 word-break: break-word;
                 div {
                     margin: 10px 0;
+                }
+            }
+            .reply-item-msg {
+                a{
+                    text-decoration: none;
                 }
             }
             .reply-item-form {
