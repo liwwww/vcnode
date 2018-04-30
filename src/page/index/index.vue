@@ -169,8 +169,7 @@ export default {
                 &:hover {
                     background-image: url(../../commons/img/ypin.png);
                 }
-            }
-            );
+            });
         }
     }
 }
