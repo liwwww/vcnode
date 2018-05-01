@@ -21,7 +21,7 @@
                     <i>
                         <svg class="icon" aria-hidden="true"><use xlink:href="#icon-like__easyico"></use></svg>
                     </i>
-                    <span class="reply-tips-zan">赞
+                    <span class="reply-tips-zan" @click="ups(reply.id, reply)">{{ reply.ups.indexOf(userId) === -1 ? '赞':'已赞' }}
                         <a v-if="reply.ups.length > 0 ">
                             + {{ reply.ups.length }}
                         </a>
@@ -49,11 +49,22 @@
                 </div>
             </div>
         </div>
+        <div class="reply-comments">
+            <div class="comments-header">
+                <strong>评论</strong>
+            </div>
+            <div class="comments-textarea">
+                <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="commentsData"></el-input>
+            </div>
+            <div class="comments-btn">
+                <el-button @click="postReplies(reply.id, reply.author.loginname)">回复</el-button>
+            </div>
+        </div>
     </div>
 </template>
 
 <script>
-import { getTopic, createReplies } from '@/service/data';
+import { getTopic, createReplies, upsReply } from '@/service/data';
 import vs from '@/config/storage';
 export default {
     props: {
@@ -66,11 +77,15 @@ export default {
             replyData: [],
             author_name: '',
             replyBtnCheck: -1,
-            inputData: ''
+            inputData: '',
+            commentsData: '',
+            userId: ''
         }
     },
     created() {
         this.getTopicData(this.topicId);
+        this.userId = vs.get('login_data');
+        this.userId = this.userId.id || ''
     },
     methods: {
         async getTopicData(id) {
@@ -97,7 +112,6 @@ export default {
                 }
             }
             this.replyData = replyData;
-            console.log(JSON.stringify(this.replyData));
             this.author_name = topicDetail.data.author.loginname;
         },
         replyBtn(id, data) {
@@ -106,7 +120,6 @@ export default {
         },
         async postReplies(id, name) {
             let _accessToken = vs.get('accessToken');
-            console.log(this.topicId, id, this.inputData, _accessToken);
             if(_accessToken) {
                 try {
                   this.inputData = '@'+name+' '+this.inputData;
@@ -117,6 +130,22 @@ export default {
             }else {
                 this.$router.push({ path: '/login' });
             }
+        },
+        async ups (id, replyItem) {
+            let _accessToken = vs.get('accessToken');
+            if(_accessToken) {
+                try {
+                    let upsMsg = await upsReply(id, _accessToken);
+                    if(upsMsg.action === 'up') {
+                        replyItem.ups.push(this.userId);
+                    }else {
+                        replyItem.ups.splice(replyItem.ups.indexOf(this.userId), 1);
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            }
+            
         }
     }
 }
@@ -238,6 +267,19 @@ export default {
                 }
             }
         }
+    }
+}
+.reply-comments {
+    padding: 10px 0;
+    overflow: hidden;
+    .comments-header {
+        margin-bottom: 20px;
+    }
+    .comments-textarea {
+        margin-bottom: 20px;
+    }
+    .comments-btn {
+        float: right;
     }
 }
 </style>
