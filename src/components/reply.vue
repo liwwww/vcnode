@@ -1,6 +1,6 @@
 <template>
     <div class="reply-comtainer shadow-box">
-        <div class="reply-box" v-for="(reply, key) in replyData" :key="reply.id" v-if="!reply.reply_id">
+        <div class="reply-box" v-for="(reply, key) in replyData" :key="reply.id" v-if="reply&&!reply.reply_id">
             <div class="reply-left">
                 <router-link :to="{ path:'/user/'+reply.author.loginname }"><img :src="reply.author.avatar_url" alt="img" /></router-link>
             </div>
@@ -26,13 +26,16 @@
                             + {{ reply.ups.length }}
                         </a>
                     </span>
-                    <span class="reply-tips-btn" @click="replyBtn(key)">回复</span>
+                    <span class="reply-tips-btn" @click="replyBtn(key)">回复({{reply.replies.length}})</span>
                 </p>
                 <div class="reply-item-box" v-if="replyBtnCheck == key && replyBtnCheck >= 0">
                     <div class="reply-item-list" v-for="replies in reply.replies" :key="replies.id">
                         <div class="reply-item-content" v-html="replies.content"></div>
                         <div class="reply-item-msg">
-                            ——<router-link :to="{path: '/user/'+replies.author.loginname}">{{replies.author.loginname}}</router-link> · 1秒钟前
+                            ——<router-link :to="{path: '/user/'+replies.author.loginname}">{{replies.author.loginname}} </router-link><i v-if="author_name == replies.author.loginname"><svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-star"></use>
+                            </svg>
+                        </i> · 1秒钟前
                         </div>
                     </div>
                     <div class="reply-item-form">
@@ -75,15 +78,26 @@ export default {
             let replyData = topicDetail.data.replies;
             for (const i in replyData) {
                 if (replyData.hasOwnProperty(i)&&!replyData[i].reply_id) {
+                    let childId = '';
+                    let childName = '';
                     replyData[i] = {...replyData[i], 'replies': []};
                     for (const j in replyData) {
-                        if (replyData.hasOwnProperty(j)&&replyData[j].reply_id === replyData[i].id) {
+                        if (replyData.hasOwnProperty(j)&&replyData[j].reply_id&&replyData[j].reply_id === replyData[i].id) {
                             replyData[i].replies = replyData[i].replies.concat(replyData[j]);
+                            childId = replyData[j].id;
+                            childName = replyData[j].author.loginname;
                         }
-                    }                    
+                        if (replyData.hasOwnProperty(j)&&replyData[j].reply_id&&replyData[j].reply_id === childId) {
+                            replyData[j].content = '<span style="font-size:14px;float:left;line-height:1.7;">回复 '+childName+'：'+'</span>'+replyData[j].content
+                            replyData[i].replies = replyData[i].replies.concat(replyData[j]);
+                            childId = replyData[j].id;
+                            childName = replyData[j].author.loginname;
+                        }
+                    }              
                 }
             }
             this.replyData = replyData;
+            console.log(JSON.stringify(this.replyData));
             this.author_name = topicDetail.data.author.loginname;
         },
         replyBtn(id, data) {

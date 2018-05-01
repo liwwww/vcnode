@@ -52,6 +52,7 @@ export default {
         next();
         if(this.nowPage !== this.$route.query.tab) {
             this.loading = false;
+            this.nowPage = this._params;
             this.loadList();
         }       
   },
