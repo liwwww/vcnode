@@ -54,10 +54,10 @@
                 <strong>评论</strong>
             </div>
             <div class="comments-textarea">
-                <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="commentsData"></el-input>
+                <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="inputData"></el-input>
             </div>
             <div class="comments-btn">
-                <el-button @click="postReplies(reply.id, reply.author.loginname)">回复</el-button>
+                <el-button @click="postReplies('')">回复</el-button>
             </div>
         </div>
     </div>
@@ -122,8 +122,15 @@ export default {
             let _accessToken = vs.get('accessToken');
             if(_accessToken) {
                 try {
-                  this.inputData = '@'+name+' '+this.inputData;
-                  await createReplies(this.topicId, id, this.inputData, _accessToken);
+                    if(name) {
+                        this.inputData = '@'+name+' '+this.inputData;
+                    }  
+                  await createReplies(this.topicId, id, this.inputData, _accessToken).then((msg) => {
+                      if(msg.success) {
+                          this.getTopicData(this.topicId);
+                          this.inputData = '';
+                      }
+                  });
                 } catch (error) {
                     console.log(error);
                     }
@@ -144,6 +151,8 @@ export default {
                 } catch (error) {
                     console.log(error);
                 }
+            }else {
+                this.$router.push({ path: '/login' });
             }
             
         }
