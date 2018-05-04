@@ -26,9 +26,27 @@
             </div>
         </v-content>
         <v-release><!--<router-link :to="{ path: '/create', query: { tab: pageTab } }"><div class="release-btn"></div></router-link>-->
-            <li><router-link :to="{ path: '/create', query: { tab: pageTab } }"><a></a></router-link></li>
-			<li><a></a></li>
-			<li><a></a></li>
+            <li><router-link :to="{ path: '/create', query: { tab: pageTab } }">
+                <a>
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-xie"></use>
+                    </svg>
+                </a></router-link>
+            </li>
+			<li><router-link :to="{ path: '/create', query: { tab: pageTab } }">
+                <a>
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-i-mail"></use>
+                    </svg>
+                </a></router-link>
+            </li>
+			<li><router-link :to="{ path: '/create', query: { tab: pageTab } }">
+                <a>
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-user11"></use>
+                    </svg>
+                </a></router-link>
+            </li>
         </v-release>
     </div>
 </template>
