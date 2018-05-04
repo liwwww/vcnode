@@ -60,11 +60,13 @@
                 <el-button @click="postReplies('')">回复</el-button>
             </div>
         </div>
+        <v-notify ref="notify" v-show='true' ></v-notify>
     </div>
 </template>
 
 <script>
 import { getTopic, createReplies, upsReply } from '@/service/data';
+import vNotify from '@/components/notify';
 import vs from '@/config/storage';
 export default {
     props: {
@@ -72,6 +74,7 @@ export default {
             type: String
         }
     },
+    components: { vNotify },
     data() {
         return {
             replyData: [],
@@ -127,13 +130,24 @@ export default {
                     }  
                   await createReplies(this.topicId, id, this.inputData, _accessToken).then((msg) => {
                       if(msg.success) {
+                          this.$store.dispatch('getNotifyMsg', {
+                              title: '评论',
+                              info: '评论成功',
+                              type: 'success'
+                          });
+                          this.notify();
                           this.getTopicData(this.topicId);
                           this.inputData = '';
                       }
                   });
                 } catch (error) {
-                    console.log(error);
-                    }
+                    this.$store.dispatch('getNotifyMsg', {
+                              title: '评论',
+                              info: '评论失败',
+                              type: 'error'
+                          });
+                    this.notify();
+                }
             }else {
                 this.$router.push({ path: '/login' });
             }
@@ -154,7 +168,9 @@ export default {
             }else {
                 this.$router.push({ path: '/login' });
             }
-            
+        },
+        notify (){
+            this.$refs.notify.openNotify();
         }
     }
 }

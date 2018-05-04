@@ -4,7 +4,8 @@ import vs from '@/config/storage';
 import { checkUser, getUser } from '@/service/data';
 import {
     GET_ACCESSTOKEN,
-    CHECK_LOGININFO
+    CHECK_LOGININFO,
+    GET_NOTIFYMESSAGE
 } from './mutation-types';
 
 Vue.use(Vuex);
@@ -13,7 +14,10 @@ export default new Vuex.Store({
     state: {
         isLogin: false,
         loginInfo: '',
-        accessToken: ''
+        accessToken: '',
+        notifytitle: '',
+        notifyInfo: '',
+        notifySuccess: ''
     },
     mutations: {
         [GET_ACCESSTOKEN] (state, accessToken){
@@ -27,12 +31,20 @@ export default new Vuex.Store({
                 vs.set('login_data', infoArr.userInfo);
                 vs.set('accessToken', infoArr.accessToken);
             }
+        },
+        [GET_NOTIFYMESSAGE] (state, msg) {
+            state.notifytitle = msg.title;
+            state.notifyInfo = msg.info;
+            state.notifySuccess = msg.type;
         }
     },
     actions: {
         async checkLoginInfo ({ commit }, accessToken){
             let info = await checkUser(accessToken);
             commit('CHECK_LOGININFO', { 'userInfo': info,'accessToken': accessToken });
+        },
+        getNotifyMsg ({ commit }, msg){
+            commit('GET_NOTIFYMESSAGE', msg)
         }   
     }
 })

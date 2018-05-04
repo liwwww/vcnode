@@ -20,12 +20,14 @@
                 </el-form>
             </div>
         </v-content>
+        <v-notify ref="notify"></v-notify>
     </div>
 </template>
 
 <script>
 import vContent from '@/components/content';
 import { markdownEditor } from 'vue-simplemde';
+import vNotify from '@/components/notify'
 import { getTab, createTopic, checkUser } from '../../service/data';
 import vs from '@/config/storage';
 export default {
@@ -60,14 +62,20 @@ export default {
     },
     components: {
         markdownEditor,
-        vContent
+        vContent,
+        vNotify
     },
     methods: {
         createBtn (){
             if(this.tab && this.content && this.title) {
                 this.release();
             }else {
-                alert('补全信息');
+                this.$store.dispatch('getNotifyMsg', {
+                    title: '创建话题',
+                    info: '请补全信息',
+                    type: 'error'
+                });
+                this.notify();
             }
         }, 
         release (){
@@ -86,14 +94,27 @@ export default {
                     this.tab = this.tab ? this.tab : 'ask';
                     createTopic(_accessToken, this.title, this.tab, this.content).then((msg) => {
                         if(msg.success) {
+                            this.$store.dispatch('getNotifyMsg', {
+                            title: '创建话题',
+                            info: '创建成功',
+                            type: 'success'
+                            });
+                            this.notify();
                             this.$router.push({ path: '/detail', query: { id: msg.topic_id } });
                         }else {
-                            alert('err');
+                            this.$store.dispatch('getNotifyMsg', {
+                            title: '创建话题',
+                            info: '服务器或用户信息错误',
+                            type: 'error'
+                            });
+                            this.notify();
                         }
                     });
                 }
-            })
-            
+            })  
+        },
+        notify (){
+            this.$refs.notify.openNotify();
         }
     }
 }

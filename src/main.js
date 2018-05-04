@@ -6,7 +6,25 @@ import router from './router'
 import store from './store/index'
 import vs from './config/storage'
 
-import {Menu, MenuItem, Row, Submenu, Col, MenuItemGroup, Switch, Input, Button, Radio, RadioGroup, RadioButton, Form, FormItem, Table, Loading} from 'element-ui'
+import {
+  Menu, 
+  MenuItem, 
+  Row, 
+  Submenu, 
+  Col, 
+  MenuItemGroup, 
+  Switch, 
+  Input, 
+  Button, 
+  Radio, 
+  RadioGroup, 
+  RadioButton, 
+  Form, 
+  FormItem, 
+  Table, 
+  Loading,
+  Notification
+} from 'element-ui'
 
 Vue.use(Menu);
 Vue.use(MenuItem);
@@ -25,7 +43,9 @@ Vue.use(FormItem);
 /*Vue.use(Table);
 Vue.use(Loading.directive);
 
+
 Vue.prototype.$loading = Loading.service;*/
+Vue.prototype.$notify = Notification;
 
 Vue.config.productionTip = false
 
