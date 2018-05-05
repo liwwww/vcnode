@@ -13,7 +13,7 @@
                                 <use xlink:href="#icon-star"></use>
                             </svg>
                         </i>
-                        <span>{{'· '+reply.create_at}}</span>
+                        <span>· {{ reply.create_at | formatTime }}</span>
                     </div>
                 </div>
                 <div class="reply-content" v-html="reply.content"></div>
@@ -35,7 +35,7 @@
                             ——<router-link :to="{path: '/user/'+replies.author.loginname}">{{replies.author.loginname}} </router-link><i v-if="author_name == replies.author.loginname"><svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-star"></use>
                             </svg>
-                        </i> · 1秒钟前
+                        </i> · {{ replies.create_at | formatTime }}
                         </div>
                     </div>
                     <div class="reply-item-form">
@@ -268,7 +268,7 @@ export default {
             overflow: hidden;
             .reply-item-list {
                 font-size: 14px;
-                padding: 10px 0 10px 40px;
+                padding: 10px 0;
                 border-bottom: 1px dashed rgba(0, 0, 0, 0.09);
                 word-break: break-word;
                 div {

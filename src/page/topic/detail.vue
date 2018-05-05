@@ -14,7 +14,7 @@
                             </router-link>
                             <span>{{ detail.author.loginname }}</span>
                         </div>
-                        <div class="user-create-time">{{ detail.create_at }}</div>
+                        <div class="user-create-time">{{ detail.create_at | formatTime }}</div>
                     </div>
                     <div class="content-main" v-html='detail.content'></div>
                 </div>

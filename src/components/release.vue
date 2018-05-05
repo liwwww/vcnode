@@ -33,7 +33,7 @@ export default {
   position: fixed;
   right: 0;
   bottom: 0;
-  margin: 30px;
+  margin: 22px;
   border-radius: 50%;
   cursor: pointer;
   background: #409eff;
@@ -119,6 +119,14 @@ export default {
         &:nth-child(3) a {
           transition-delay: 0.32s;
           transform: translateY(-55px);
+        }
+        &:nth-child(4) {
+          transition-delay: 0.16s;
+          transform: translateY(-160px);
+        }
+        &:nth-child(4) a {
+          transition-delay: 0.32s;
+          transform: translateY(-60px);
         }
       }
     }

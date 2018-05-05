@@ -82,7 +82,7 @@ export default {
             if(!this.loginData) {
                 this.$router.push({ path: '/login' });
             }
-            let _accessToken = JSON.parse(this.loginData).access_token;
+            let _accessToken = JSON.parse(this.loginData).accessToken;
             checkUser(_accessToken).then((msg) => {
                 if(msg.success) {
                     let tabList = this.tabs;

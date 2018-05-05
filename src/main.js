@@ -5,6 +5,7 @@ import App from './App'
 import router from './router'
 import store from './store/index'
 import vs from './config/storage'
+import * as filters from './filters/index'
 
 import {
   Menu, 
@@ -48,6 +49,8 @@ Vue.prototype.$loading = Loading.service;*/
 Vue.prototype.$notify = Notification;
 
 Vue.config.productionTip = false
+
+Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.login)) {

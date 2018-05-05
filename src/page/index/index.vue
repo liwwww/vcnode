@@ -18,7 +18,7 @@
                             <span>
                                 <i class="el-icon-edit-outline" style="margin: 10px 0 0 15px;"></i>{{ nav.reply_count }}</span>
                             <span>
-                                <i class="el-icon-refresh" style="margin: 10px 0 0 15px;"></i>5 秒前</span>
+                                <i class="el-icon-refresh" style="margin: 10px 0 0 15px;"></i>{{ nav.last_reply_at | formatTime }}</span>
                         </div>
                     </div>
                     <i class="list-pin" @click="pinClick(nav, index)" v-bind:class="{ isPin: nav.checkPin }"></i>
@@ -40,7 +40,14 @@
                     </svg>
                 </a></router-link>
             </li>
-			<li><router-link :to="{ path: '/create', query: { tab: pageTab } }">
+			<li v-if="userName"><router-link :to="{ path: '/user/'+userName }">
+                <a>
+                    <svg class="icon" aria-hidden="true">
+                        <use xlink:href="#icon-user11"></use>
+                    </svg>
+                </a></router-link>
+            </li>
+            <li v-if="!userName"><router-link :to="{ path: '/login' }">
                 <a>
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-user11"></use>
@@ -67,8 +74,12 @@ export default {
             pageTab: '',
             loading: false,
             nowPage: '',
-            _params: ''
+            _params: '',
+            userName: ''
         };
+    },
+    activated (){
+        this.userName = vs.get('login_data').loginname;
     },
     beforeRouteUpdate (to, from, next) {
         next();
@@ -79,8 +90,8 @@ export default {
   },
     created() {
         this._params = this.$route.query.tab;
-         this.loadList();
-         this.nowPage = this._params;
+        this.loadList();
+        this.nowPage = this._params;
     },
     methods: {
         loadList() {

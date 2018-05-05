@@ -10,22 +10,22 @@
                     <div class="user-msg">
                         <div class="msg-loginname">
                             <strong class="msgName-item">
-                                <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#icon-star"></use>
+                                <!--<svg class="icon" aria-hidden="true">
+                                    <use xlink:href="#-github"></use>
                                 </svg>
-                                {{userMsg.loginname}}
+                                {{userMsg.loginname}}-->
                                 <a class="msg-githubName msgName-item" target="_blank" :href="githubLink" style="color:#666">
                                 <svg class="icon" aria-hidden="true">
                                     <use xlink:href="#icon-github"></use>
                                 </svg>
-                                @{{userMsg.githubUsername}}
+                                {{userMsg.loginname}}
                             </a>
                             </strong>
                         </div>
                         <div class="msg-score" v-if="userMsg.githubUsername">
                             <a class="msgName-item" target="_blank" :href="githubLink" style="color:#666">
                                 <svg class="icon" aria-hidden="true">
-                                    <use xlink:href="#icon-github"></use>
+                                    <use xlink:href="#icon-qianbi-"></use>
                                 </svg>
                                 {{userMsg.score}}
                             </a>
@@ -35,7 +35,8 @@
                 <div class="user-detail">
                     <a class="detail-numberBorad" :class="{ userTabActive: index === listName.arrow }" v-for="(numBorad, key, index) in topicList" :key="numBorad.id" @click="getList(numBorad, index)">
                         <div class="numberBorad-name">{{ listName[key] }}</div>
-                        <div class="numberBorad-num">{{ index != 1 ? numBorad.length:"5天前" }}</div>
+                        <div class="numberBorad-num" v-if="index === 1">{{ lastTime | formatTime }}</div>
+                        <div class="numberBorad-num" v-if="index != 1">{{ numBorad.length }}</div>
                     </a>
                     <!--<a class="detail-numberBorad" @click="getList(replies)">
                         <div class="numberBorad-name">最近评论</div>
@@ -52,7 +53,7 @@
                             <img :src="list.author.avatar_url" alt="author_avatar" />
                         </div>
                         <div class="item-title" @click="linkDetail(list.id)">{{ list.title }}</div>
-                        <div class="item-time">一天前</div>
+                        <div class="item-time">{{ list.last_reply_at | formatTime }}</div>
                     </div>
                     <div class="item-empty" v-if="detailList <= 0">暂无数据~~</div>
                 </div>
@@ -74,6 +75,7 @@ export default {
       githubLink: "https://www.github.com/" + this.$route.params.name,
       detailList: '',
       topicList: '',
+      lastTime: '',
       listName: {_topics:'发帖', _replies:'最近回复', _collect:'收藏', arrow: 0}
     };
   },
@@ -90,7 +92,7 @@ export default {
   },
   methods: {
     async getUserMsg() {
-      let userName = this.$route.params.name
+      let userName = this.$route.params.name;
       this.userMsg = await getUser(userName);
       this.collect = await getUserCollect(userName); 
       const collect = this.collect.data;
@@ -98,6 +100,7 @@ export default {
       const topics =  this.userMsg.recent_topics
       this.detailList = topics;
       const replies = this.userMsg.recent_replies;
+      this.lastTime = replies[0].last_reply_at;
       this.topicList = {'_topics': topics, '_replies': replies, '_collect': collect};
     },
     getList(list, index) {
@@ -158,8 +161,8 @@ export default {
       float: left;
       img {
         display: inline-block;
-        width: 68px;
-        height: 68px;
+        width: 64px;
+        height: 64px;
         border-radius: 100%;
       }
     }
@@ -168,7 +171,7 @@ export default {
       justify-content: center;
       flex-direction: column;
       .msg-githubName {
-          margin-left: 10px;
+          //margin-left: 10px;
       }
       .msg-loginname,
       .msg-score {
@@ -254,7 +257,7 @@ export default {
         border-left: 10px solid transparent;
         border-right: 10px solid transparent;
         position: absolute;
-        margin-left: -10px;
+        margin-left: -9px;
         bottom: -22px;
         }
   }
