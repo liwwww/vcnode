@@ -12,9 +12,21 @@
                             <router-link :to="{ path: '/user/'+detail.author.loginname }">
                             <img :src="detail.author.avatar_url" alt="头像" />
                             </router-link>
-                            <span>{{ detail.author.loginname }}</span>
+                            <span>{{ detail.author.loginname }} · {{ detail.create_at | formatTime }}</span>
                         </div>
-                        <div class="user-create-time">{{ detail.create_at | formatTime }}</div>
+                        <div class="user-create-more" @click="showMore">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-gengduo"></use>
+                            </svg>
+                        </div>
+                    <div class="more-list" v-if="clickMore">
+                        <ul @click="showMore">
+                            <li>收藏</li>
+                            <li>编辑</li>
+                        </ul>
+                        <span></span>            
+                    </div>
+                    <div class="clearfloat" style="clear: both;"></div>
                     </div>
                     <div class="content-main" v-html='detail.content'></div>
                 </div>
@@ -40,7 +52,8 @@ export default {
                 } 
             },
             id: this.$route.query.id,
-            detailName: 'topic_detail' 
+            detailName: 'topic_detail',
+            clickMore: false 
         }
     },
     created () {
@@ -48,16 +61,23 @@ export default {
             this.detail = msg.data;
         });
     },
+    methods: {
+        showMore (){
+            this.clickMore = !this.clickMore;
+        }
+    },
     components: { vHeader, vContent, vReply }
 }
 </script>
 
 <style scoped lang="less">
 .content {
+    position: relative;
     padding: 0;
     margin-top: 16px;
     border-radius: 2px;
     background-color: #fff;
+    z-index: 1;
     .content-menu {
         padding: 20px 16px;
         font-size: 15px;
@@ -68,13 +88,15 @@ export default {
         }
     }
     .content-detail {
+        position: relative;
         padding: 14px 16px;
         box-sizing: border-box;
+        z-index: 10;
         .content-user {
             position: relative;
             width: 100%;
-            overflow: hidden;
             font-size: 13px;
+            z-index: 200;
             .user-detail {
                 float: left;
                 img {
@@ -92,15 +114,73 @@ export default {
                     text-decoration: none;
                 }
             }
-            .user-create-time {
+            .user-create-more {
+                position: relative;
                 margin: 5px 0 0 20px;
                 float: right;
+                font-size: 26px;
+                cursor: pointer;
+            }
+            .more-list {
+                position: absolute;
+                text-align: center;
+                right: 0;
+                bottom: -73px;
+                width: 120px;
+                font-size: 14px;
+                background: #fff;
+                border: 1px solid #ebebeb;
+                color: #8590a6;
+                border-radius: 4px;
+                box-shadow: 0 5px 20px rgba(26,26,26,.1);
+                span {
+                    position: absolute;
+                    top: -15px;
+                    right: 5px;
+                    width: 0;
+                    height: 0;
+                    border: 7px solid transparent;
+                    border-bottom-color: #ebebeb;
+                    &:after {
+                        content: "";
+                        position: absolute;
+                        display: block;
+                        top: -7px;
+                        right: 0;
+                        width: 0;
+                        height: 0;
+                        transform: translateX(50%);
+                        border: 8px solid transparent;
+                        border-bottom-color: #fff;
+                    }
+                }  
+                ul {
+                    padding: 6px 0;
+                    li {
+                        display: block;
+                        width: 100%;
+                        padding: 0 20px;
+                        text-align: center;
+                        cursor: pointer;
+                        line-height: 28px;
+                        box-sizing: border-box;
+                        z-index: 200;
+                        &:hover {
+                            background-color: #f6f6f6;
+                            color: #77839c;
+                        }
+                    }
+                }
             }
         }
         .content-main {
+            position: relative;
             font-size: 14px;
             line-height: 22px;
             padding: 24px 26px;
+            box-sizing: border-box;
+            overflow: hidden;
+            z-index: 101;
         }
     }
 }

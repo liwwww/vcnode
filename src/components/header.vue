@@ -1,13 +1,13 @@
 <template>
   <header>
     <div class="menu-top">
-      <div class="menu-icon" @click="menuCtrl">
+      <!--<div class="menu-icon" @click="menuCtrl">
         <i></i>
-      </div>
-      <router-link :to="{name: 'index',params:{ tab:'dev'}}"><span class="menu-text">VUE</span></router-link>
+      </div>-->
+      <router-link :to="{ path: '/' }"><span class="menu-text">VUE</span></router-link>
       <el-switch v-model="value2" active-color="#F2F6FC" inactive-color="#67C23A"></el-switch>
     </div>
-    <transition name="slide-fade-mask">
+    <!--<transition name="slide-fade-mask">
       <div class="menu-mask" @click="menuCtrl" v-show="menuClick"></div>
     </transition>
     <transition name="slide-fade-menu">
@@ -23,7 +23,7 @@
           </el-menu-item>
         </el-menu>
       </el-col>
-    </transition>
+    </transition>-->
   </header>
 </template>
 
@@ -96,7 +96,7 @@ header {
   box-sizing: border-box;
   background-color: #409EFF;
   overflow: hidden;
-  box-shadow: 0 1px 12px rgba(0, 0, 0, .22);
+  box-shadow: 0 1px 3px rgba(26,26,26,.2);
   z-index: 100;
   .menu-icon {
     position: relative;
@@ -127,8 +127,8 @@ header {
     display: inline-block;
     top: 0;
     bottom: 0;
-    margin: auto 40px;
-    height: 100%;
+    margin: auto 0;
+    line-height: 24px;
     font-size: 24px;
     color: #fff;
     box-sizing: border-box;

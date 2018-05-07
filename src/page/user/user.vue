@@ -35,7 +35,7 @@
                 <div class="user-detail">
                     <a class="detail-numberBorad" :class="{ userTabActive: index === listName.arrow }" v-for="(numBorad, key, index) in topicList" :key="numBorad.id" @click="getList(numBorad, index)">
                         <div class="numberBorad-name">{{ listName[key] }}</div>
-                        <div class="numberBorad-num" v-if="index === 1">{{ lastTime | formatTime }}</div>
+                        <div class="numberBorad-num test" v-if="index === 1">{{ lastTime | formatTime }}活跃</div>
                         <div class="numberBorad-num" v-if="index != 1">{{ numBorad.length }}</div>
                     </a>
                     <!--<a class="detail-numberBorad" @click="getList(replies)">
@@ -53,7 +53,7 @@
                             <img :src="list.author.avatar_url" alt="author_avatar" />
                         </div>
                         <div class="item-title" @click="linkDetail(list.id)">{{ list.title }}</div>
-                        <div class="item-time">{{ list.last_reply_at | formatTime }}</div>
+                        <div class="item-time">{{ list.create_at ? list.create_at : list.last_reply_at | formatTime }}</div>
                     </div>
                     <div class="item-empty" v-if="detailList <= 0">暂无数据~~</div>
                 </div>
@@ -143,7 +143,7 @@ export default {
   box-sizing: border-box;
   overflow: hidden;
   border-radius: 2px;
-  background: linear-gradient( #BFDAF5, #F2F6FC);
+  background: linear-gradient(to left, #BFDAF5, #F2F6FC);
   .user-header {
     display: flex;
     padding: 14px 16px;
@@ -230,7 +230,11 @@ export default {
               }
           }
           .item-title {
-            width: 70%; 
+            width: 80%;
+            .mixin-screen-md({
+                width: 62%;
+            });
+            box-sizing: border-box;  
             vertical-align: middle;
             white-space: nowrap;
             text-overflow: ellipsis;
@@ -261,5 +265,8 @@ export default {
         bottom: -22px;
         }
   }
+}
+.test {
+    font-size: 1em;
 }
 </style>

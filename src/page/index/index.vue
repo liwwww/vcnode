@@ -5,7 +5,7 @@
                 <el-row class="list" v-for="n in 10" :key="n.index" v-if="!loading">
                     <vtloding></vtloding>
                 </el-row>
-                <el-row class="list" v-for="(nav, index) in list" :key="nav.index" v-if="loading">
+                <el-row class="list shadow-box" v-for="(nav, index) in list" :key="nav.id" v-if="loading">
                     <div class="list-avatar">
                         <router-link :to="{ name: 'user', params: { name: nav.author.loginname }}"><img :src="nav.author.avatar_url"/></router-link>
                     </div>
@@ -13,8 +13,22 @@
                         <a>{{ nav.title }}</a>
                         <p>{{ nav.content.replace(new RegExp('<[^>]*>','g'),'') }}</p>
                         <div class="list-tips" style="font-size:13px;color:#999;">
+                            <span class="tips-top">
+                                <i>
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-crown"></use>
+                                    </svg>
+                                </i>
+                            </span>
+                            <span class="tips-good">
+                                <i style="margin: 10px 0 0 15px;">
+                                    <svg class="icon" aria-hidden="true">
+                                        <use xlink:href="#icon-star"></use>
+                                    </svg>
+                                </i>
+                            </span>
                             <span>
-                                <i class="el-icon-view"></i>{{ nav.visit_count }}</span>
+                                <i class="el-icon-view" style="margin: 10px 0 0 15px;"></i>{{ nav.visit_count }}</span>
                             <span>
                                 <i class="el-icon-edit-outline" style="margin: 10px 0 0 15px;"></i>{{ nav.reply_count }}</span>
                             <span>
@@ -25,7 +39,8 @@
                 </el-row>
             </div>
         </v-content>
-        <v-release><!--<router-link :to="{ path: '/create', query: { tab: pageTab } }"><div class="release-btn"></div></router-link>-->
+        <v-release>
+            <ul class="user-menu">
             <li><router-link :to="{ path: '/create', query: { tab: pageTab } }">
                 <a>
                     <svg class="icon" aria-hidden="true">
@@ -33,7 +48,7 @@
                     </svg>
                 </a></router-link>
             </li>
-			<li><router-link :to="{ path: '/create', query: { tab: pageTab } }">
+			<li v-if="userName"><router-link :to="{ path: '/create', query: { tab: pageTab } }">
                 <a>
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-i-mail"></use>
@@ -54,6 +69,7 @@
                     </svg>
                 </a></router-link>
             </li>
+          </ul>
         </v-release>
     </div>
 </template>
@@ -75,7 +91,8 @@ export default {
             loading: false,
             nowPage: '',
             _params: '',
-            userName: ''
+            userName: '',
+            test: ''
         };
     },
     activated (){
@@ -184,6 +201,11 @@ export default {
                 font-size: 12px;
                 color: #909399;
             }
+            .list-tips {
+                .tips-top, .tips-good {
+                    display: none;
+                }
+            }
         }
 
         .list-pin {
@@ -204,6 +226,16 @@ export default {
                 }
             });
         }
+    }
+}
+.tipsShowTop {
+    .tips-top {
+        display: inline-block !important;
+    }
+}
+.tipsShowGood {
+    .tips-good {
+        display: inline-block !important;
     }
 }
 </style>
