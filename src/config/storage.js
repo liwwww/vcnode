@@ -10,8 +10,9 @@ export default {
     },
     get (key){
         let sessionData = VC_STORAGE.getItem(CACHE_NAME);
-        let isSession = JSON.parse(sessionData)[SESSION_NAME];
+        let isSession = JSON.parse(sessionData)['SESSION_NAME'];
         let getData = isSession ? VC_SESSION_STORAGE.getItem(CACHE_NAME) : VC_STORAGE.getItem(CACHE_NAME);
+        console.log(getData);
         if(!getData) {
             return false;
         }else {
