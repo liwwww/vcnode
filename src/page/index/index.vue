@@ -96,7 +96,7 @@ export default {
         };
     },
     activated (){
-        this.userName = vs.get('login_data').loginname;
+        this.userName = vs.get('login_data') ? vs.get('login_data').loginname : '';
     },
     beforeRouteUpdate (to, from, next) {
         next();
