@@ -3,20 +3,20 @@
         <v-content>
             <div class="create-container shadow-box">
                 <el-form label-width="40px">
-                    <el-form-item label="标题">
-                        <el-input v-model="title" placeholder="请输入标题" clearable></el-input>
-                    </el-form-item>
-                    <el-form-item label="板块">
+                    <div class="create-row row-input"> 
+                        <el-input id="create-form-title" type="textarea" :rows="1" :autosize="{ minRows: 1, maxRows: 3}" placeholder="请输入标题" v-model="title"></el-input>
+                    </div>
+                    <div class="create-row">
                         <el-radio-group v-model="radio">
-                        <el-radio-button v-for="tabName in tabs" v-if="tabName.release" :key="tabName.tab" :label="tabName.name"></el-radio-button>
-                    </el-radio-group>
-                    </el-form-item>
-                    <el-form-item label="正文">
-                        <markdown-editor v-model="content" :configs="configs" ref="markdownEditor"></markdown-editor>
-                    </el-form-item>
-                    <el-form-item>
-                        <el-button type="primary" @click="createBtn()">提交</el-button>
-                    </el-form-item>
+                            <el-radio-button class="create-radio" v-for="tabName in tabs" v-if="tabName.release" :key="tabName.tab" :label="tabName.name"></el-radio-button>
+                        </el-radio-group>
+                    </div>
+                    <div class="create-row">       
+                        <markdown-editor v-model="content" :configs="configs" ref="markdownEditor"></markdown-editor>                       
+                    </div>
+                    <div class="create-row">                       
+                        <el-button type="primary" @click="createBtn()">提交</el-button>                       
+                    </div>
                 </el-form>
             </div>
         </v-content>
@@ -123,19 +123,59 @@ export default {
 @import '../../commons/style/simplemde.min.css';
 @import '../../commons/style/mixin.less';
 .create-container {
-    margin-top: -33px;
     background-color: #fff;
     .mixin-screen-sm({
         padding: 10px;
     });
     padding: 50px 45px;
     box-sizing: border-box;
+    .create-row {
+        position: relative;
+        padding: 12px 0;
+        box-sizing: border-box;
+        div {
+            border-right-width: 0!important;
+            border-left-width: 0!important;
+            border-radius: 0;   
+        }
+        .create-radio span{
+            border-width: 0 !important;
+            border-bottom: 1px solid #dcdfe6 !important;  
+        }
+    }
+    .row-input {
+        position: relative;
+        display: flex;
+        font-size: 14px;
+        background: #fff;
+        box-sizing: border-box;
+        border: 0;
+        padding: 0;
+        height: auto;
+        width: 100%;
+            #create-form-title {
+            height: auto;
+            min-height: 38px;
+            display: block;
+            width: 100%;
+            border: 0;
+            font-size: 28px;
+            line-height: 1.4;
+            font-weight: 600;
+            font-synthesis: style;
+            box-shadow: none;
+            outline: none;
+            resize: none;
+            overflow: hidden;
+        }
+    }
 }
-.editor-toolbar {
+
+/*.editor-toolbar {
     .mixin-screen-sm({
         display: none;
     });
-}
+}*/
 .el-radio-button {
     .mixin-screen-sm({
         zoom: .8;

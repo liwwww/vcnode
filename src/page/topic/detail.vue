@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div @click="clickMore = false">
         <v-content>
             <div class="content shadow-box">
                 <div class="content-menu">
@@ -14,13 +14,13 @@
                             </router-link>
                             <span>{{ detail.author.loginname }} · {{ detail.create_at | formatTime }}</span>
                         </div>
-                        <div class="user-create-more" @click="showMore">
+                        <div class="user-create-more" @click.stop="clickMore = !clickMore">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-gengduo"></use>
                             </svg>
                         </div>
                     <div class="more-list" v-if="clickMore">
-                        <ul @click="showMore">
+                        <ul>
                             <li>收藏</li>
                             <li>编辑</li>
                         </ul>
@@ -62,9 +62,7 @@ export default {
         });
     },
     methods: {
-        showMore (){
-            this.clickMore = !this.clickMore;
-        }
+
     },
     components: { vHeader, vContent, vReply }
 }
