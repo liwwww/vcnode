@@ -14,7 +14,7 @@ export default {
             this.init();
             sessionData = VC_STORAGE.getItem(CACHE_NAME);
         }
-        let isSession = JSON.parse(sessionData)['SESSION_NAME'];
+        let isSession = JSON.parse(sessionData)[SESSION_NAME];
         let getData = isSession ? VC_SESSION_STORAGE.getItem(CACHE_NAME) : VC_STORAGE.getItem(CACHE_NAME);
         if(!getData) {
             return false;

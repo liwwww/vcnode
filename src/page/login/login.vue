@@ -52,6 +52,8 @@ export default {
       this.logining = true;
       if(!this.saveToken) {
         vs.set('SESSION_STORAGE', true);
+      }else {
+        vs.set('SESSION_STORAGE', false);
       }
       this.$store.dispatch('checkLoginInfo', this.token).then(() => {
         if(this.$store.state.isLogin) {
