@@ -54,7 +54,7 @@
                 <strong>评论</strong>
             </div>
             <div class="comments-textarea">
-                <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="inputData"></el-input>
+                <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="inputData2"></el-input>
             </div>
             <div class="comments-btn">
                 <el-button @click="postReplies('')">回复</el-button>
@@ -81,13 +81,16 @@ export default {
             author_name: '',
             replyBtnCheck: -1,
             inputData: '',
+            inputData2: '',
+            postData: '',
             commentsData: '',
-            userId: ''
+            userId: '',
+            isSession: vs.get('SESSION_STORAGE', false)
         }
     },
     created() {
         this.getTopicData(this.topicId);
-        this.userId = vs.get('login_data');
+        this.userId = vs.get('login_data', this.isSession);
         this.userId = this.userId.id || ''
     },
     methods: {
@@ -122,13 +125,15 @@ export default {
             this.inputData = '';
         },
         async postReplies(id, name) {
-            let _accessToken = vs.get('accessToken');
+            let _accessToken = vs.get('accessToken', this.isSession);
+            let inputData = id && name ? this.inputData : this.inputData2;
+            this.postData = inputData;
             if(_accessToken) {
                 try {
                     if(name) {
-                        this.inputData = '@'+name+' '+this.inputData;
+                        inputData = '@'+name+' '+inputData;
                     }  
-                  await createReplies(this.topicId, id, this.inputData, _accessToken).then((msg) => {
+                  await createReplies(this.topicId, id, inputData, _accessToken).then((msg) => {
                       if(msg.success) {
                           this.$store.dispatch('getNotifyMsg', {
                               title: '评论',
@@ -137,7 +142,7 @@ export default {
                           });
                           this.notify();
                           this.getTopicData(this.topicId);
-                          this.inputData = '';
+                          inputData = '';
                       }
                   });
                 } catch (error) {
@@ -153,7 +158,7 @@ export default {
             }
         },
         async ups (id, replyItem) {
-            let _accessToken = vs.get('accessToken');
+            let _accessToken = vs.get('accessToken', this.isSession);
             if(_accessToken) {
                 try {
                     let upsMsg = await upsReply(id, _accessToken);
@@ -273,6 +278,7 @@ export default {
                 word-break: break-word;
                 div {
                     margin: 10px 0;
+                    font-size: 12px;
                 }
             }
             .reply-item-msg {

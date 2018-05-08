@@ -4,7 +4,7 @@ import vs from '@/config/storage';
 export const getTopics = ( tab, page ) => vfetch('/topics', 'GET', {
     page: page || 1,
     tab: tab,
-    limit: 30,
+    limit: 15,
     mdrender: 'true'
 })
 

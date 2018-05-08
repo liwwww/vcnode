@@ -23,11 +23,12 @@ export default {
   data() {
     return {
       isClick: false,
-      tab: []
+      tab: [],
+      isSession: vs.get('SESSION_STORAGE', false)
     };
   },
   created() {
-    this.userName = vs.get('login_data') ? vs.get('login_data').loginname : '';
+    this.userName = vs.get('login_data', this.isSession) ? vs.get('login_data', this.isSession).loginname : '';
     this.tab = getTab();
   },
   methods: {

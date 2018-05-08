@@ -54,7 +54,8 @@ Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.login)) {
-    if (!vs.get('accessToken')) {
+    let isSession = vs.get('SESSION_STORAGE');
+    if (!vs.get('accessToken', isSession)) {
       next({
         path: '/login',
         query: { redirect: to.fullPath }

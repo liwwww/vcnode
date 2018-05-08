@@ -39,11 +39,14 @@ export default {
       token: "",
       inputText: "是否保存token",
       logining: false,
-      loginMsg: ''
+      loginMsg: '',
+      isSession: ''
     };
   },
   beforeCreate() {
-    if(vs.get('login_data')) {
+    this.$store.dispatch('getLocalStorage');
+    this.isSession = this.$store.state.isSession;
+    if(vs.get('login_data', this.isSession)) {
       this.$router.push({ path: "/index", name: "index" });
     }
   },

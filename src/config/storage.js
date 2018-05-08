@@ -8,19 +8,13 @@ export default {
         VC_STORAGE.setItem(CACHE_NAME,'{"SESSION_STORAGE": "false"}');
         VC_SESSION_STORAGE.setItem(CACHE_NAME,'{}');
     },
-    get (key){
-        let sessionData = VC_STORAGE.getItem(CACHE_NAME);
-        if(!sessionData){
-            this.init();
-            sessionData = VC_STORAGE.getItem(CACHE_NAME);
-        }
-        let isSession = JSON.parse(sessionData)[SESSION_NAME];
+    get (key, isSession){
         let getData = isSession ? VC_SESSION_STORAGE.getItem(CACHE_NAME) : VC_STORAGE.getItem(CACHE_NAME);
         if(!getData) {
-            return false;
-        }else {
-            return JSON.parse(getData)[key];
+            this.init();
+            getData = VC_STORAGE.getItem(CACHE_NAME);
         }
+        return JSON.parse(getData)[key]; 
     },
     set (key, value, isSession){
         var setData = isSession ? VC_SESSION_STORAGE.getItem(CACHE_NAME) : VC_STORAGE.getItem(CACHE_NAME);

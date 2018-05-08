@@ -2,7 +2,7 @@
 <div>
     <v-header></v-header>
         <div class="container">
-            <div class="user-container">
+            <div class="user-container shadow-box">
                 <div class="user-header">
                     <div class="user-avatar">
                         <img :src="userMsg.avatar_url" alt="user-avatar" />
@@ -232,7 +232,7 @@ export default {
           .item-title {
             width: 80%;
             .mixin-screen-md({
-                width: 62%;
+                width: 52%;
             });
             box-sizing: border-box;  
             vertical-align: middle;

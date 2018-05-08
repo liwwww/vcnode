@@ -37,6 +37,9 @@
                     </div>
                     <i class="list-pin" @click="pinClick(nav, index)" v-bind:class="{ isPin: nav.checkPin }"></i>
                 </el-row>
+                <div class="load-container">
+                    <el-button class="loadBtn" type="primary" :loading="isLoading" @click="isLoad">加载更多</el-button>
+                </div>
             </div>
         </v-content>
         <v-release>
@@ -92,11 +95,13 @@ export default {
             nowPage: '',
             _params: '',
             userName: '',
-            test: ''
+            test: '',
+            isSession: vs.get('SESSION_STORAGE', false),
+            isLoading: false
         };
     },
     activated (){
-        this.userName = vs.get('login_data') ? vs.get('login_data').loginname : '';
+        this.userName = vs.get('login_data', this.isSession) ? vs.get('login_data', this.isSession).loginname : '';
     },
     beforeRouteUpdate (to, from, next) {
         next();
@@ -127,6 +132,17 @@ export default {
         },
         getDetail(id) {
             this.$router.push({path: '/detail', query: { id: id}});
+        },
+        isLoad (){
+            this.isLoading = !this.isLoading;
+            let getTab = this.$route.query.tab ? this.$route.query.tab : 'all';
+            let nextName = 'CACHE_item_';
+            let content = vs.get(nextName+getTab, true);
+            let pageNum = content ? ~~(content.length/15)+1 : 2;  
+            this.$store.dispatch('getNextPage', { tab: getTab, page: pageNum });
+            this.list = this.list.concat(this.$store.state.nextContent);
+            console.log(this.list.length+this.$store.state.nextContent);
+            this.isLoading = !this.isLoading;
         }
     },
     components: { vContent, vHeader, vRelease, vtloding }
@@ -220,13 +236,25 @@ export default {
             background-repeat: no-repeat;
             background-image: url(../../commons/img/npin.png);
             cursor: pointer;
-            .mixin-screen-lg( {
-                &:hover {
-                    background-image: url(../../commons/img/ypin.png);
-                }
-            });
+            &:hover {
+                background-image: url(../../commons/img/ypin.png);
+            }  
         }
     }
+    .load-container {
+    position: relative;
+    width: 100%;
+    padding: 14px 10px;
+    .loadBtn {
+    position: relative;
+    display: inherit;
+    width: 180px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+    }
+}
 }
 .tipsShowTop {
     .tips-top {

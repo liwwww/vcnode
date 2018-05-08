@@ -38,7 +38,7 @@ export default {
             radio: '',
             title: '',
             content: '',
-            loginData: vs.get('login_data'),                                    // markdown编辑器内容
+            loginData: '',                                    // markdown编辑器内容
             configs: {                                    // markdown编辑器配置参数
                 status: false,                            // 禁用底部状态栏
                 initialValue: '请输入要编辑的内容....',                // 设置初始值
@@ -46,11 +46,13 @@ export default {
                     codeSyntaxHighlighting: false,        // 开启代码高亮
                     highlightingTheme: 'atom-one-light' // 自定义代码高亮主题
                 }
-            }
+            },
+            isSession: vs.get('SESSION_STORAGE', false)
         }
     },
     created() {
         let tabParam = this.$route.query.tab;
+        this.loginData = vs.get('login_data', this.isSession);
         let tabList = getTab();
         this.tabs = tabList;
         for (var i in tabList) {
@@ -67,7 +69,7 @@ export default {
     },
     methods: {
         createBtn (){
-            if(this.tab && this.content && this.title) {
+            if(this.getRadio(this.radio) && this.content && this.title) {
                 this.release();
             }else {
                 this.$store.dispatch('getNotifyMsg', {
@@ -77,12 +79,20 @@ export default {
                 });
                 this.notify();
             }
+        },
+        getRadio (radio){
+            let lists = this.tabs;
+            for (var j in lists) {
+            if (lists.hasOwnProperty(j) === true && lists[j].name == radio) {
+                return lists[j].tab;
+              }
+            }
         }, 
         release (){
             if(!this.loginData) {
                 this.$router.push({ path: '/login' });
             }
-            let _accessToken = JSON.parse(this.loginData).accessToken;
+            let _accessToken = vs.get('accessToken', this.isSession);
             checkUser(_accessToken).then((msg) => {
                 if(msg.success) {
                     let tabList = this.tabs;

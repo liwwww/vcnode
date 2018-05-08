@@ -1,12 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import vs from '@/config/storage';
-import { checkUser, getUser } from '@/service/data';
+import { checkUser, getUser, getTopics } from '@/service/data';
 import {
     GET_ACCESSTOKEN,
     CHECK_LOGININFO,
     GET_NOTIFYMESSAGE,
-    GET_LOCALSTORAGE
+    GET_LOCALSTORAGE,
+    GET_NEXTPAGE
 } from './mutation-types';
 
 Vue.use(Vuex);
@@ -19,7 +20,8 @@ export default new Vuex.Store({
         notifytitle: '',
         notifyInfo: '',
         notifySuccess: '',
-        isSession: vs.get('SESSION_STORAGE')
+        isSession: vs.get('SESSION_STORAGE'),
+        nextContent: ''
     },
     mutations: {
         [GET_ACCESSTOKEN] (state, accessToken){
@@ -44,6 +46,17 @@ export default new Vuex.Store({
         },
         [GET_LOCALSTORAGE] (state) {
             state.isSession = vs.get('SESSION_STORAGE');
+        },
+        [GET_NEXTPAGE] (state, info) {
+            let nextName = 'CACHE_item_';
+            if (vs.get(nextName+info.tab, true)) {
+                let preContent = vs.get(nextName+info.tab, true);
+                preContent = preContent.concat(info.content);
+                vs.set(nextName+info.tab, preContent, true);
+            }else {
+                vs.set(nextName+info.tab, info.content, true)
+            }
+            state.nextContent = info.content;
         }
     },
     actions: {
@@ -56,6 +69,12 @@ export default new Vuex.Store({
         },
         getLocalStorage ({ commit }){
             commit('GET_LOCALSTORAGE')
+        },
+        async getNextPage ({ commit }, msg){
+            let tab = msg.tab;
+            let content = await getTopics(msg.tab, msg.page);
+            content = content.data;
+            commit('GET_NEXTPAGE', { content, tab });
         }   
     }
 })
