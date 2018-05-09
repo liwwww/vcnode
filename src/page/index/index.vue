@@ -44,7 +44,7 @@
         </v-content>
         <v-release>
             <ul class="user-menu">
-            <li><router-link :to="{ path: '/create', query: { tab: pageTab } }">
+            <li v-if="userName"><router-link :to="{ path: '/create', query: { tab: pageTab } }">
                 <a>
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-xie"></use>
@@ -58,14 +58,14 @@
                     </svg>
                 </a></router-link>
             </li>
-			<li v-if="userName"><router-link :to="{ path: '/user/'+userName }">
+			<li v-if="!userName"><router-link :to="{ path: '/user/'+userName }">
                 <a>
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-user11"></use>
                     </svg>
                 </a></router-link>
             </li>
-            <li v-if="!userName"><router-link :to="{ path: '/login' }">
+            <li v-if="userName"><router-link :to="{ path: '/login' }">
                 <a>
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-user11"></use>
@@ -101,11 +101,20 @@ export default {
         };
     },
     activated (){
+        let tab = this.$route.query.tab;
         this.userName = vs.get('login_data', this.isSession) ? vs.get('login_data', this.isSession).loginname : '';
     },
     beforeRouteUpdate (to, from, next) {
         next();
-        if(this.nowPage !== this.$route.query.tab) {
+        let tab = this.$route.query.tab;
+        /*console.log(tab);
+        if(this.nowPage !== tab) {
+            this.loading = false;
+            this.loadList();
+        }*/
+        if (this.$store.state.nextContent[tab]){
+            this.list = this.$store.state.nextContent[tab];
+        }else {
             this.loading = false;
             this.loadList();
         }       
@@ -125,9 +134,14 @@ export default {
         pinClick(nav, index) {
             nav.checkPin = !nav.checkPin;
         },
-        async getTopicsData(tab = '') {
-            let topicsDetail = await getTopics(tab);
-            this.list = topicsDetail.data;
+        async getTopicsData(tab = '', page = '', load = false) {
+            let topicsDetail = await getTopics(tab, page);
+            if (load){
+                this.list = this.list.concat(topicsDetail.data);
+                this.$store.state.nextContent[tab] = this.list;
+            }else {
+                this.list = topicsDetail.data;
+            } 
             this.loading = true;
         },
         getDetail(id) {
@@ -136,12 +150,8 @@ export default {
         isLoad (){
             this.isLoading = !this.isLoading;
             let getTab = this.$route.query.tab ? this.$route.query.tab : 'all';
-            let nextName = 'CACHE_item_';
-            let content = vs.get(nextName+getTab, true);
-            let pageNum = content ? ~~(content.length/15)+1 : 2;  
-            this.$store.dispatch('getNextPage', { tab: getTab, page: pageNum });
-            this.list = this.list.concat(this.$store.state.nextContent);
-            console.log(this.list.length+this.$store.state.nextContent);
+            let pageNum = this.list ? ~~(this.list.length/15)+1 : 2;
+            this.getTopicsData(getTab, pageNum, true);
             this.isLoading = !this.isLoading;
         }
     },

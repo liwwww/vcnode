@@ -21,7 +21,14 @@ export default new Vuex.Store({
         notifyInfo: '',
         notifySuccess: '',
         isSession: vs.get('SESSION_STORAGE'),
-        nextContent: ''
+        nextContent: {
+            dev: '',
+            good: '',
+            share: '',
+            ask: '',
+            all: '',
+            job: ''
+        }
     },
     mutations: {
         [GET_ACCESSTOKEN] (state, accessToken){
