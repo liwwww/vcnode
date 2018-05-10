@@ -92,10 +92,12 @@ export default {
   },
   methods: {
     async getUserMsg() {
-      let userName = this.$route.params.name;
-      this.userMsg = await getUser(userName);
-      this.collect = await getUserCollect(userName); 
-      const collect = this.collect.data;
+      let name = this.$route.params.name;
+      this.userMsg = await getUser(name);
+      //this.collect = await getUserCollect(name); 
+      //const collect = this.collect.data;
+      this.$store.dispatch('getUserCollect', name);
+      const collect = this.$store.state.collect;
       this.userMsg = this.userMsg.data;
       const topics =  this.userMsg.recent_topics
       this.detailList = topics;

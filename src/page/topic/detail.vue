@@ -14,14 +14,14 @@
                             </router-link>
                             <span>{{ detail.author.loginname }} · {{ detail.create_at | formatTime }}</span>
                         </div>
-                        <div class="user-create-more" @click.stop="clickMore = !clickMore">
+                        <div class="user-create-more" @click.stop="clickMore = !clickMore" v-if="userName">
                             <svg class="icon" aria-hidden="true">
                                 <use xlink:href="#icon-gengduo"></use>
                             </svg>
                         </div>
                     <div class="more-list" v-if="clickMore">
                         <ul>
-                            <li>收藏</li>
+                            <li>{{ collectList && collectList.indexOf(id) === -1 ? '收藏':'已收藏' }}</li>
                             <li>编辑</li>
                         </ul>
                         <span></span>            
@@ -37,149 +37,155 @@
 </template>
 
 <script>
-import vHeader from '@/components/header.vue';
-import vContent from '@/components/content.vue';
-import vReply from '@/components/reply.vue';
-import vs from '@/config/storage';
-import { getTopic } from '@/service/data';
+import vHeader from "@/components/header.vue";
+import vContent from "@/components/content.vue";
+import vReply from "@/components/reply.vue";
+import vs from "@/config/storage";
+import { getTopic } from "@/service/data";
 export default {
-    data() {
-        return {
-            detail: {
-                author: {
-                    loginname: '',
-                    avatar_url: ''
-                } 
-            },
-            id: this.$route.query.id,
-            detailName: 'topic_detail',
-            clickMore: false 
+  data() {
+    return {
+      detail: {
+        author: {
+          loginname: "",
+          avatar_url: "",
+          collectList: ''
         }
-    },
-    created () {
-        getTopic(this.$route.query.id).then((msg) => {
-            this.detail = msg.data;
-        });
-    },
-    methods: {
-
-    },
-    components: { vHeader, vContent, vReply }
-}
+      },
+      id: this.$route.query.id,
+      detailName: "topic_detail",
+      clickMore: false,
+      userName: ''
+    };
+  },
+  components: { vHeader, vContent, vReply },
+  created() {
+    this.$store.dispatch('getUserName');
+    this.userName = vs.get('username', true) || '';
+    if(this.userName) {
+        this.$store.dispatch('getUserCollect', this.userName);
+        this.collectList = vs.get('collect_list', true);
+    }
+    getTopic(this.$route.query.id).then(msg => {
+      this.detail = msg.data;
+    });
+  },
+  methods: {}
+};
 </script>
 
 <style scoped lang="less">
 .content {
+  position: relative;
+  padding: 0;
+  margin-top: 16px;
+  border-radius: 2px;
+  background-color: #fff;
+  z-index: 1;
+  .content-menu {
+    padding: 20px 16px;
+    font-size: 15px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #e4e7ed;
+    .content-title {
+      font-weight: bolder;
+    }
+  }
+  .content-detail {
     position: relative;
-    padding: 0;
-    margin-top: 16px;
-    border-radius: 2px;
-    background-color: #fff;
-    z-index: 1;
-    .content-menu {
-        padding: 20px 16px;
-        font-size: 15px;
-        box-sizing: border-box;
-        border-bottom: 1px solid #E4E7ED;
-        .content-title {
-            font-weight: bolder;
+    padding: 14px 16px;
+    box-sizing: border-box;
+    z-index: 10;
+    .content-user {
+      position: relative;
+      width: 100%;
+      font-size: 13px;
+      z-index: 200;
+      .user-detail {
+        float: left;
+        img {
+          width: 40px;
+          height: 40px;
+          border-radius: 100%;
         }
-    }
-    .content-detail {
+        span {
+          display: inline-block;
+          margin: 5px 0 0 20px;
+          vertical-align: top;
+          font-weight: bolder;
+        }
+        a {
+          text-decoration: none;
+        }
+      }
+      .user-create-more {
         position: relative;
-        padding: 14px 16px;
-        box-sizing: border-box;
-        z-index: 10;
-        .content-user {
-            position: relative;
+        margin: 5px 0 0 20px;
+        float: right;
+        font-size: 26px;
+        cursor: pointer;
+      }
+      .more-list {
+        position: absolute;
+        text-align: center;
+        right: 0;
+        bottom: -73px;
+        width: 120px;
+        font-size: 14px;
+        background: #fff;
+        border: 1px solid #ebebeb;
+        color: #8590a6;
+        border-radius: 4px;
+        box-shadow: 0 5px 20px rgba(26, 26, 26, 0.1);
+        span {
+          position: absolute;
+          top: -15px;
+          right: 5px;
+          width: 0;
+          height: 0;
+          border: 7px solid transparent;
+          border-bottom-color: #ebebeb;
+          &:after {
+            content: "";
+            position: absolute;
+            display: block;
+            top: -7px;
+            right: 0;
+            width: 0;
+            height: 0;
+            transform: translateX(50%);
+            border: 8px solid transparent;
+            border-bottom-color: #fff;
+          }
+        }
+        ul {
+          padding: 6px 0;
+          li {
+            display: block;
             width: 100%;
-            font-size: 13px;
-            z-index: 200;
-            .user-detail {
-                float: left;
-                img {
-                    width: 40px;
-                    height: 40px;
-                    border-radius: 100%;
-                }
-                span {
-                    display: inline-block;
-                    margin: 5px 0 0 20px;
-                    vertical-align: top;
-                    font-weight: bolder;
-                }
-                a {
-                    text-decoration: none;
-                }
-            }
-            .user-create-more {
-                position: relative;
-                margin: 5px 0 0 20px;
-                float: right;
-                font-size: 26px;
-                cursor: pointer;
-            }
-            .more-list {
-                position: absolute;
-                text-align: center;
-                right: 0;
-                bottom: -73px;
-                width: 120px;
-                font-size: 14px;
-                background: #fff;
-                border: 1px solid #ebebeb;
-                color: #8590a6;
-                border-radius: 4px;
-                box-shadow: 0 5px 20px rgba(26,26,26,.1);
-                span {
-                    position: absolute;
-                    top: -15px;
-                    right: 5px;
-                    width: 0;
-                    height: 0;
-                    border: 7px solid transparent;
-                    border-bottom-color: #ebebeb;
-                    &:after {
-                        content: "";
-                        position: absolute;
-                        display: block;
-                        top: -7px;
-                        right: 0;
-                        width: 0;
-                        height: 0;
-                        transform: translateX(50%);
-                        border: 8px solid transparent;
-                        border-bottom-color: #fff;
-                    }
-                }  
-                ul {
-                    padding: 6px 0;
-                    li {
-                        display: block;
-                        width: 100%;
-                        padding: 0 20px;
-                        text-align: center;
-                        cursor: pointer;
-                        line-height: 28px;
-                        box-sizing: border-box;
-                        z-index: 200;
-                        &:hover {
-                            background-color: #f6f6f6;
-                            color: #77839c;
-                        }
-                    }
-                }
-            }
-        }
-        .content-main {
-            position: relative;
-            font-size: 14px;
-            line-height: 22px;
-            padding: 24px 26px;
+            padding: 0 20px;
+            text-align: center;
+            cursor: pointer;
+            line-height: 28px;
             box-sizing: border-box;
-            overflow: hidden;
-            z-index: 101;
+            z-index: 200;
+            &:hover {
+              background-color: #f6f6f6;
+              color: #77839c;
+            }
+          }
         }
+      }
     }
+    .content-main {
+      position: relative;
+      font-size: 14px;
+      line-height: 22px;
+      padding: 24px 26px;
+      box-sizing: border-box;
+      overflow: hidden;
+      z-index: 101;
+    }
+  }
 }
 </style>
