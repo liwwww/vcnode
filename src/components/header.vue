@@ -88,10 +88,6 @@ header {
     background-size: 100% 100%;
     background-color: rgba(0, 0, 0, 0) !important;
   }
-  .mixin-screen-sm( {
-    padding: 0 10px !important;
-  }
-  );
   padding: 0 40px;
   box-sizing: border-box;
   background-color: #409EFF;
