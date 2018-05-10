@@ -91,7 +91,7 @@ export default {
     created() {
         this.getTopicData(this.topicId);
         this.userId = vs.get('login_data', this.isSession);
-        this.userId = this.userId.id || ''
+        this.userId = this.userId ? this.userId.id : '';
     },
     methods: {
         async getTopicData(id) {
