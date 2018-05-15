@@ -27,6 +27,9 @@ export default {
       isSession: vs.get('SESSION_STORAGE', false)
     };
   },
+  beforeUpdate() {
+    this.userName = vs.get('login_data', this.isSession) ? vs.get('login_data', this.isSession).loginname : '';
+  },
   created() {
     this.userName = vs.get('login_data', this.isSession) ? vs.get('login_data', this.isSession).loginname : '';
     this.tab = getTab();

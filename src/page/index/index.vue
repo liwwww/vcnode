@@ -51,7 +51,7 @@
                     </svg>
                 </a></router-link>
             </li>
-			<li v-if="userName"><router-link :to="{ path: '/create', query: { tab: pageTab } }">
+			<li v-if="userName"><router-link :to="{ path: '/message' }">
                 <a>
                     <svg class="icon" aria-hidden="true">
                         <use xlink:href="#icon-i-mail"></use>

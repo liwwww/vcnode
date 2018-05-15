@@ -21,7 +21,7 @@
                         </div>
                     <div class="more-list" v-if="clickMore">
                         <ul>
-                            <li>{{ collectList && collectList.indexOf(id) === -1 ? '收藏':'已收藏' }}</li>
+                            <li @click="collectBtn">{{ isCollect >= 0 ? '已收藏':'收藏' }}</li>
                             <li>编辑</li>
                         </ul>
                         <span></span>            
@@ -41,7 +41,7 @@ import vHeader from "@/components/header.vue";
 import vContent from "@/components/content.vue";
 import vReply from "@/components/reply.vue";
 import vs from "@/config/storage";
-import { getTopic } from "@/service/data";
+import { getTopic, collectTopic, deCollectTopic } from "@/service/data";
 export default {
   data() {
     return {
@@ -55,22 +55,45 @@ export default {
       id: this.$route.query.id,
       detailName: "topic_detail",
       clickMore: false,
-      userName: ''
+      userName: '',
+      isCollect: '',
+      accessToken: ''
     };
   },
   components: { vHeader, vContent, vReply },
   created() {
     this.$store.dispatch('getUserName');
     this.userName = vs.get('username', true) || '';
-    if(this.userName) {
-        this.$store.dispatch('getUserCollect', this.userName);
-        this.collectList = vs.get('collect_list', true);
-    }
+    setTimeout(() => {
+      this.getCollectList();
+    }, 500);
     getTopic(this.$route.query.id).then(msg => {
       this.detail = msg.data;
     });
   },
-  methods: {}
+  methods: {
+    getCollectList (){
+      if(this.userName) {
+        this.$store.dispatch('getUserCollect', this.userName);
+        this.collectList = this.$store.state.collectList || vs.get('collect_id', true);
+        console.log(this.collectList);
+        this.isCollect = this.collectList.indexOf(this.id);
+        console.log(this.isCollect);
+      }
+    },
+    async collectBtn (){
+      this.$store.dispatch('getAccessToken');
+      let _accessToken = vs.get('accessToken', true);
+      if(this.isCollect >= 0) {
+        await deCollectTopic(_accessToken, this.id);
+        this.isCollect = -1;
+      }else {
+        await collectTopic(_accessToken, this.id);
+        this.getCollectList();
+        this.isCollect = 2;
+      }
+    }
+  }
 };
 </script>
 

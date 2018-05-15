@@ -67,6 +67,7 @@
 <script>
 import vHeader from "@/components/header";
 import vContent from "@/components/content";
+import vs from "@/config/storage";
 import { getUser, getUserCollect } from "@/service/data";
 export default {
   data() {
@@ -85,10 +86,10 @@ export default {
     }, 1000);
   },
   watch: {
-        '$route'(to, from) {
-            this.getUserMsg();
-            this.listName.arrow = 0;
-        }
+    '$route'(to, from) {
+        this.getUserMsg();
+        this.listName.arrow = 0;
+    }
   },
   methods: {
     async getUserMsg() {
@@ -97,7 +98,7 @@ export default {
       //this.collect = await getUserCollect(name); 
       //const collect = this.collect.data;
       this.$store.dispatch('getUserCollect', name);
-      const collect = this.$store.state.collect;
+      const collect = this.$store.state.collect || vs.get('collect_list', true);
       this.userMsg = this.userMsg.data;
       const topics =  this.userMsg.recent_topics
       this.detailList = topics;

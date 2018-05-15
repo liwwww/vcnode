@@ -61,7 +61,7 @@ export default {
       this.$store.dispatch('checkLoginInfo', this.token).then(() => {
         if(this.$store.state.isLogin) {
           this.logining = false;
-          this.$router.push({ path: "/index", name: "index" });
+          this.$router.push({ path: "/", name: "index" });
         }else {
           this.loginMsg = 'accessToken错误';
           this.logining = false;

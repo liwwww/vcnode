@@ -29,11 +29,32 @@ export const checkUser = (token) => vfetch('/accesstoken', 'POST', {
 
 export const getUserCollect = (name) => vfetch('/topic_collect/'+name, 'GET', {})
 
+export const collectTopic = (accesstoken, id) => vfetch('/topic_collect/collect', 'POST', {
+  accesstoken: accesstoken,
+  topic_id: id
+})
+
+export const deCollectTopic = (accesstoken, id) => vfetch('/topic_collect/de_collect', 'POST', {
+  accesstoken: accesstoken,
+  topic_id: id
+})
+
 export const upsReply = (reply_id, accesstoken) => vfetch('/reply/'+reply_id+'/ups', 'POST', {
   accesstoken: accesstoken
 })
 
 export const getUser = (loginname) => vfetch('/user/'+loginname, 'GET', {})
+
+export const getAllMessage = (accesstoken) => vfetch('/messages', 'GET', {
+  accesstoken: accesstoken,
+  mdrender: false
+})
+
+export const markAllMessage = (accesstoken) => vfetch('/message/mark_all', 'POST', {})
+
+export const markOneMessage = (accesstoken, id) => vfetch('/message/mark_one/'+id, 'POST', {
+  accesstoken: accesstoken
+})
 
 export const getTab = () => 
      [

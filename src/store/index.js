@@ -35,8 +35,12 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    [GET_ACCESSTOKEN](state, accessToken) {
-      state.accessToken = accessToken;
+    [GET_ACCESSTOKEN](state) {
+      let isSession = vs.get("SESSION_STORAGE", false);
+      let accessToken = vs.get("accessToken", isSession)
+        ? vs.get("accessToken", isSession)
+        : "";
+      vs.set("accessToken", accessToken, true);
     },
     [CHECK_LOGININFO](state, infoArr) {
       if (infoArr.userInfo.success) {
@@ -68,12 +72,16 @@ export default new Vuex.Store({
     [GET_COLLECT](state, { collect, collectList, name }) {
       state.collect = collect;
       state.collectList = collectList;
+      vs.set("collect_list", collect, true);
       if (state.userName) {
-        vs.set("collect_list", collectList, true);
+        vs.set("collect_id", collectList, true);
       }
     }
   },
   actions: {
+    getAccessToken({ commit }) {
+      commit("GET_ACCESSTOKEN");
+    },
     async checkLoginInfo({ commit }, accessToken) {
       let info = await checkUser(accessToken);
       commit("CHECK_LOGININFO", { userInfo: info, accessToken: accessToken });
