@@ -6,6 +6,11 @@
 感谢[cnodejs](https://cnodejs.org/)社区提供的API。
 github：[https://github.com/liwwww/vcnode](https://github.com/liwwww/vcnode)
 
+### 预览
+```
+地址：[http://www.wlgxh.cn](http://www.wlgxh.cn)
+```
+
 ### 技术栈
 ```
 基于vue2 + vue-router + vuex + ES6 + less + webpck 重写vue版cnode社区.
