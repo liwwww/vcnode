@@ -1,29 +1,9 @@
 <template>
   <header>
     <div class="menu-top">
-      <!--<div class="menu-icon" @click="menuCtrl">
-        <i></i>
-      </div>-->
       <router-link :to="{ path: '/' }"><span class="menu-text">VUE</span></router-link>
-      <el-switch v-model="value2" active-color="#F2F6FC" inactive-color="#67C23A"></el-switch>
+      <!--<el-switch v-model="value2" active-color="#F2F6FC" inactive-color="#67C23A"></el-switch>-->
     </div>
-    <!--<transition name="slide-fade-mask">
-      <div class="menu-mask" @click="menuCtrl" v-show="menuClick"></div>
-    </transition>
-    <transition name="slide-fade-menu">
-      <el-col :span="16" v-show="menuClick">
-        <el-menu router default-active="1" class="menu-vertical" background-color="#fff" text-color="#000" active-text-color="#000">
-          <div class="menu-header">
-            <img calss="menu-avatar" src="./user.png" style="width='80px',height='80px'" />
-            <span class="menu-username">{{ username }}</span>
-          </div>
-          <el-menu-item v-for="tabs in tab" index=0 :key="tabs.name" @click="menuCtrl" :route="{path: '/', query:{tab:tabs.tab}}">
-            <i class="el-icon-tickets"></i>
-            <span slot="title">{{ tabs.name }}</span>
-          </el-menu-item>
-        </el-menu>
-      </el-col>
-    </transition>-->
   </header>
 </template>
 

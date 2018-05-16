@@ -35,7 +35,7 @@
                                 <i class="el-icon-refresh" style="margin: 10px 0 0 15px;"></i>{{ nav.last_reply_at | formatTime }}</span>
                         </div>
                     </div>
-                    <i class="list-pin" @click="pinClick(nav, index)" v-bind:class="{ isPin: nav.checkPin }"></i>
+                    <!--<i class="list-pin" @click="pinClick(nav, index)" v-bind:class="{ isPin: nav.checkPin }"></i>-->
                 </el-row>
                 <div class="load-container">
                     <el-button class="loadBtn" type="primary" :loading="isLoading" @click="isLoad">加载更多</el-button>
