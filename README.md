@@ -7,9 +7,7 @@
 github：[https://github.com/liwwww/vcnode](https://github.com/liwwww/vcnode)
 
 ### 预览
-```
 地址：[http://www.wlgxh.cn](http://www.wlgxh.cn)
-```
 
 ### 技术栈
 ```
