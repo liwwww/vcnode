@@ -75,10 +75,8 @@ export default {
     getCollectList (){
       if(this.userName) {
         this.$store.dispatch('getUserCollect', this.userName);
-        this.collectList = this.$store.state.collectList || vs.get('collect_id', true);
-        console.log(this.collectList);
+        this.collectList = vs.get('collect_id', true);
         this.isCollect = this.collectList.indexOf(this.id);
-        console.log(this.isCollect);
       }
     },
     async collectBtn (){
